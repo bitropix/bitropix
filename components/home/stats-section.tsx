@@ -1,73 +1,73 @@
-"use client"
+'use client';
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef } from 'react';
 
 const stats = [
-  { value: 150, suffix: "+", label: "Projects Completed" },
-  { value: 50, suffix: "+", label: "Happy Clients" },
-  { value: 25, suffix: "+", label: "Team Members" },
-  { value: 5, suffix: "+", label: "Years in Business" },
-]
+  { value: 50, suffix: '+', label: 'Projects Completed' },
+  { value: 50, suffix: '+', label: 'Happy Clients' },
+  { value: 25, suffix: '+', label: 'Team Members' },
+  { value: 5, suffix: '+', label: 'Years in Business' },
+];
 
 function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
-  const [count, setCount] = useState(0)
-  const ref = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
+          setIsVisible(true);
         }
       },
-      { threshold: 0.5 },
-    )
+      { threshold: 0.5 }
+    );
 
     if (ref.current) {
-      observer.observe(ref.current)
+      observer.observe(ref.current);
     }
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
-    if (!isVisible) return
+    if (!isVisible) return;
 
-    const duration = 2000
-    const steps = 60
-    const increment = value / steps
-    let current = 0
+    const duration = 2000;
+    const steps = 60;
+    const increment = value / steps;
+    let current = 0;
 
     const timer = setInterval(() => {
-      current += increment
+      current += increment;
       if (current >= value) {
-        setCount(value)
-        clearInterval(timer)
+        setCount(value);
+        clearInterval(timer);
       } else {
-        setCount(Math.floor(current))
+        setCount(Math.floor(current));
       }
-    }, duration / steps)
+    }, duration / steps);
 
-    return () => clearInterval(timer)
-  }, [isVisible, value])
+    return () => clearInterval(timer);
+  }, [isVisible, value]);
 
   return (
-    <div ref={ref} className="text-4xl sm:text-5xl font-bold text-primary-foreground mb-2">
+    <div ref={ref} className="text-primary-foreground mb-2 text-4xl font-bold sm:text-5xl">
       {count}
       {suffix}
     </div>
-  )
+  );
 }
 
 export function StatsSection() {
   return (
-    <section className="py-16 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-accent" />
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:30px_30px]" />
+    <section className="relative overflow-hidden py-16">
+      <div className="from-primary via-primary/90 to-accent absolute inset-0 bg-linear-to-r" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
               <AnimatedNumber value={stat.value} suffix={stat.suffix} />
@@ -77,5 +77,5 @@ export function StatsSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

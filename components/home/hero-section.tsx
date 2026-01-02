@@ -1,44 +1,44 @@
-"use client"
+'use client';
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Play } from "lucide-react"
-import { useEffect, useState } from "react"
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Play } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export function HeroSection() {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true)
-  }, [])
+    setIsVisible(true);
+  }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden bg-background">
-      {/* Subtle gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-tl from-accent/5 via-transparent to-transparent" />
+    <section className="bg-background relative flex min-h-screen items-center overflow-hidden pt-16">
+      {/* Subtle linear overlays */}
+      <div className="from-primary/5 absolute inset-0 bg-linear-to-br via-transparent to-transparent" />
+      <div className="from-accent/5 absolute inset-0 bg-linear-to-tl via-transparent to-transparent" />
 
       {/* Animated glow orbs */}
-      <div className="absolute top-20 right-10 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] animate-pulse-glow" />
-      <div className="absolute bottom-20 left-10 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px] animate-pulse-glow delay-500" />
+      <div className="bg-primary/10 animate-pulse-glow absolute top-20 right-10 h-125 w-125 rounded-full blur-[100px]" />
+      <div className="bg-accent/10 animate-pulse-glow absolute bottom-20 left-10 h-100 w-100 rounded-full blur-[100px] delay-500" />
 
       {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,77,45,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,77,45,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+      <div className="absolute inset-0 bg-[linear-linear(rgba(255,77,45,0.03)_1px,transparent_1px),linear-linear(90deg,rgba(255,77,45,0.03)_1px,transparent_1px)] bg-size-[50px_50px]" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
           <div
-            className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+            className={`transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium mb-6 animate-fade-in">
-              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              Trusted by 100+ Businesses
+            <div className="bg-primary/10 border-primary/20 text-primary animate-fade-in mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium">
+              <span className="bg-primary h-2 w-2 animate-pulse rounded-full" />
+              Trusted by 50+ Businesses
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance">
-              Transform Your Business with{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Innovation</span>
+            <h1 className="text-foreground text-4xl leading-tight font-bold text-balance sm:text-5xl lg:text-6xl">
+              Transform Your Business with{' '}
+              <span className="from-primary to-accent bg-linear-to-r bg-clip-text text-transparent">Innovation</span>
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
+            <p className="text-muted-foreground mt-6 max-w-xl text-lg leading-relaxed">
               Bitropix delivers cutting-edge IT solutions including software development, digital transformation, cloud
               migrations, and agile hiring to accelerate your growth.
             </p>
@@ -46,7 +46,7 @@ export function HeroSection() {
               <Button
                 size="lg"
                 asChild
-                className="bg-primary hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:scale-105"
+                className="bg-primary hover:bg-primary/90 hover:shadow-primary/25 transition-all duration-300 hover:scale-105 hover:shadow-lg"
               >
                 <Link href="/contact">
                   Get Started <ArrowRight className="ml-2 h-4 w-4" />
@@ -56,7 +56,7 @@ export function HeroSection() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="border-border hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 bg-transparent"
+                className="border-border hover:border-primary/50 hover:bg-primary/5 bg-transparent transition-all duration-300"
               >
                 <Link href="/about">
                   <Play className="mr-2 h-4 w-4" /> Watch Demo
@@ -67,17 +67,17 @@ export function HeroSection() {
             {/* Stats with animation */}
             <div className="mt-12 flex items-center gap-8">
               {[
-                { value: "150+", label: "Projects Delivered" },
-                { value: "50+", label: "Happy Clients" },
-                { value: "5+", label: "Years Experience" },
+                { value: '50+', label: 'Projects Delivered' },
+                { value: '50+', label: 'Happy Clients' },
+                { value: '2+', label: 'Years Experience' },
               ].map((stat, index) => (
                 <div
                   key={stat.label}
                   className={`animate-slide-up`}
                   style={{ animationDelay: `${(index + 1) * 200}ms` }}
                 >
-                  <p className="text-3xl font-bold text-foreground">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
+                  <p className="text-foreground text-3xl font-bold">{stat.value}</p>
+                  <p className="text-muted-foreground text-sm">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -85,30 +85,30 @@ export function HeroSection() {
 
           {/* Hero visual */}
           <div
-            className={`relative transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
+            className={`relative transition-all delay-300 duration-1000 ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}
           >
-            <div className="relative aspect-square max-w-lg mx-auto">
-              {/* Gradient background card */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded rotate-6 animate-float" />
-              <div className="absolute inset-0 rounded overflow-hidden border border-border/50 bg-secondary/50 backdrop-blur-sm">
+            <div className="relative mx-auto aspect-square max-w-lg">
+              {/* linear background card */}
+              <div className="from-primary/20 to-accent/20 animate-float absolute inset-0 rotate-6 rounded bg-linear-to-br" />
+              <div className="border-border/50 bg-secondary/50 absolute inset-0 overflow-hidden rounded border backdrop-blur-sm">
                 <img
                   src="/modern-office-team-working-on-computers-with-code-.jpg"
                   alt="Team working on innovative solutions"
-                  className="w-full h-full object-cover opacity-60"
+                  className="h-full w-full object-cover opacity-60"
                 />
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+                {/* Overlay linear */}
+                <div className="from-background absolute inset-0 bg-linear-to-t via-transparent to-transparent" />
               </div>
 
               {/* Floating card */}
-              <div className="absolute -bottom-6 -left-6 bg-card p-4 rounded border border-border/50 backdrop-blur-sm animate-slide-up delay-500">
+              <div className="bg-card border-border/50 animate-slide-up absolute -bottom-6 -left-6 rounded border p-4 backdrop-blur-sm delay-500">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+                  <div className="from-primary to-accent flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br">
                     <span className="text-primary-foreground text-xl font-bold">98%</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Client Satisfaction</p>
-                    <p className="text-sm text-muted-foreground">Based on reviews</p>
+                    <p className="text-foreground font-semibold">Client Satisfaction</p>
+                    <p className="text-muted-foreground text-sm">Based on reviews</p>
                   </div>
                 </div>
               </div>
@@ -117,5 +117,5 @@ export function HeroSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

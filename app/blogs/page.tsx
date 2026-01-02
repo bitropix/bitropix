@@ -1,132 +1,132 @@
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { Calendar, Clock, User, ArrowRight, Tag } from "lucide-react"
+import { Navbar } from '@/components/navbar';
+import { Footer } from '@/components/footer';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { Calendar, Clock, User, ArrowRight, Tag } from 'lucide-react';
 
 export const metadata = {
-  title: "Blog - Bitropix | Tech Insights & Industry Updates",
+  title: 'Blog - Bitropix | Tech Insights & Industry Updates',
   description:
-    "Stay updated with the latest insights on technology, digital transformation, software development, and industry trends from Bitropix experts.",
-}
+    'Stay updated with the latest insights on technology, digital transformation, software development, and industry trends from Bitropix experts.',
+};
 
 const featuredPost = {
   id: 1,
-  slug: "digital-transformation-2024-guide",
-  title: "The Complete Guide to Digital Transformation in 2024",
+  slug: 'digital-transformation-2024-guide',
+  title: 'The Complete Guide to Digital Transformation in 2024',
   excerpt:
-    "Digital transformation is no longer optional. Learn how to navigate the changing landscape and position your business for success in the digital age.",
-  image: "/digital-transformation-concept-with-technology-ico.jpg",
-  author: "Rahul Verma",
-  date: "Dec 15, 2024",
-  readTime: "10 min read",
-  category: "Digital Transformation",
-}
+    'Digital transformation is no longer optional. Learn how to navigate the changing landscape and position your business for success in the digital age.',
+  image: '/digital-transformation-concept-with-technology-ico.jpg',
+  author: 'Rahul Verma',
+  date: 'Dec 15, 2024',
+  readTime: '10 min read',
+  category: 'Digital Transformation',
+};
 
 const blogPosts = [
   {
     id: 2,
-    slug: "react-19-features",
+    slug: 'react-19-features',
     title: "React 19: What's New and How to Upgrade",
     excerpt:
-      "Explore the latest features in React 19 and learn best practices for upgrading your existing applications.",
-    image: "/react-programming-code.jpg",
-    author: "Vikram Patel",
-    date: "Dec 10, 2024",
-    readTime: "8 min read",
-    category: "Development",
+      'Explore the latest features in React 19 and learn best practices for upgrading your existing applications.',
+    image: '/react-programming-code.jpg',
+    author: 'Vikram Patel',
+    date: 'Dec 10, 2024',
+    readTime: '8 min read',
+    category: 'Development',
   },
   {
     id: 3,
-    slug: "cloud-cost-optimization",
-    title: "10 Strategies to Reduce Your Cloud Costs by 40%",
+    slug: 'cloud-cost-optimization',
+    title: '10 Strategies to Reduce Your Cloud Costs by 40%',
     excerpt:
-      "Cloud costs can spiral out of control quickly. Here are proven strategies to optimize your cloud spending.",
-    image: "/cloud-computing-infrastructure.jpg",
-    author: "Ananya Singh",
-    date: "Dec 5, 2024",
-    readTime: "7 min read",
-    category: "Cloud",
+      'Cloud costs can spiral out of control quickly. Here are proven strategies to optimize your cloud spending.',
+    image: '/cloud-computing-infrastructure.jpg',
+    author: 'Ananya Singh',
+    date: 'Dec 5, 2024',
+    readTime: '7 min read',
+    category: 'Cloud',
   },
   {
     id: 4,
-    slug: "ai-in-enterprise",
-    title: "Implementing AI in Enterprise: A Practical Roadmap",
-    excerpt: "Move beyond the hype. Learn how to practically implement AI solutions that deliver real business value.",
-    image: "/artificial-intelligence-neural-network.jpg",
-    author: "Priya Sharma",
-    date: "Nov 28, 2024",
-    readTime: "12 min read",
-    category: "AI & ML",
+    slug: 'ai-in-enterprise',
+    title: 'Implementing AI in Enterprise: A Practical Roadmap',
+    excerpt: 'Move beyond the hype. Learn how to practically implement AI solutions that deliver real business value.',
+    image: '/artificial-intelligence-neural-network.jpg',
+    author: 'Priya Sharma',
+    date: 'Nov 28, 2024',
+    readTime: '12 min read',
+    category: 'AI & ML',
   },
   {
     id: 5,
-    slug: "microservices-best-practices",
-    title: "Microservices Architecture: Lessons from 50+ Projects",
+    slug: 'microservices-best-practices',
+    title: 'Microservices Architecture: Lessons from 50+ Projects',
     excerpt: "After implementing microservices for over 50 clients, here's what we've learned about doing it right.",
-    image: "/microservices-architecture.png",
-    author: "Vikram Patel",
-    date: "Nov 20, 2024",
-    readTime: "9 min read",
-    category: "Architecture",
+    image: '/microservices-architecture.png',
+    author: 'Vikram Patel',
+    date: 'Nov 20, 2024',
+    readTime: '9 min read',
+    category: 'Architecture',
   },
   {
     id: 6,
-    slug: "ux-design-trends-2025",
-    title: "UX Design Trends That Will Shape 2025",
+    slug: 'ux-design-trends-2025',
+    title: 'UX Design Trends That Will Shape 2025',
     excerpt:
-      "From AI-driven personalization to immersive experiences, discover the trends that will define UX in 2025.",
-    image: "/modern-ux-design-interface.jpg",
-    author: "Ananya Singh",
-    date: "Nov 15, 2024",
-    readTime: "6 min read",
-    category: "Design",
+      'From AI-driven personalization to immersive experiences, discover the trends that will define UX in 2025.',
+    image: '/modern-ux-design-interface.jpg',
+    author: 'Ananya Singh',
+    date: 'Nov 15, 2024',
+    readTime: '6 min read',
+    category: 'Design',
   },
   {
     id: 7,
-    slug: "devops-automation",
-    title: "Automating Your DevOps Pipeline: Complete Guide",
-    excerpt: "Learn how to build a fully automated CI/CD pipeline that improves deployment frequency and reliability.",
-    image: "/devops-automation-pipeline.jpg",
-    author: "Rahul Verma",
-    date: "Nov 8, 2024",
-    readTime: "11 min read",
-    category: "DevOps",
+    slug: 'devops-automation',
+    title: 'Automating Your DevOps Pipeline: Complete Guide',
+    excerpt: 'Learn how to build a fully automated CI/CD pipeline that improves deployment frequency and reliability.',
+    image: '/devops-automation-pipeline.jpg',
+    author: 'Rahul Verma',
+    date: 'Nov 8, 2024',
+    readTime: '11 min read',
+    category: 'DevOps',
   },
-]
+];
 
-const categories = ["All", "Development", "Cloud", "AI & ML", "Design", "DevOps", "Digital Transformation", "Mobile"]
+const categories = ['All', 'Development', 'Cloud', 'AI & ML', 'Design', 'DevOps', 'Digital Transformation', 'Mobile'];
 
 export default function BlogsPage() {
   return (
     <>
       <Navbar />
       <main className="pt-16">
-        <section className="py-20 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/5" />
-          <div className="absolute top-20 right-20 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[100px]" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-primary font-semibold mb-2">Our Blog</p>
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6 text-balance">
+        <section className="relative overflow-hidden py-20">
+          <div className="from-primary/10 via-background to-accent/5 absolute inset-0 bg-gradient-to-br" />
+          <div className="bg-primary/10 absolute top-20 right-20 h-[300px] w-[300px] rounded-full blur-[100px]" />
+          <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+            <p className="text-primary mb-2 font-semibold">Our Blog</p>
+            <h1 className="text-foreground mb-6 text-4xl font-bold text-balance sm:text-5xl">
               Insights & Tech Stories
             </h1>
-            <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
+            <p className="text-muted-foreground mx-auto max-w-3xl text-lg">
               Stay updated with the latest in technology, best practices, and insights from our team of experts.
             </p>
           </div>
         </section>
 
-        <section className="py-8 border-b border-border/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-wrap gap-3 justify-center">
+        <section className="border-border/50 border-b py-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-wrap justify-center gap-3">
               {categories.map((category, index) => (
                 <button
                   key={category}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                     index === 0
-                      ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
-                      : "bg-card/50 border border-border/50 text-foreground hover:bg-primary/10 hover:border-primary/30"
+                      ? 'bg-primary text-primary-foreground shadow-primary/25 shadow-lg'
+                      : 'bg-card/50 border-border/50 text-foreground hover:bg-primary/10 hover:border-primary/30 border'
                   }`}
                 >
                   {category}
@@ -137,28 +137,28 @@ export default function BlogsPage() {
         </section>
 
         <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-foreground mb-8">Featured Article</h2>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 className="text-foreground mb-8 text-2xl font-bold">Featured Article</h2>
             <Link href={`/blogs/${featuredPost.slug}`} className="group block">
-              <Card className="overflow-hidden bg-card/30 border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
+              <Card className="bg-card/30 border-border/50 hover:border-primary/30 hover:shadow-primary/5 overflow-hidden transition-all duration-300 hover:shadow-lg">
                 <div className="grid md:grid-cols-2">
-                  <div className="aspect-video md:aspect-auto md:h-full overflow-hidden">
+                  <div className="aspect-video overflow-hidden md:aspect-auto md:h-full">
                     <img
-                      src={featuredPost.image || "/placeholder.svg"}
+                      src={featuredPost.image || '/placeholder.svg'}
                       alt={featuredPost.title}
-                      className="w-full h-full object-cover opacity-70 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
+                      className="h-full w-full object-cover opacity-70 transition-all duration-500 group-hover:scale-105 group-hover:opacity-80"
                     />
                   </div>
-                  <CardContent className="p-8 flex flex-col justify-center">
-                    <div className="flex items-center gap-2 mb-4">
-                      <Tag className="h-4 w-4 text-primary" />
+                  <CardContent className="flex flex-col justify-center p-8">
+                    <div className="mb-4 flex items-center gap-2">
+                      <Tag className="text-primary h-4 w-4" />
                       <span className="text-primary text-sm font-medium">{featuredPost.category}</span>
                     </div>
-                    <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                    <h3 className="text-foreground group-hover:text-primary mb-4 text-2xl font-bold transition-colors">
                       {featuredPost.title}
                     </h3>
                     <p className="text-muted-foreground mb-6 leading-relaxed">{featuredPost.excerpt}</p>
-                    <div className="flex items-center gap-6 text-sm text-muted-foreground">
+                    <div className="text-muted-foreground flex items-center gap-6 text-sm">
                       <span className="flex items-center gap-1">
                         <User className="h-4 w-4" /> {featuredPost.author}
                       </span>
@@ -176,32 +176,32 @@ export default function BlogsPage() {
           </div>
         </section>
 
-        <section className="py-16 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 via-background to-background" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-foreground mb-8">Latest Articles</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section className="relative overflow-hidden py-16">
+          <div className="from-secondary/20 via-background to-background absolute inset-0 bg-gradient-to-b" />
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 className="text-foreground mb-8 text-2xl font-bold">Latest Articles</h2>
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {blogPosts.map((post) => (
                 <Link key={post.id} href={`/blogs/${post.slug}`} className="group">
-                  <Card className="h-full bg-card/30 border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 overflow-hidden">
+                  <Card className="bg-card/30 border-border/50 hover:border-primary/30 hover:shadow-primary/5 h-full overflow-hidden transition-all duration-300 hover:shadow-lg">
                     <div className="aspect-video overflow-hidden">
                       <img
-                        src={post.image || "/placeholder.svg"}
+                        src={post.image || '/placeholder.svg'}
                         alt={post.title}
-                        className="w-full h-full object-cover opacity-70 group-hover:opacity-80 group-hover:scale-105 transition-all duration-500"
+                        className="h-full w-full object-cover opacity-70 transition-all duration-500 group-hover:scale-105 group-hover:opacity-80"
                       />
                     </div>
                     <CardContent className="p-6">
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="text-primary text-xs font-medium px-2 py-1 bg-primary/10 border border-primary/20 rounded-full">
+                      <div className="mb-3 flex items-center gap-2">
+                        <span className="text-primary bg-primary/10 border-primary/20 rounded-full border px-2 py-1 text-xs font-medium">
                           {post.category}
                         </span>
                       </div>
-                      <h3 className="font-bold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      <h3 className="text-foreground group-hover:text-primary mb-2 line-clamp-2 font-bold transition-colors">
                         {post.title}
                       </h3>
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{post.excerpt}</p>
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">{post.excerpt}</p>
+                      <div className="text-muted-foreground flex items-center justify-between text-xs">
                         <span className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" /> {post.date}
                         </span>
@@ -215,7 +215,7 @@ export default function BlogsPage() {
               ))}
             </div>
 
-            <div className="text-center mt-12">
+            <div className="mt-12 text-center">
               <Button
                 variant="outline"
                 size="lg"
@@ -227,19 +227,19 @@ export default function BlogsPage() {
           </div>
         </section>
 
-        <section className="py-20 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-accent" />
+        <section className="relative overflow-hidden py-20">
+          <div className="from-primary via-primary/90 to-accent absolute inset-0 bg-gradient-to-r" />
           <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:30px_30px]" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-4">Subscribe to Our Newsletter</h2>
-            <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-8">
+          <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+            <h2 className="text-primary-foreground mb-4 text-3xl font-bold sm:text-4xl">Subscribe to Our Newsletter</h2>
+            <p className="text-primary-foreground/80 mx-auto mb-8 max-w-2xl">
               Get the latest insights, tutorials, and industry updates delivered directly to your inbox.
             </p>
-            <form className="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
+            <form className="mx-auto flex max-w-md flex-col gap-4 sm:flex-row">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded border-0 focus:ring-2 focus:ring-background text-foreground bg-background"
+                className="focus:ring-background text-foreground bg-background flex-1 rounded border-0 px-4 py-3 focus:ring-2"
               />
               <Button type="submit" className="bg-foreground text-background hover:bg-foreground/90 transition-all">
                 Subscribe
@@ -250,5 +250,5 @@ export default function BlogsPage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

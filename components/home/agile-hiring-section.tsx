@@ -1,43 +1,43 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { CheckCircle2, Users, Clock, Shield } from "lucide-react"
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { CheckCircle2, Users, Clock, Shield } from 'lucide-react';
 
 const benefits = [
   {
     icon: Users,
-    title: "Expert Specialists",
-    description: "Access top-tier talent with specialized skills tailored to your project needs.",
+    title: 'Expert Specialists',
+    description: 'Access top-tier talent with specialized skills tailored to your project needs.',
   },
   {
     icon: Clock,
-    title: "Quick Deployment",
-    description: "Get resources onboarded and productive within days, not months.",
+    title: 'Quick Deployment',
+    description: 'Get resources onboarded and productive within days, not months.',
   },
   {
     icon: Shield,
-    title: "No Hiring Overhead",
-    description: "Eliminate recruitment costs, training expenses, and HR administration.",
+    title: 'No Hiring Overhead',
+    description: 'Eliminate recruitment costs, training expenses, and HR administration.',
   },
-]
+];
 
 const checkpoints = [
-  "Dedicated developer works exclusively for you",
-  "Flexible engagement models (full-time/part-time)",
-  "Seamless integration with your existing team",
-  "Regular performance reviews and reporting",
-  "Easy scaling up or down based on needs",
-]
+  'Dedicated developer works exclusively for you',
+  'Flexible engagement models (full-time/part-time)',
+  'Seamless integration with your existing team',
+  'Regular performance reviews and reporting',
+  'Easy scaling up or down based on needs',
+];
 
 export function AgileHiringSection() {
   return (
-    <section className="py-20 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5" />
+    <section className="relative overflow-hidden py-20">
+      <div className="from-primary/5 to-accent/5 absolute inset-0 bg-gradient-to-r via-transparent" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
-            <p className="text-primary font-semibold mb-2">Agile Hiring</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6 text-balance">
+            <p className="text-primary mb-2 font-semibold">Agile Hiring</p>
+            <h2 className="text-foreground mb-6 text-3xl font-bold text-balance sm:text-4xl">
               Build Your Dream Team Without the Hassle
             </h2>
             <p className="text-muted-foreground mb-8 leading-relaxed">
@@ -45,11 +45,11 @@ export function AgileHiringSection() {
               the expertise you need without the complexities of traditional hiring.
             </p>
 
-            <ul className="space-y-4 mb-8">
+            <ul className="mb-8 space-y-4">
               {checkpoints.map((point, index) => (
-                <li key={point} className="flex items-start gap-3 group">
-                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                    <CheckCircle2 className="h-4 w-4 text-primary" />
+                <li key={point} className="group flex items-start gap-3">
+                  <div className="bg-primary/10 group-hover:bg-primary/20 flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition-colors">
+                    <CheckCircle2 className="text-primary h-4 w-4" />
                   </div>
                   <span className="text-foreground">{point}</span>
                 </li>
@@ -59,7 +59,7 @@ export function AgileHiringSection() {
             <Button
               size="lg"
               asChild
-              className="bg-primary hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
+              className="bg-primary hover:bg-primary/90 hover:shadow-primary/25 transition-all duration-300 hover:shadow-lg"
             >
               <Link href="/contact">Hire Talent Now</Link>
             </Button>
@@ -69,13 +69,13 @@ export function AgileHiringSection() {
             {benefits.map((benefit, index) => (
               <div
                 key={benefit.title}
-                className="flex gap-4 p-6 bg-card/50 backdrop-blur-sm rounded border border-border/50 hover:border-primary/30 hover:bg-card/80 transition-all duration-300 group"
+                className="bg-card/50 border-border/50 hover:border-primary/30 hover:bg-card/80 group flex gap-4 rounded border p-6 backdrop-blur-sm transition-all duration-300"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/5 rounded flex items-center justify-center shrink-0 group-hover:from-primary/30 group-hover:to-primary/10 transition-all">
-                  <benefit.icon className="h-6 w-6 text-primary" />
+                <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 flex h-12 w-12 shrink-0 items-center justify-center rounded bg-gradient-to-br transition-all">
+                  <benefit.icon className="text-primary h-6 w-6" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">{benefit.title}</h3>
+                  <h3 className="text-foreground mb-1 font-semibold">{benefit.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
                 </div>
               </div>
@@ -84,5 +84,5 @@ export function AgileHiringSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
