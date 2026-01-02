@@ -15,7 +15,8 @@ async function sendTelegramMessage(formData: {
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
   if (!botToken || !chatId) {
-    return;
+    console.error('Missing Telegram credentials');
+    return { success: false, error: 'Missing credentials' };
   }
 
   // Format service name
@@ -64,7 +65,7 @@ Received: ${new Date().toLocaleString('en-IN', {
   const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
   try {
-    await fetch(telegramUrl, {
+    const response = await fetch(telegramUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,8 +75,19 @@ Received: ${new Date().toLocaleString('en-IN', {
         text: telegramMessage,
       }),
     });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Telegram API error:', data);
+      return { success: false, error: data };
+    }
+
+    console.log('Telegram message sent successfully');
+    return { success: true };
   } catch (error) {
-    // Silently fail - don't block email sending
+    console.error('Telegram sending failed:', error);
+    return { success: false, error };
   }
 }
 
@@ -94,6 +106,18 @@ function isValidPhoneNumber(phone: string): boolean {
 
 export async function POST(request: NextRequest) {
   try {
+    // Log environment variables (without sensitive values)
+    console.log('Environment check:', {
+      hasSmtpHost: !!process.env.SMTP_HOST,
+      hasSmtpPort: !!process.env.SMTP_PORT,
+      hasSmtpUser: !!process.env.SMTP_USER,
+      hasSmtpPassword: !!process.env.SMTP_PASSWORD,
+      hasSmtpFrom: !!process.env.SMTP_FROM,
+      hasSmtpTo: !!process.env.SMTP_TO,
+      hasTelegramToken: !!process.env.TELEGRAM_BOT_TOKEN,
+      hasTelegramChatId: !!process.env.TELEGRAM_CHAT_ID,
+    });
+
     const { name, email, phone, company, service, budget, message } = await request.json();
 
     // Validate required fields
@@ -119,19 +143,40 @@ export async function POST(request: NextRequest) {
 
     const formData = { name, email, phone, company, service, budget, message };
 
-    // Send Telegram notification (non-blocking)
-    sendTelegramMessage(formData).catch(() => {});
+    // Send Telegram notification with error logging
+    const telegramResult = await sendTelegramMessage(formData);
+    if (!telegramResult.success) {
+      console.error('Telegram failed:', telegramResult.error);
+    }
 
-    // Create email transporter
+    // Verify email environment variables
+    if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+      console.error('Missing email configuration');
+      return NextResponse.json({ error: 'Email configuration error' }, { status: 500 });
+    }
+
+    // Create email transporter with better error handling
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT),
-      secure: false,
+      secure: false, // true for 465, false for other ports
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized: false, // For Gmail
+      },
     });
+
+    // Verify transporter configuration
+    try {
+      await transporter.verify();
+      console.log('SMTP connection verified');
+    } catch (verifyError) {
+      console.error('SMTP verification failed:', verifyError);
+      return NextResponse.json({ error: 'Email service configuration error' }, { status: 500 });
+    }
 
     // Format service name
     const serviceName = service
@@ -280,11 +325,21 @@ export async function POST(request: NextRequest) {
       `,
     };
 
-    // Send emails (non-blocking)
-    Promise.all([transporter.sendMail(adminMailOptions), transporter.sendMail(customerMailOptions)]).catch(() => {});
+    // Send emails with error handling
+    try {
+      await Promise.all([
+        transporter.sendMail(adminMailOptions),
+        transporter.sendMail(customerMailOptions),
+      ]);
+      console.log('Emails sent successfully');
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      return NextResponse.json({ error: 'Failed to send emails' }, { status: 500 });
+    }
 
     return NextResponse.json({ success: true, message: 'Message sent successfully!' }, { status: 200 });
   } catch (error) {
+    console.error('Contact form error:', error);
     return NextResponse.json({ error: 'Failed to send message. Please try again.' }, { status: 500 });
   }
 }
