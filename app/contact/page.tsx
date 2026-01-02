@@ -422,7 +422,7 @@ export default function ContactPage() {
                       <p className="text-muted-foreground text-sm leading-relaxed">
                         We value your time. Our team responds to all inquiries within 24 hours during business days. For
                         urgent matters, please call us directly at{' '}
-                        <span className="text-primary font-medium">+91 9318454571</span>.
+                        <span className="text-primary font-medium">+91 9004569903</span>.
                       </p>
                     </div>
                   </CardContent>
