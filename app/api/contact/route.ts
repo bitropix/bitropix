@@ -83,7 +83,6 @@ Received: ${new Date().toLocaleString('en-IN', {
       return { success: false, error: data };
     }
 
-    console.log('Telegram message sent successfully');
     return { success: true };
   } catch (error) {
     console.error('Telegram sending failed:', error);
@@ -106,18 +105,6 @@ function isValidPhoneNumber(phone: string): boolean {
 
 export async function POST(request: NextRequest) {
   try {
-    // Log environment variables (without sensitive values)
-    console.log('Environment check:', {
-      hasSmtpHost: !!process.env.SMTP_HOST,
-      hasSmtpPort: !!process.env.SMTP_PORT,
-      hasSmtpUser: !!process.env.SMTP_USER,
-      hasSmtpPassword: !!process.env.SMTP_PASSWORD,
-      hasSmtpFrom: !!process.env.SMTP_FROM,
-      hasSmtpTo: !!process.env.SMTP_TO,
-      hasTelegramToken: !!process.env.TELEGRAM_BOT_TOKEN,
-      hasTelegramChatId: !!process.env.TELEGRAM_CHAT_ID,
-    });
-
     const { name, email, phone, company, service, budget, message } = await request.json();
 
     // Validate required fields
@@ -172,7 +159,6 @@ export async function POST(request: NextRequest) {
     // Verify transporter configuration
     try {
       await transporter.verify();
-      console.log('SMTP connection verified');
     } catch (verifyError) {
       console.error('SMTP verification failed:', verifyError);
       return NextResponse.json({ error: 'Email service configuration error' }, { status: 500 });
@@ -327,11 +313,7 @@ export async function POST(request: NextRequest) {
 
     // Send emails with error handling
     try {
-      await Promise.all([
-        transporter.sendMail(adminMailOptions),
-        transporter.sendMail(customerMailOptions),
-      ]);
-      console.log('Emails sent successfully');
+      await Promise.all([transporter.sendMail(adminMailOptions), transporter.sendMail(customerMailOptions)]);
     } catch (emailError) {
       console.error('Email sending failed:', emailError);
       return NextResponse.json({ error: 'Failed to send emails' }, { status: 500 });

@@ -113,26 +113,13 @@ export default function ContactPage() {
       }
 
       // Show success toast
-      toast.success(
-        (t) => (
-          <div className="flex items-start gap-3">
-            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
-            <div>
-              <p className="font-semibold text-gray-900">Message sent successfully!</p>
-              <p className="mt-1 text-sm text-gray-600">We'll get back to you within 24 hours.</p>
-            </div>
+      toast.success((t) => (
+        <div className="flex items-start gap-3">
+          <div>
+            <p className="font-semibold text-gray-900">Message sent successfully!</p>
           </div>
-        ),
-        {
-          duration: 5000,
-          style: {
-            background: '#fff',
-            padding: '16px',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-          },
-        }
-      );
+        </div>
+      ));
 
       // Reset form
       setFormState({
@@ -152,12 +139,8 @@ export default function ContactPage() {
       toast.error(
         (t) => (
           <div className="flex items-start gap-3">
-            <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
             <div>
               <p className="font-semibold text-gray-900">Failed to send message</p>
-              <p className="mt-1 text-sm text-gray-600">
-                {err instanceof Error ? err.message : 'Please try again or contact us directly.'}
-              </p>
             </div>
           </div>
         ),
