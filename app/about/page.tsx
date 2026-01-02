@@ -61,7 +61,7 @@ const milestones = [
 const team = [
   {
     name: 'Arunendrra Ganguly',
-    role: 'Founder & CEO',
+    role: 'CEO',
     bio: '18+ years in Data platform and Digital transformation.',
   },
   {
@@ -71,12 +71,12 @@ const team = [
   },
   {
     name: 'Kapil Sinha',
-    role: 'Head of Design',
+    role: 'COO',
     bio: 'Designer with passion for user experience.',
   },
   {
     name: 'Gaurav Kushwaha',
-    role: 'Head of Delivery',
+    role: 'CMO',
     bio: 'Driving seamless delivery through strategy and execution.',
   },
 ];
@@ -114,7 +114,7 @@ export default function AboutPage() {
                 </p>
               </div>
               <div className="relative">
-                <div className="border-border/50 aspect-4/3 overflow-hidden rounded border">
+                <div className="border-border aspect-4/3 overflow-hidden rounded border">
                   <img
                     src="/diverse-team-of-professionals-collaborating-in-mod.jpg"
                     alt="Bitropix Team"
@@ -162,7 +162,7 @@ export default function AboutPage() {
                   </p>
                 </div>
               </div>
-              <div className="bg-card/30 border-border/50 group hover:border-primary/30 relative overflow-hidden rounded border p-8 transition-colors">
+              <div className="bg-card/30 border-border group hover:border-primary/30 relative overflow-hidden rounded border p-8 transition-colors">
                 <div className="bg-accent/5 group-hover:bg-accent/10 absolute top-0 right-0 h-32 w-32 rounded-full blur-3xl transition-colors" />
                 <div className="relative">
                   <div className="from-primary/20 to-primary/5 mb-6 flex h-14 w-14 items-center justify-center rounded bg-linear-to-br">
@@ -215,7 +215,7 @@ export default function AboutPage() {
               <div className="space-y-12">
                 {milestones.map((milestone, index) => (
                   <div
-                    key={milestone.year}
+                    key={`${milestone.year}-${index}`}
                     className={`flex flex-col items-center gap-8 md:flex-row ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
                   >
                     <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
@@ -246,7 +246,7 @@ export default function AboutPage() {
               {team.map((member) => (
                 <Card
                   key={member.name}
-                  className="bg-card/30 border-border/50 hover:border-primary/30 group text-center transition-all duration-300"
+                  className="bg-card/30 border-border hover:border-primary/30 group text-center transition-all duration-300"
                 >
                   <CardContent className="pt-8">
                     <div className="from-primary/20 to-accent/20 group-hover:from-primary/30 group-hover:to-accent/30 mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-br transition-all">

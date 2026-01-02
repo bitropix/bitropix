@@ -199,7 +199,7 @@ export default function CareersPage() {
                   ))}
                 </div>
               </div>
-              <div className="border-border/50 aspect-[4/3] overflow-hidden rounded border">
+              <div className="border-border aspect-[4/3] overflow-hidden rounded border">
                 <img
                   src="/team-collaboration-in-modern-startup-office-space.jpg"
                   alt="Team collaboration"
@@ -224,7 +224,7 @@ export default function CareersPage() {
               {benefits.map((benefit) => (
                 <div
                   key={benefit.title}
-                  className="bg-card/30 border-border/50 hover:border-primary/30 group flex gap-4 rounded border p-6 transition-all duration-300"
+                  className="bg-card/30 border-border hover:border-primary/30 group flex gap-4 rounded border p-6 transition-all duration-300"
                 >
                   <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 flex h-12 w-12 shrink-0 items-center justify-center rounded bg-gradient-to-br transition-all">
                     <benefit.icon className="text-primary h-6 w-6" />
@@ -252,7 +252,7 @@ export default function CareersPage() {
               {openings.map((job) => (
                 <Card
                   key={job.id}
-                  className="bg-card/30 border-border/50 hover:border-primary/30 hover:shadow-primary/5 transition-all duration-300 hover:shadow-lg"
+                  className="bg-card/30 border-border hover:border-primary/30 hover:shadow-primary/5 transition-all duration-300 hover:shadow-lg"
                 >
                   <CardHeader>
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -289,7 +289,7 @@ export default function CareersPage() {
                       {job.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="bg-secondary/50 border-border/50 text-foreground rounded-full border px-3 py-1 text-sm"
+                          className="bg-secondary/50 border-border text-foreground rounded-full border px-3 py-1 text-sm"
                         >
                           {skill}
                         </span>

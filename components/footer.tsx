@@ -146,7 +146,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-border/50 mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
+        <div className="border-border mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
           <p className="text-muted-foreground text-sm">&copy; 2025 Bitropix. All rights reserved.</p>
           <div className="flex gap-6">
             <Link
@@ -155,12 +155,12 @@ export function Footer() {
             >
               Privacy Policy
             </Link>
-            <Link
+            {/* <Link
               href="/terms"
               className="text-muted-foreground hover:text-primary text-sm transition-colors duration-300"
             >
               Terms of Service
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

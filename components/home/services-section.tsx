@@ -69,7 +69,7 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <Card
               key={service.title}
-              className="group bg-card/50 border-border/50 hover:border-primary/50 hover:shadow-primary/5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-lg"
+              className="group bg-card/50 border-border hover:border-primary/50 hover:shadow-primary/5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-lg"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <CardHeader>

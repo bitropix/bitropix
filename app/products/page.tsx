@@ -123,14 +123,14 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        <section className="border-border/50 border-b py-12">
+        <section className="border-border border-b py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-6 md:grid-cols-3">
               {products.map((product) => (
                 <Link
                   key={product.id}
                   href={`#${product.id}`}
-                  className="bg-card/30 border-border/50 hover:border-primary/30 hover:bg-card/50 group flex items-center gap-4 rounded border p-4 transition-all duration-300"
+                  className="bg-card/30 border-border hover:border-primary/30 hover:bg-card/50 group flex items-center gap-4 rounded border p-4 transition-all duration-300"
                 >
                   <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 flex h-12 w-12 items-center justify-center rounded bg-gradient-to-br transition-all">
                     <product.icon className="text-primary h-6 w-6" />
@@ -207,7 +207,7 @@ export default function ProductsPage() {
                   </div>
                 </div>
 
-                <div className="bg-card/30 border-border/50 aspect-video overflow-hidden rounded border">
+                <div className="bg-card/30 border-border aspect-video overflow-hidden rounded border">
                   <img
                     src={`/.jpg?height=400&width=600&query=${product.title} software dashboard dark`}
                     alt={`${product.title} Dashboard`}
@@ -222,7 +222,7 @@ export default function ProductsPage() {
                   {product.features.map((feature) => (
                     <Card
                       key={feature.title}
-                      className="bg-card/30 border-border/50 hover:border-primary/30 group transition-all duration-300"
+                      className="bg-card/30 border-border hover:border-primary/30 group transition-all duration-300"
                     >
                       <CardHeader className="pb-2">
                         <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 mb-3 flex h-10 w-10 items-center justify-center rounded bg-gradient-to-br transition-all">

@@ -31,7 +31,7 @@ export function WhyUsSection() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="relative">
-            <div className="border-border/50 relative aspect-[4/3] overflow-hidden rounded border">
+            <div className="border-border relative aspect-[4/3] overflow-hidden rounded border">
               <img
                 src="/professional-team-meeting-in-modern-office-discuss.jpg"
                 alt="Our team at work"

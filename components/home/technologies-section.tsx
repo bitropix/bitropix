@@ -40,7 +40,7 @@ export function TechnologiesSection() {
           {technologies.map((tech, index) => (
             <div
               key={tech.name}
-              className="bg-card/50 border-border/50 hover:border-primary/50 hover:bg-primary/10 group cursor-default rounded-full border px-6 py-3 backdrop-blur-sm transition-all duration-300"
+              className="bg-card/50 border-border hover:border-primary/50 hover:bg-primary/10 group cursor-default rounded-full border px-6 py-3 backdrop-blur-sm transition-all duration-300"
             >
               <span className="text-foreground group-hover:text-primary font-medium transition-colors">
                 {tech.name}

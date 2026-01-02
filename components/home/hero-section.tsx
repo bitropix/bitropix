@@ -90,7 +90,7 @@ export function HeroSection() {
             <div className="relative mx-auto aspect-square max-w-lg">
               {/* linear background card */}
               <div className="from-primary/20 to-accent/20 animate-float absolute inset-0 rotate-6 rounded bg-linear-to-br" />
-              <div className="border-border/50 bg-secondary/50 absolute inset-0 overflow-hidden rounded border backdrop-blur-sm">
+              <div className="border-border bg-secondary/50 absolute inset-0 overflow-hidden rounded border backdrop-blur-sm">
                 <img
                   src="/modern-office-team-working-on-computers-with-code-.jpg"
                   alt="Team working on innovative solutions"
@@ -101,7 +101,7 @@ export function HeroSection() {
               </div>
 
               {/* Floating card */}
-              <div className="bg-card border-border/50 animate-slide-up absolute -bottom-6 -left-6 rounded border p-4 backdrop-blur-sm delay-500">
+              <div className="bg-card border-border animate-slide-up absolute -bottom-6 -left-6 rounded border p-4 backdrop-blur-sm delay-500">
                 <div className="flex items-center gap-3">
                   <div className="from-primary to-accent flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br">
                     <span className="text-primary-foreground text-xl font-bold">98%</span>

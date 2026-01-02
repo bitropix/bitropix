@@ -23,7 +23,7 @@ export function Navbar() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <nav className="bg-background/80 border-border/50 fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-xl">
+    <nav className="bg-background/80 border-border fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="group flex items-center gap-3">
@@ -66,7 +66,7 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="border-border/50 animate-fade-in from-background to-secondary/50 border-t bg-linear-to-b py-4 md:hidden">
+          <div className="border-border animate-fade-in from-background to-secondary/50 border-t bg-linear-to-b py-4 md:hidden">
             <div className="flex flex-col gap-4">
               {navLinks.map((link, index) => (
                 <Link

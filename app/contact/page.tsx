@@ -115,13 +115,13 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="border-border/50 border-b py-12">
+        <section className="border-border border-b py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {contactInfo.map((info) => (
                 <Card
                   key={info.title}
-                  className="bg-card/30 border-border/50 hover:border-primary/30 group transition-all duration-300"
+                  className="bg-card/30 border-border hover:border-primary/30 group transition-all duration-300"
                 >
                   <CardContent className="pt-6">
                     <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded bg-linear-to-br transition-all">
@@ -163,7 +163,7 @@ export default function ContactPage() {
                         required
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        className="bg-card/30 border-border/50 focus:border-primary/50"
+                        className="bg-card/30 border-border focus:border-primary/50"
                       />
                     </div>
                     <div className="space-y-2">
@@ -177,7 +177,7 @@ export default function ContactPage() {
                         required
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                        className="bg-card/30 border-border/50 focus:border-primary/50"
+                        className="bg-card/30 border-border focus:border-primary/50"
                       />
                     </div>
                   </div>
@@ -193,7 +193,7 @@ export default function ContactPage() {
                         placeholder="+91 98765 43210"
                         value={formState.phone}
                         onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
-                        className="bg-card/30 border-border/50 focus:border-primary/50"
+                        className="bg-card/30 border-border focus:border-primary/50"
                       />
                     </div>
                     <div className="space-y-2">
@@ -205,7 +205,7 @@ export default function ContactPage() {
                         placeholder="Your Company"
                         value={formState.company}
                         onChange={(e) => setFormState({ ...formState, company: e.target.value })}
-                        className="bg-card/30 border-border/50 focus:border-primary/50"
+                        className="bg-card/30 border-border focus:border-primary/50"
                       />
                     </div>
                   </div>
@@ -220,7 +220,7 @@ export default function ContactPage() {
                         value={formState.service}
                         onValueChange={(value) => setFormState({ ...formState, service: value })}
                       >
-                        <SelectTrigger className="bg-card/30 border-border/50">
+                        <SelectTrigger className="bg-card/30 border-border">
                           <SelectValue placeholder="Select a service" />
                         </SelectTrigger>
                         <SelectContent>
@@ -240,7 +240,7 @@ export default function ContactPage() {
                         value={formState.budget}
                         onValueChange={(value) => setFormState({ ...formState, budget: value })}
                       >
-                        <SelectTrigger className="bg-card/30 border-border/50">
+                        <SelectTrigger className="bg-card/30 border-border">
                           <SelectValue placeholder="Select budget" />
                         </SelectTrigger>
                         <SelectContent>
@@ -265,7 +265,7 @@ export default function ContactPage() {
                       required
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      className="bg-card/30 border-border/50 focus:border-primary/50"
+                      className="bg-card/30 border-border focus:border-primary/50"
                     />
                   </div>
 
@@ -280,7 +280,7 @@ export default function ContactPage() {
               </div>
 
               <div>
-                {/* <div className="aspect-video rounded overflow-hidden bg-card/30 border border-border/50 mb-8">
+                {/* <div className="aspect-video rounded overflow-hidden bg-card/30 border border-border mb-8">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.5965547633966!2d77.6309395!3d12.9279232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1490fd4b1671%3A0x7b6e3e9b0d7e8d5e!2sHSR%20Layout%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1702900000000!5m2!1sen!2sin"
                     width="100%"
@@ -293,7 +293,7 @@ export default function ContactPage() {
                   />
                 </div> */}
 
-                <Card className="bg-card/30 border-border/50">
+                <Card className="bg-card/30 border-border">
                   <CardContent className="pt-6">
                     <h3 className="text-foreground mb-4 font-semibold">Connect With Us</h3>
                     <p className="text-muted-foreground mb-6 text-sm">
@@ -353,7 +353,7 @@ export default function ContactPage() {
               ].map((faq) => (
                 <Card
                   key={faq.q}
-                  className="bg-card/30 border-border/50 hover:border-primary/30 transition-all duration-300"
+                  className="bg-card/30 border-border hover:border-primary/30 transition-all duration-300"
                 >
                   <CardContent className="pt-6">
                     <h3 className="text-foreground mb-2 font-semibold">{faq.q}</h3>

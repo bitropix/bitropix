@@ -30,7 +30,7 @@ const steps = [
 export function ProcessSection() {
   return (
     <section className="relative overflow-hidden py-20">
-      <div className="from-primary/5 to-accent/5 absolute inset-0 bg-gradient-to-r via-transparent" />
+      <div className="from-primary/5 to-accent/5 absolute inset-0 bg-linear-to-r via-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
@@ -46,12 +46,12 @@ export function ProcessSection() {
             <div key={step.number} className="group relative">
               {/* Connecting line */}
               {index < steps.length - 1 && (
-                <div className="from-border absolute top-12 left-full z-0 hidden h-0.5 w-full -translate-x-1/2 bg-gradient-to-r to-transparent lg:block" />
+                <div className="from-border absolute top-12 left-full z-0 hidden h-0.5 w-full -translate-x-1/2 bg-linear-to-r to-transparent lg:block" />
               )}
               <div className="relative z-10 text-center">
-                <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 relative mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br transition-all duration-500">
+                <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 relative mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-br transition-all duration-500">
                   <step.icon className="text-primary h-10 w-10" />
-                  <span className="from-primary to-accent text-primary-foreground shadow-primary/20 absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br text-sm font-bold shadow-lg">
+                  <span className="from-primary to-accent text-primary-foreground shadow-primary/20 absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br text-sm font-bold shadow-lg">
                     {step.number}
                   </span>
                 </div>

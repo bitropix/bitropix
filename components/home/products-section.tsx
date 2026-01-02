@@ -50,7 +50,7 @@ export function ProductsSection() {
           {products.map((product, index) => (
             <Card
               key={product.title}
-              className="bg-card/30 border-border/50 hover:border-primary/30 hover:bg-card/50 group backdrop-blur-sm transition-all duration-500"
+              className="bg-card/30 border-border hover:border-primary/30 hover:bg-card/50 group backdrop-blur-sm transition-all duration-500"
             >
               <CardHeader>
                 <div className="from-primary/30 to-accent/20 group-hover:from-primary/40 group-hover:to-accent/30 mb-4 flex h-14 w-14 items-center justify-center rounded bg-gradient-to-br transition-all duration-500">

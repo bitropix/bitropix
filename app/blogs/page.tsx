@@ -117,7 +117,7 @@ export default function BlogsPage() {
           </div>
         </section>
 
-        <section className="border-border/50 border-b py-8">
+        <section className="border-border border-b py-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap justify-center gap-3">
               {categories.map((category, index) => (
@@ -126,7 +126,7 @@ export default function BlogsPage() {
                   className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                     index === 0
                       ? 'bg-primary text-primary-foreground shadow-primary/25 shadow-lg'
-                      : 'bg-card/50 border-border/50 text-foreground hover:bg-primary/10 hover:border-primary/30 border'
+                      : 'bg-card/50 border-border text-foreground hover:bg-primary/10 hover:border-primary/30 border'
                   }`}
                 >
                   {category}
@@ -140,7 +140,7 @@ export default function BlogsPage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-foreground mb-8 text-2xl font-bold">Featured Article</h2>
             <Link href={`/blogs/${featuredPost.slug}`} className="group block">
-              <Card className="bg-card/30 border-border/50 hover:border-primary/30 hover:shadow-primary/5 overflow-hidden transition-all duration-300 hover:shadow-lg">
+              <Card className="bg-card/30 border-border hover:border-primary/30 hover:shadow-primary/5 overflow-hidden transition-all duration-300 hover:shadow-lg">
                 <div className="grid md:grid-cols-2">
                   <div className="aspect-video overflow-hidden md:aspect-auto md:h-full">
                     <img
@@ -183,7 +183,7 @@ export default function BlogsPage() {
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {blogPosts.map((post) => (
                 <Link key={post.id} href={`/blogs/${post.slug}`} className="group">
-                  <Card className="bg-card/30 border-border/50 hover:border-primary/30 hover:shadow-primary/5 h-full overflow-hidden transition-all duration-300 hover:shadow-lg">
+                  <Card className="bg-card/30 border-border hover:border-primary/30 hover:shadow-primary/5 h-full overflow-hidden transition-all duration-300 hover:shadow-lg">
                     <div className="aspect-video overflow-hidden">
                       <img
                         src={post.image || '/placeholder.svg'}

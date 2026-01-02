@@ -212,7 +212,7 @@ export default function ServicesPage() {
                         {service.technologies.map((tech) => (
                           <span
                             key={tech}
-                            className="bg-card/50 border-border/50 text-foreground rounded-full border px-3 py-1 text-sm"
+                            className="bg-card/50 border-border text-foreground rounded-full border px-3 py-1 text-sm"
                           >
                             {tech}
                           </span>
@@ -231,7 +231,7 @@ export default function ServicesPage() {
                   </div>
 
                   <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                    <div className="bg-card/30 border-border/50 group relative aspect-4/3 overflow-hidden rounded border">
+                    <div className="bg-card/30 border-border group relative aspect-4/3 overflow-hidden rounded border">
                       <div className="from-primary/10 absolute inset-0 bg-linear-to-br to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       <Image
                         src={service.image}

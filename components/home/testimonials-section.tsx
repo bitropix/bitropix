@@ -11,7 +11,7 @@ const testimonials = [
   },
   {
     name: 'Sachin Sharma',
-    role: 'CTO, FinanceFlow',
+    role: 'Founder, Advancedbeauty.in',
     content:
       'An absolute pleasure to work with! The professionalism, creativity, and attention to detail were exceptional. From understanding my preferences to delivering flawless hair and makeup at my doorstep, the entire experience was seamless and stress-free. Truly talented, punctual, and highly skilled—I couldn’t have asked for a better artist.',
     rating: 5,
@@ -44,7 +44,7 @@ export function TestimonialsSection() {
           {testimonials.map((testimonial) => (
             <Card
               key={testimonial.name}
-              className="bg-card/50 border-border/50 hover:border-primary/30 group relative backdrop-blur-sm transition-all duration-300"
+              className="bg-card/50 border-border hover:border-primary/30 group relative backdrop-blur-sm transition-all duration-300"
             >
               <CardContent className="pt-8">
                 <Quote className="text-primary/20 group-hover:text-primary/30 absolute top-6 right-6 h-8 w-8 transition-colors" />
