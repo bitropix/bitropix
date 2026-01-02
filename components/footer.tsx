@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Instagram } from 'lucide-react';
 
 const footerLinks = {
   services: [
@@ -49,16 +49,20 @@ export function Footer() {
               Transforming businesses through innovative IT solutions. Your trusted partner for digital transformation.
             </p>
             <div className="flex gap-4">
-              {[Linkedin, Twitter, Facebook, Instagram].map((Icon, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="bg-secondary/50 text-muted-foreground hover:text-primary hover:bg-primary/10 flex h-10 w-10 items-center justify-center rounded transition-all duration-300"
-                  aria-label="Social link"
-                >
-                  <Icon className="h-5 w-5" />
-                </a>
-              ))}
+              <a
+                href="https://www.linkedin.com/company/bitropix/about/"
+                className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-accent hover:text-primary-foreground flex h-10 w-10 items-center justify-center rounded bg-linear-to-br transition-all duration-300"
+                aria-label="Social link"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a
+                href="https://www.instagram.com/bitropix/"
+                className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-accent hover:text-primary-foreground flex h-10 w-10 items-center justify-center rounded bg-linear-to-br transition-all duration-300"
+                aria-label="Social link"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
             </div>
           </div>
 

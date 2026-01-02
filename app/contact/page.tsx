@@ -3,6 +3,7 @@
 import type React from 'react';
 
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
@@ -11,7 +12,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Mail, Phone, MapPin, Clock, MessageSquare, Linkedin, Twitter, Facebook, CheckCircle2 } from 'lucide-react';
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  MessageSquare,
+  Linkedin,
+  Instagram,
+  CheckCircle2,
+  XCircle,
+  Send,
+} from 'lucide-react';
 
 const contactInfo = [
   {
@@ -27,7 +39,7 @@ const contactInfo = [
   {
     icon: MapPin,
     title: 'Visit Us',
-    details: ['Noida, Uttar Pardesh'],
+    details: ['Noida, Uttar Pradesh'],
   },
   {
     icon: Clock,
@@ -60,41 +72,109 @@ export default function ContactPage() {
     budget: '',
     message: '',
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
-  };
+    setIsLoading(true);
 
-  if (isSubmitted) {
-    return (
-      <>
-        <Navbar />
-        <main className="relative flex min-h-screen items-center justify-center overflow-hidden pt-16">
-          <div className="from-primary/10 via-background to-accent/5 absolute inset-0 bg-linear-to-br" />
-          <div className="bg-primary/10 absolute top-20 right-20 h-75 w-75 rounded-full blur-[100px]" />
-          <div className="relative px-4 text-center">
-            <div className="from-primary/20 to-primary/5 mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br">
-              <CheckCircle2 className="text-primary h-10 w-10" />
+    // Client-side validation
+    if (formState.name.trim().length < 2) {
+      toast.error('Name must be at least 2 characters long');
+      setIsLoading(false);
+      return;
+    }
+
+    if (formState.message.trim().length < 10) {
+      toast.error('Please provide more details about your project (at least 10 characters)');
+      setIsLoading(false);
+      return;
+    }
+
+    // Show loading toast
+    const loadingToast = toast.loading('Sending your message...');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const data = await response.json();
+
+      // Dismiss loading toast
+      toast.dismiss(loadingToast);
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
+      // Show success toast
+      toast.success(
+        (t) => (
+          <div className="flex items-start gap-3">
+            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+            <div>
+              <p className="font-semibold text-gray-900">Message sent successfully!</p>
+              <p className="mt-1 text-sm text-gray-600">We'll get back to you within 24 hours.</p>
             </div>
-            <h1 className="text-foreground mb-4 text-3xl font-bold">Thank You!</h1>
-            <p className="text-muted-foreground mb-8 max-w-md">
-              We've received your message and will get back to you within 24 hours. Our team is excited to learn more
-              about your project!
-            </p>
-            <Button
-              onClick={() => setIsSubmitted(false)}
-              className="bg-primary hover:bg-primary/90 transition-all duration-300"
-            >
-              Send Another Message
-            </Button>
           </div>
-        </main>
-        <Footer />
-      </>
-    );
-  }
+        ),
+        {
+          duration: 5000,
+          style: {
+            background: '#fff',
+            padding: '16px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          },
+        }
+      );
+
+      // Reset form
+      setFormState({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        service: '',
+        budget: '',
+        message: '',
+      });
+    } catch (err) {
+      // Dismiss loading toast
+      toast.dismiss(loadingToast);
+
+      // Show error toast
+      toast.error(
+        (t) => (
+          <div className="flex items-start gap-3">
+            <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
+            <div>
+              <p className="font-semibold text-gray-900">Failed to send message</p>
+              <p className="mt-1 text-sm text-gray-600">
+                {err instanceof Error ? err.message : 'Please try again or contact us directly.'}
+              </p>
+            </div>
+          </div>
+        ),
+        {
+          duration: 5000,
+          style: {
+            background: '#fff',
+            padding: '16px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          },
+        }
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -105,7 +185,7 @@ export default function ContactPage() {
           <div className="bg-primary/10 absolute right-0 bottom-0 h-125 w-125 rounded-full blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
             <p className="text-primary mb-2 font-semibold">Get In Touch</p>
-            <h1 className="text-foreground mb-6 text-4xl font-bold text-balance sm:text-5xl">
+            <h1 className="text-foreground mb-6 text-4xl font-bold sm:text-5xl">
               Let's Build Something Great Together
             </h1>
             <p className="text-muted-foreground mx-auto max-w-3xl text-lg">
@@ -142,11 +222,11 @@ export default function ContactPage() {
 
         <section className="py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-12 lg:grid-cols-2">
-              <div>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <Card className="bg-card/30 border-border border-2 p-6 transition-all duration-300">
                 <div className="mb-8">
-                  <h2 className="text-foreground mb-2 text-2xl font-bold">Send Us a Message</h2>
-                  <p className="text-muted-foreground">
+                  <h2 className="text-foreground mb-3 text-3xl font-bold">Send Us a Message</h2>
+                  <p className="text-muted-foreground text-base">
                     Fill out the form below and we'll get back to you within 24 hours.
                   </p>
                 </div>
@@ -154,8 +234,8 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="name" className="text-foreground">
-                        Full Name *
+                      <Label htmlFor="name" className="text-foreground text-sm font-medium">
+                        Full Name <span className="text-red-500">*</span>
                       </Label>
                       <Input
                         id="name"
@@ -163,12 +243,13 @@ export default function ContactPage() {
                         required
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        className="bg-card/30 border-border focus:border-primary/50"
+                        className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 border-2 transition-all focus:ring-2"
+                        minLength={2}
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="text-foreground">
-                        Email Address *
+                      <Label htmlFor="email" className="text-foreground text-sm font-medium">
+                        Email Address <span className="text-red-500">*</span>
                       </Label>
                       <Input
                         id="email"
@@ -177,14 +258,14 @@ export default function ContactPage() {
                         required
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                        className="bg-card/30 border-border focus:border-primary/50"
+                        className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 border-2 transition-all focus:ring-2"
                       />
                     </div>
                   </div>
 
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="phone" className="text-foreground">
+                      <Label htmlFor="phone" className="text-foreground text-sm font-medium">
                         Phone Number
                       </Label>
                       <Input
@@ -193,11 +274,11 @@ export default function ContactPage() {
                         placeholder="+91 98765 43210"
                         value={formState.phone}
                         onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
-                        className="bg-card/30 border-border focus:border-primary/50"
+                        className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 border-2 transition-all focus:ring-2"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="company" className="text-foreground">
+                      <Label htmlFor="company" className="text-foreground text-sm font-medium">
                         Company Name
                       </Label>
                       <Input
@@ -205,22 +286,22 @@ export default function ContactPage() {
                         placeholder="Your Company"
                         value={formState.company}
                         onChange={(e) => setFormState({ ...formState, company: e.target.value })}
-                        className="bg-card/30 border-border focus:border-primary/50"
+                        className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 border-2 transition-all focus:ring-2"
                       />
                     </div>
                   </div>
 
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div className="space-y-2">
-                      <Label htmlFor="service" className="text-foreground">
-                        Service Interested In *
+                      <Label htmlFor="service" className="text-foreground text-sm font-medium">
+                        Service Interested In <span className="text-red-500">*</span>
                       </Label>
                       <Select
                         required
                         value={formState.service}
                         onValueChange={(value) => setFormState({ ...formState, service: value })}
                       >
-                        <SelectTrigger className="bg-card/30 border-border">
+                        <SelectTrigger className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 w-full border-2 transition-all focus:ring-2">
                           <SelectValue placeholder="Select a service" />
                         </SelectTrigger>
                         <SelectContent>
@@ -233,14 +314,14 @@ export default function ContactPage() {
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="budget" className="text-foreground">
+                      <Label htmlFor="budget" className="text-foreground text-sm font-medium">
                         Budget Range
                       </Label>
                       <Select
                         value={formState.budget}
                         onValueChange={(value) => setFormState({ ...formState, budget: value })}
                       >
-                        <SelectTrigger className="bg-card/30 border-border">
+                        <SelectTrigger className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 w-full border-2 transition-all focus:ring-2">
                           <SelectValue placeholder="Select budget" />
                         </SelectTrigger>
                         <SelectContent>
@@ -255,75 +336,123 @@ export default function ContactPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message" className="text-foreground">
-                      Project Details *
+                    <Label htmlFor="message" className="text-foreground text-sm font-medium">
+                      Project Details <span className="text-red-500">*</span>
                     </Label>
                     <Textarea
                       id="message"
                       placeholder="Tell us about your project requirements, timeline, and any specific needs..."
-                      rows={5}
+                      rows={6}
                       required
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      className="bg-card/30 border-border focus:border-primary/50"
+                      className="border-border bg-background focus:border-primary focus:ring-primary/20 h-40 resize-none border-2 transition-all focus:ring-2"
+                      minLength={10}
                     />
+                    <div className="flex items-center justify-between">
+                      <p className="text-muted-foreground text-xs">{formState.message.length}/10 characters minimum</p>
+                      <p className="text-muted-foreground text-xs">{formState.message.length}/500</p>
+                    </div>
                   </div>
 
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="bg-primary hover:bg-primary/90 hover:shadow-primary/25 w-full transition-all duration-300 hover:shadow-lg sm:w-auto"
-                  >
-                    <MessageSquare className="mr-2 h-4 w-4" /> Send Message
-                  </Button>
+                  <div className="flex justify-end pt-2">
+                    <Button
+                      type="submit"
+                      size="lg"
+                      disabled={isLoading}
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground hover:shadow-primary/25 h-12 w-full cursor-pointer px-8 text-base font-semibold shadow-lg transition-all duration-300 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                    >
+                      {isLoading ? (
+                        <>
+                          <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="mr-2 h-5 w-5" />
+                          Send Message
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </form>
-              </div>
-
-              <div>
-                {/* <div className="aspect-video rounded overflow-hidden bg-card/30 border border-border mb-8">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.5965547633966!2d77.6309395!3d12.9279232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1490fd4b1671%3A0x7b6e3e9b0d7e8d5e!2sHSR%20Layout%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1702900000000!5m2!1sen!2sin"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0, filter: "invert(90%) hue-rotate(180deg)" }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Bitropix Office Location"
-                  />
-                </div> */}
-
-                <Card className="bg-card/30 border-border">
+              </Card>
+              <div className="space-y-6">
+                <Card className="bg-card/30 border-border hover:border-primary/30 border-2 transition-all duration-300">
                   <CardContent className="pt-6">
-                    <h3 className="text-foreground mb-4 font-semibold">Connect With Us</h3>
-                    <p className="text-muted-foreground mb-6 text-sm">
+                    <h3 className="text-foreground mb-4 text-lg font-semibold">Connect With Us</h3>
+                    <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
                       Follow us on social media to stay updated with our latest projects, insights, and company news.
                     </p>
                     <div className="flex gap-4">
-                      {[Linkedin, Twitter, Facebook].map((Icon, index) => (
-                        <a
-                          key={index}
-                          href="#"
-                          className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-accent hover:text-primary-foreground flex h-10 w-10 items-center justify-center rounded bg-linear-to-br transition-all duration-300"
-                          aria-label="Social link"
-                        >
-                          <Icon className="h-5 w-5" />
-                        </a>
-                      ))}
+                      <a
+                        href="https://www.linkedin.com/company/bitropix/about/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-primary/90 flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-br transition-all duration-300 hover:scale-110 hover:text-white hover:shadow-lg"
+                        aria-label="LinkedIn"
+                      >
+                        <Linkedin className="h-5 w-5" />
+                      </a>
+                      <a
+                        href="https://www.instagram.com/bitropix/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-primary/90 flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-br transition-all duration-300 hover:scale-110 hover:text-white hover:shadow-lg"
+                        aria-label="Instagram"
+                      >
+                        <Instagram className="h-5 w-5" />
+                      </a>
                     </div>
                   </CardContent>
                 </Card>
 
-                <div className="bg-card/30 border-primary/20 group relative mt-8 overflow-hidden rounded border p-6">
-                  <div className="bg-primary/5 group-hover:bg-primary/10 absolute top-0 right-0 h-20 w-20 rounded-full blur-2xl transition-colors" />
-                  <div className="relative">
-                    <h3 className="text-foreground mb-2 font-semibold">Quick Response Guarantee</h3>
-                    <p className="text-muted-foreground text-sm">
-                      We value your time. Our team responds to all inquiries within 24 hours during business days. For
-                      urgent matters, please call us directly.
-                    </p>
-                  </div>
-                </div>
+                <Card className="bg-card/30 border-primary/20 group hover:border-primary/40 overflow-hidden border-2 transition-all duration-300">
+                  <CardContent className="relative pt-6">
+                    <div className="bg-primary/5 group-hover:bg-primary/10 absolute top-0 right-0 h-24 w-24 rounded-full blur-2xl transition-all duration-300" />
+                    <div className="relative">
+                      <div className="mb-3 flex items-start gap-3">
+                        <div className="from-primary/20 to-primary/5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-br">
+                          <Clock className="text-primary h-5 w-5" />
+                        </div>
+                        <div>
+                          <h3 className="text-foreground text-base font-semibold">Quick Response Guarantee</h3>
+                        </div>
+                      </div>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        We value your time. Our team responds to all inquiries within 24 hours during business days. For
+                        urgent matters, please call us directly at{' '}
+                        <span className="text-primary font-medium">+91 9318454571</span>.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="from-primary/10 to-secondary/10 border-primary/20 border-2 bg-linear-to-br">
+                  <CardContent className="pt-6">
+                    <h3 className="text-foreground mb-3 text-base font-semibold">What Happens Next?</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <div className="bg-primary/20 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                          <span className="text-primary text-xs font-bold">1</span>
+                        </div>
+                        <p className="text-muted-foreground text-sm">We review your project details within 2 hours</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="bg-primary/20 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                          <span className="text-primary text-xs font-bold">2</span>
+                        </div>
+                        <p className="text-muted-foreground text-sm">Our expert gets in touch within 24 hours</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="bg-primary/20 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                          <span className="text-primary text-xs font-bold">3</span>
+                        </div>
+                        <p className="text-muted-foreground text-sm">We schedule a call to discuss your needs</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
@@ -353,11 +482,11 @@ export default function ContactPage() {
               ].map((faq) => (
                 <Card
                   key={faq.q}
-                  className="bg-card/30 border-border hover:border-primary/30 transition-all duration-300"
+                  className="bg-card/30 border-border hover:border-primary/30 border-2 transition-all duration-300 hover:shadow-lg"
                 >
                   <CardContent className="pt-6">
-                    <h3 className="text-foreground mb-2 font-semibold">{faq.q}</h3>
-                    <p className="text-muted-foreground text-sm">{faq.a}</p>
+                    <h3 className="text-foreground mb-3 text-base font-semibold">{faq.q}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{faq.a}</p>
                   </CardContent>
                 </Card>
               ))}
