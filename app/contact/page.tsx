@@ -372,7 +372,7 @@ export default function ContactPage() {
                         href="https://www.linkedin.com/company/bitropix/about/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-primary/90 flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-br transition-all duration-300 hover:scale-110 hover:text-white hover:shadow-lg"
+                        className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-primary/90 flex h-12 w-12 items-center justify-center rounded bg-linear-to-br transition-all duration-300 hover:scale-110 hover:text-white hover:shadow-lg"
                         aria-label="LinkedIn"
                       >
                         <Linkedin className="h-5 w-5" />
@@ -381,7 +381,7 @@ export default function ContactPage() {
                         href="https://www.instagram.com/bitropix/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-primary/90 flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-br transition-all duration-300 hover:scale-110 hover:text-white hover:shadow-lg"
+                        className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-primary/90 flex h-12 w-12 items-center justify-center rounded bg-linear-to-br transition-all duration-300 hover:scale-110 hover:text-white hover:shadow-lg"
                         aria-label="Instagram"
                       >
                         <Instagram className="h-5 w-5" />
@@ -395,7 +395,7 @@ export default function ContactPage() {
                     <div className="bg-primary/5 group-hover:bg-primary/10 absolute top-0 right-0 h-24 w-24 rounded-full blur-2xl transition-all duration-300" />
                     <div className="relative">
                       <div className="mb-3 flex items-start gap-3">
-                        <div className="from-primary/20 to-primary/5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-br">
+                        <div className="from-primary/20 to-primary/5 flex h-10 w-10 shrink-0 items-center justify-center rounded bg-linear-to-br">
                           <Clock className="text-primary h-5 w-5" />
                         </div>
                         <div>
