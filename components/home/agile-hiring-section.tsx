@@ -30,8 +30,8 @@ const checkpoints = [
 
 export function AgileHiringSection() {
   return (
-    <section className="relative overflow-hidden py-20">
-      <div className="from-primary/5 to-accent/5 absolute inset-0 bg-gradient-to-r via-transparent" />
+    <section className="relative overflow-hidden py-20 bg-primary/5">
+      {/* <div className="from-primary/10 to-accent/5 absolute inset-0 bg-linear-to-b via-transparent" /> */}
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">

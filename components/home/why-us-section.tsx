@@ -1,4 +1,7 @@
+'use client';
+
 import { Award, Zap, HeartHandshake, Lightbulb } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 const reasons = [
   {
@@ -24,20 +27,46 @@ const reasons = [
 ];
 
 export function WhyUsSection() {
-  return (
-    <section className="relative overflow-hidden py-20">
-      <div className="bg-primary/5 absolute top-1/2 right-0 h-[300px] w-[300px] -translate-y-1/2 rounded-full blur-[100px]" />
+  const [offsetY, setOffsetY] = useState(0);
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  useEffect(() => {
+    const handleScroll = () => {
+      setOffsetY(window.scrollY * 0.5);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <section 
+      className="relative overflow-hidden py-20"
+      style={{
+        backgroundImage: 'url(/professional-team-meeting-in-modern-office-discuss.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/60" />
+      
+      {/* Parallax background element */}
+      <div 
+        className="bg-primary/5 absolute top-1/2 right-0 h-[300px] w-[300px] -translate-y-1/2 rounded-full blur-[100px] z-10"
+        style={{ transform: `translateY(${offsetY}px)` }}
+      />
+
+      <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="relative">
             <div className="border-border relative aspect-[4/3] overflow-hidden rounded border">
               <img
                 src="/professional-team-meeting-in-modern-office-discuss.jpg"
                 alt="Our team at work"
-                className="h-full w-full object-cover opacity-70"
+                className="h-full w-full object-cover"
               />
-              <div className="from-background via-background/50 absolute inset-0 bg-gradient-to-t to-transparent" />
+              {/* <div className="from-background via-background/50 absolute inset-0 bg-gradient-to-t to-transparent" /> */}
             </div>
             {/* Floating stat card */}
             <div className="from-primary to-accent text-primary-foreground shadow-primary/20 absolute -right-6 -bottom-6 rounded bg-gradient-to-br p-6 shadow-lg">
@@ -48,10 +77,10 @@ export function WhyUsSection() {
 
           <div>
             <p className="text-primary mb-2 font-semibold">Why Choose Us</p>
-            <h2 className="text-foreground mb-6 text-3xl font-bold text-balance sm:text-4xl">
+            <h2 className="text-secondary mb-6 text-3xl font-bold text-balance sm:text-4xl">
               Your Trusted Technology Partner
             </h2>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-muted mb-8 leading-relaxed">
               We combine technical excellence with business acumen to deliver solutions that not only work but drive
               real business value.
             </p>
@@ -63,8 +92,8 @@ export function WhyUsSection() {
                     <reason.icon className="text-primary h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-foreground mb-1 font-semibold">{reason.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{reason.description}</p>
+                    <h3 className="text-primary mb-1 font-semibold">{reason.title}</h3>
+                    <p className="text-muted text-sm leading-relaxed">{reason.description}</p>
                   </div>
                 </div>
               ))}

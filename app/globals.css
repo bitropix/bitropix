@@ -3,44 +3,58 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Updated to dark theme as default with subtle gradient support */
+body {
+  background-color: var(--background);
+}
+
+/* Converted to LIGHT theme as default - clean, modern electronics store */
 :root {
-  /* Dark theme as default */
-  --background: oklch(0.1 0.01 250);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.14 0.01 250);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.12 0.01 250);
-  --popover-foreground: oklch(0.98 0 0);
-  /* Primary: Vibrant orange-red from logo #FF4D2D */
+  /* Light theme as default - clean white/off-white base */
+  --background: oklch(0.98 0 0);           /* Clean white */
+  --foreground: oklch(0.15 0.01 250);      /* Dark gray text */
+  --card: oklch(1 0 0);                    /* Pure white cards */
+  --card-foreground: oklch(0.15 0.01 250); /* Dark text on cards */
+  --popover: oklch(1 0 0);                 /* White popover */
+  --popover-foreground: oklch(0.15 0.01 250);
+  
+  /* Primary: Vibrant orange-red from logo #FF4D2D (unchanged) */
   --primary: oklch(0.65 0.22 27);
   --primary-foreground: oklch(1 0 0);
-  /* Secondary: Dark gray for cards */
-  --secondary: oklch(0.18 0.01 250);
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.22 0.01 250);
-  --muted-foreground: oklch(0.65 0 0);
-  /* Accent: Slightly different shade for variety */
-  --accent: oklch(0.55 0.2 27);
-  --accent-foreground: oklch(1 0 0);
+  
+  /* Secondary: Light gray for subtle backgrounds */
+  --secondary: oklch(0.95 0 0);
+  --secondary-foreground: oklch(0.25 0.01 250);
+  
+  --muted: oklch(80.466% 0.00009 271.152);
+  --muted-foreground: oklch(61.335% 0.00007 271.152);
+  
+  /* Accent: Lighter orange variant */
+  --accent: oklch(0.92 0.15 27);
+  --accent-foreground: oklch(0.65 0.22 27);
+  
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.25 0.01 250);
-  --input: oklch(0.2 0.01 250);
+  
+  --border: oklch(0.92 0 0);
+  --input: oklch(1 0 0);
   --ring: oklch(0.65 0.22 27);
+  
   --chart-1: oklch(0.65 0.22 27);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
+  
   --radius: 0.625rem;
-  --sidebar: oklch(0.12 0.01 250);
-  --sidebar-foreground: oklch(0.98 0 0);
+  
+  /* Sidebar: Light version */
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.15 0.01 250);
   --sidebar-primary: oklch(0.65 0.22 27);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.18 0.01 250);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.25 0.01 250);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.25 0.01 250);
+  --sidebar-border: oklch(0.92 0 0);
   --sidebar-ring: oklch(0.65 0.22 27);
 }
 
@@ -185,11 +199,11 @@
 
 /* Subtle gradient backgrounds */
 .gradient-subtle {
-  background: linear-gradient(135deg, oklch(0.12 0.01 250) 0%, oklch(0.08 0.02 250) 100%);
+  background: linear-gradient(135deg, oklch(0.98 0 0) 0%, oklch(0.95 0 0) 100%);
 }
 
 .gradient-card {
-  background: linear-gradient(180deg, oklch(0.16 0.01 250) 0%, oklch(0.12 0.01 250) 100%);
+  background: linear-gradient(180deg, oklch(1 0 0) 0%, oklch(0.98 0 0) 100%);
 }
 
 .gradient-glow {
