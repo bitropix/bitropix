@@ -32,14 +32,14 @@ export function HeroSection() {
       </video>
 
       {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-linear-to-r from-black/40 via-black/20 to-black/10" />
+      <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/50 to-black/20" />
 
       {/* Animated glow orbs */}
       {/* <div className="bg-primary/20 animate-pulse-glow absolute top-20 right-10 h-125 w-125 rounded-full blur-[100px] z-20" /> */}
       {/* <div className="bg-accent/20 animate-pulse-glow absolute bottom-20 left-10 h-100 w-100 rounded-full blur-[100px] delay-500 z-20" /> */}
 
-      <div className="relative z-30 mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex justify-center items-center gap-12 lg:grid-cols-2">
+      <div className="relative z-30 mx-auto w-full px-[15%] py-8">
+        <div className="flex justify-start gap-12 w-full">
           
           {/* Left Content */}
           <div
@@ -52,18 +52,15 @@ export function HeroSection() {
             </div> */}
 
             {/* Heading */}
-            <h1 className="text-background text-center text-4xl leading-tight font-bold text-balance sm:text-3xl lg:text-4xl xl:text-6xl max-w-lg">
-              Transform Your Business with{' '}
-              <span className="from-primary to-accent bg-linear-to-r bg-clip-text text-transparent font-black drop-shadow-lg">
-                Innovation
-              </span>
+            <h1 className="text-primary text-4xl leading-tight font-bold text-balance sm:text-3xl lg:text-4xl xl:text-6xl max-w-lg">
+              Transform Your Business with innovation
             </h1>
 
             {/* Description */}
-            {/* <p className="text-muted mt-6 max-w-xl text-lg leading-relaxed backdrop-blur-sm bg-black/20 rounded-xl p-6 border border-white/10">
+            <p className="text-background mt-6 max-w-xl text-lg leading-relaxed backdrop-blur-sm  rounded-xl ">
               Bitropix delivers cutting-edge IT solutions including software development, digital transformation, 
               cloud migrations, and agile hiring to accelerate your growth.
-            </p> */}
+            </p>
 
             {/* CTA Buttons */}
             {/* <div className="mt-10 flex justify-center flex-wrap gap-4">
