@@ -63,7 +63,7 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
 export function StatsSection() {
   return (
     <section className="relative overflow-hidden py-16">
-      <div className="from-primary via-primary/90 to-accent absolute inset-0 bg-linear-to-r" />
+      <div className="from-primary/90 via-primary/80 to-primary/90 absolute inset-0 bg-linear-to-r" />
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

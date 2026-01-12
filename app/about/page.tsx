@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 import { Target, Eye, Heart, Users, Globe, Linkedin, Twitter } from 'lucide-react';
+import { MilestonesSection } from '@/components/home/milestones-section';
+
 
 export const metadata = {
   title: 'About Us - Bitropix | Your Trusted IT Partner',
@@ -95,6 +97,7 @@ export default function AboutPage() {
       <main className="pt-16">
         <section className="relative overflow-hidden py-20">
           <div className="from-primary/10 via-background to-accent/5 absolute inset-0 bg-linear-to-br" />
+          <div className="bg-primary/10 absolute top-20 right-10 h-100 w-100 rounded-full blur-[100px]" />
           <div className="bg-primary/10 absolute top-20 left-10 h-100 w-100 rounded-full blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -118,9 +121,9 @@ export default function AboutPage() {
                   <img
                     src="/diverse-team-of-professionals-collaborating-in-mod.jpg"
                     alt="Bitropix Team"
-                    className="h-full w-full object-cover opacity-70"
+                    className="h-full w-full object-cover opacity-90"
                   />
-                  <div className="from-background absolute inset-0 bg-linear-to-t via-transparent to-transparent" />
+                  {/* <div className="from-background absolute inset-0 bg-linear-to-t via-transparent to-transparent" /> */}
                 </div>
                 <div className="from-primary to-accent text-primary-foreground shadow-primary/20 absolute -bottom-6 -left-6 rounded bg-linear-to-br p-6 shadow-lg">
                   <p className="text-3xl font-bold">2+</p>
@@ -132,13 +135,15 @@ export default function AboutPage() {
         </section>
 
         <section className="relative overflow-hidden py-12">
-          <div className="from-secondary via-card to-secondary absolute inset-0 bg-linear-to-r" />
+          <div className="from-primary/90 via-primary/80 to-primary/90 absolute inset-0 bg-linear-to-r" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
+
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-primary mb-1 text-3xl font-bold sm:text-4xl">{stat.value}</p>
-                  <p className="text-muted-foreground text-sm">{stat.label}</p>
+                  <p className="text-background mb-1 text-3xl font-bold sm:text-4xl">{stat.value}</p>
+                  <p className="text-muted text-sm">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -180,8 +185,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden py-20">
-          <div className="from-secondary/20 via-background to-background absolute inset-0 bg-linear-to-b" />
+        <section className="relative overflow-hidden py-20 bg-primary/5">
+          {/* <div className="from-secondary/20 via-background to-background absolute inset-0 bg-linear-to-b" /> */}
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-16 text-center">
               <p className="text-primary mb-2 font-semibold">Our Values</p>
@@ -204,33 +209,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-16 text-center">
-              <p className="text-primary mb-2 font-semibold">Our Journey</p>
-              <h2 className="text-foreground mb-4 text-3xl font-bold sm:text-4xl">Milestones We're Proud Of</h2>
-            </div>
-            <div className="relative">
-              <div className="from-primary/50 via-border to-primary/50 absolute left-1/2 hidden h-full w-0.5 -translate-x-1/2 transform bg-linear-to-b md:block" />
-              <div className="space-y-12">
-                {milestones.map((milestone, index) => (
-                  <div
-                    key={`${milestone.year}-${index}`}
-                    className={`flex flex-col items-center gap-8 md:flex-row ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
-                  >
-                    <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                      <span className="text-primary text-lg font-bold">{milestone.year}</span>
-                      <h3 className="text-foreground mt-1 text-xl font-semibold">{milestone.title}</h3>
-                      <p className="text-muted-foreground mt-2">{milestone.description}</p>
-                    </div>
-                    <div className="from-primary to-accent shadow-primary/30 relative z-10 h-4 w-4 shrink-0 rounded-full bg-linear-to-br shadow-lg" />
-                    <div className="md:w-1/2" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <MilestonesSection milestones={milestones} />
 
         <section className="relative overflow-hidden py-20">
           <div className="from-primary/5 to-accent/5 absolute inset-0 bg-linear-to-r via-transparent" />

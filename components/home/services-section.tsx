@@ -49,10 +49,10 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section className="relative overflow-hidden py-20">
+    <section className="relative overflow-hidden pb-20 bg-background">
       {/* Subtle gradient background */}
-      <div className="from-secondary/30 via-background to-background absolute inset-0 bg-gradient-to-b" />
-      <div className="bg-primary/5 absolute top-0 left-1/4 h-[400px] w-[400px] rounded-full blur-[100px]" />
+      {/* <div className="from-secondary/30 via-background to-background absolute inset-0 bg-gradient-to-b" /> */}
+      {/* <div className="bg-primary/5 absolute top-0 left-1/4 h-[400px] w-[400px] rounded-full blur-[100px]" /> */}
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
@@ -69,7 +69,7 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <Card
               key={service.title}
-              className="group bg-card/50 border-border hover:border-primary/50 hover:shadow-primary/5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-lg"
+              className="group bg-card/50 border-border hover:border-primary/50 hover:shadow-primary/5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-lg hover:bg-primary/10"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <CardHeader>

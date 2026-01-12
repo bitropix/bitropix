@@ -162,9 +162,9 @@ export default function ServicesPage() {
     <>
       <Navbar />
       <main className="pt-16">
-        <section className="relative overflow-hidden py-20">
-          <div className="from-primary/10 via-background to-accent/5 absolute inset-0 bg-linear-to-br" />
-          <div className="bg-primary/10 absolute top-20 right-10 h-100 w-100 rounded-full blur-[100px]" />
+        <section className="relative overflow-hidden py-20 bg-primary/5">
+          {/* <div className="from-primary/10 via-background to-accent/5 absolute inset-0 bg-linear-to-br" /> */}
+          {/* <div className="bg-primary/10 absolute top-20 right-10 h-100 w-100 rounded-full blur-[100px]" /> */}
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
             <p className="text-primary mb-2 font-semibold">Our Services</p>
             <h1 className="text-foreground mb-6 text-4xl font-bold text-balance sm:text-5xl">
