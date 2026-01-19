@@ -18,7 +18,7 @@ export function CTASection() {
   }, []);
 
   return (
-    <section 
+    <section
       className="relative overflow-hidden py-20"
       style={{
         backgroundImage: 'url(/modern-office-team-working-on-computers-with-code-.jpg)',
@@ -28,7 +28,7 @@ export function CTASection() {
       }}
     >
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/70" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded p-8 text-center md:p-16">
@@ -61,7 +61,7 @@ export function CTASection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-border text-muted hover:border-primary/50 hover:bg-primary/5 bg-transparent transition-all duration-300"
+                className="hover:border-primary/50 hover:bg-primary/5 border bg-transparent text-white transition-all duration-300"
                 asChild
               >
                 <Link href="mailto:info@bitropix.com">

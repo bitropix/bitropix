@@ -49,9 +49,9 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section className="relative overflow-hidden pb-20 bg-background">
-      {/* Subtle gradient background */}
-      {/* <div className="from-secondary/30 via-background to-background absolute inset-0 bg-gradient-to-b" /> */}
+    <section className="bg-background relative overflow-hidden py-20">
+      {/* Subtle linear background */}
+      {/* <div className="from-secondary/30 via-background to-background absolute inset-0 bg-linear-to-b" /> */}
       {/* <div className="bg-primary/5 absolute top-0 left-1/4 h-[400px] w-[400px] rounded-full blur-[100px]" /> */}
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -69,11 +69,11 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <Card
               key={service.title}
-              className="group bg-card/50 border-border hover:border-primary/50 hover:shadow-primary/5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-lg hover:bg-primary/10"
+              className="group bg-card/50 border-border hover:border-primary/50 hover:shadow-primary/5 hover:bg-primary/10 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-lg"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <CardHeader>
-                <div className="from-primary/20 to-primary/5 group-hover:from-primary group-hover:to-accent mb-4 flex h-12 w-12 items-center justify-center rounded bg-gradient-to-br transition-all duration-500">
+                <div className="from-primary/20 to-primary/5 group-hover:from-primary group-hover:to-accent mb-4 flex h-12 w-12 items-center justify-center rounded bg-linear-to-br transition-all duration-500">
                   <service.icon className="text-primary group-hover:text-primary-foreground h-6 w-6 transition-colors duration-500" />
                 </div>
                 <CardTitle className="text-foreground text-lg">{service.title}</CardTitle>

@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { Target, Eye, Heart, Users, Globe, Linkedin, Twitter } from 'lucide-react';
 import { MilestonesSection } from '@/components/home/milestones-section';
 
-
 export const metadata = {
   title: 'About Us - Bitropix | Your Trusted IT Partner',
   description:
@@ -117,11 +116,11 @@ export default function AboutPage() {
                 </p>
               </div>
               <div className="relative">
-                <div className="border-border aspect-4/3 overflow-hidden rounded border">
+                <div className="aspect-4/3 overflow-hidden rounded">
                   <img
                     src="/diverse-team-of-professionals-collaborating-in-mod.jpg"
                     alt="Bitropix Team"
-                    className="h-full w-full object-cover opacity-90"
+                    className="h-full w-full object-cover opacity-100"
                   />
                   {/* <div className="from-background absolute inset-0 bg-linear-to-t via-transparent to-transparent" /> */}
                 </div>
@@ -185,7 +184,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden py-20 bg-primary/5">
+        <section className="bg-primary/5 relative overflow-hidden py-20">
           {/* <div className="from-secondary/20 via-background to-background absolute inset-0 bg-linear-to-b" /> */}
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-16 text-center">

@@ -13,21 +13,21 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative h-[90vh] flex items-center overflow-hidden py-12 sm:py-16 lg:py-20">
+    <section className="relative flex h-[90vh] items-center overflow-hidden py-12 sm:py-16 lg:py-20">
       {/* VIDEO BACKGROUND - Fullscreen autoplay, muted, loop */}
       <video
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover"
         autoPlay
         muted
         loop
         playsInline
         poster="/modern-office-team-working-on-computers-with-code-.jpg"
       >
-        <source src="/hero-section.mp4" type="video/mp4" />
+        <source src="/bgVideo.mp4" type="video/mp4" />
         <img
           src="/modern-office-team-working-on-computers-with-code-.jpg"
           alt="Team working"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
       </video>
 
@@ -39,8 +39,7 @@ export function HeroSection() {
       {/* <div className="bg-accent/20 animate-pulse-glow absolute bottom-20 left-10 h-100 w-100 rounded-full blur-[100px] delay-500 z-20" /> */}
 
       <div className="relative z-30 mx-auto w-full px-[15%] py-8">
-        <div className="flex justify-start gap-12 w-full">
-          
+        <div className="flex w-full justify-start gap-12">
           {/* Left Content */}
           <div
             className={`space-y-6 transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
@@ -52,14 +51,14 @@ export function HeroSection() {
             </div> */}
 
             {/* Heading */}
-            <h1 className="text-primary text-4xl leading-tight font-bold text-balance sm:text-3xl lg:text-4xl xl:text-6xl max-w-lg">
+            <h1 className="text-primary max-w-lg text-4xl leading-tight font-bold text-balance sm:text-3xl lg:text-4xl xl:text-6xl">
               Transform Your Business with innovation
             </h1>
 
             {/* Description */}
-            <p className="text-background mt-6 max-w-xl text-lg leading-relaxed backdrop-blur-sm  rounded-xl ">
-              Bitropix delivers cutting-edge IT solutions including software development, digital transformation, 
-              cloud migrations, and agile hiring to accelerate your growth.
+            <p className="text-background mt-6 max-w-xl rounded text-lg leading-relaxed backdrop-blur-sm">
+              Bitropix delivers cutting-edge IT solutions including software development, digital transformation, cloud
+              migrations, and agile hiring to accelerate your growth.
             </p>
 
             {/* CTA Buttons */}
@@ -67,7 +66,7 @@ export function HeroSection() {
               <Button
                 size="lg"
                 asChild
-                className="bg-primary/95 hover:bg-primary text-primary-foreground backdrop-blur-sm border border-white/20 shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105 text-lg px-8 h-14 font-semibold rounded-xl"
+                className="bg-primary/95 hover:bg-primary text-primary-foreground backdrop-blur-sm border border-white/20 shadow-2xl hover:shadow-primary/30 transition-all duration-300 hover:scale-105 text-lg px-8 h-14 font-semibold rounded"
               >
                 <Link href="/contact">
                   Get Started <ArrowRight className="ml-2 h-5 w-5" />
@@ -77,7 +76,7 @@ export function HeroSection() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="border-none hover:border-primary/80 bg-white/10 backdrop-blur-sm text-primary transition-all duration-300 h-14 px-8 text-lg rounded-xl font-semibold"
+                className="border-none hover:border-primary/80 bg-white/10 backdrop-blur-sm text-primary transition-all duration-300 h-14 px-8 text-lg rounded font-semibold"
               >
                 <Link href="/about">
                   <Play className="mr-2 h-5 w-5" /> Watch Demo
@@ -94,7 +93,7 @@ export function HeroSection() {
               ].map((stat, index) => (
                 <div
                   key={stat.label}
-                  className="animate-slide-up backdrop-blur-sm bg-black/30 rounded-lg p-4 border border-white/10"
+                  className="animate-slide-up backdrop-blur-sm bg-black/30 rounded p-4 border border-white/10"
                   style={{ animationDelay: `${(index + 1) * 200}ms` }}
                 >
                   <p className="text-3xl lg:text-4xl font-bold text-primary">{stat.value}</p>
@@ -107,7 +106,7 @@ export function HeroSection() {
       </div>
 
       {/* ZIGZAG BOTTOM WAVE - Exact match to your image */}
-      <div className="absolute bottom-0 left-0 w-full h-20 lg:h-28 overflow-hidden z-10 pointer-events-none">
+      {/* <div className="absolute bottom-0 left-0 w-full h-20 lg:h-28 overflow-hidden z-10 pointer-events-none">
         <svg
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
@@ -115,7 +114,7 @@ export function HeroSection() {
         >
           <path d="M0,50 Q300,100 600,50 T1200,50 L1200,120 L0,120 Z" />
         </svg>
-      </div>
+      </div> */}
     </section>
   );
 }

@@ -162,7 +162,7 @@ export default function ServicesPage() {
     <>
       <Navbar />
       <main className="pt-16">
-        <section className="relative overflow-hidden py-20 bg-primary/5">
+        <section className="bg-primary/5 relative overflow-hidden py-20">
           {/* <div className="from-primary/10 via-background to-accent/5 absolute inset-0 bg-linear-to-br" /> */}
           {/* <div className="bg-primary/10 absolute top-20 right-10 h-100 w-100 rounded-full blur-[100px]" /> */}
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
@@ -231,14 +231,14 @@ export default function ServicesPage() {
                   </div>
 
                   <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                    <div className="bg-card/30 border-border group relative aspect-4/3 overflow-hidden rounded border">
+                    <div className="bg-card/30 group relative aspect-4/3 overflow-hidden rounded">
                       <div className="from-primary/10 absolute inset-0 bg-linear-to-br to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       <Image
                         src={service.image}
                         width={10000000}
                         height={10000000}
                         alt={service.title}
-                        className="h-full w-full object-cover opacity-70"
+                        className="h-full w-full object-cover opacity-100"
                       />
                     </div>
                   </div>

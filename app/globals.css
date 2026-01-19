@@ -10,43 +10,43 @@ body {
 /* Converted to LIGHT theme as default - clean, modern electronics store */
 :root {
   /* Light theme as default - clean white/off-white base */
-  --background: oklch(0.98 0 0);           /* Clean white */
-  --foreground: oklch(0.15 0.01 250);      /* Dark gray text */
-  --card: oklch(1 0 0);                    /* Pure white cards */
+  --background: oklch(0.98 0 0); /* Clean white */
+  --foreground: oklch(0.15 0.01 250); /* Dark gray text */
+  --card: oklch(1 0 0); /* Pure white cards */
   --card-foreground: oklch(0.15 0.01 250); /* Dark text on cards */
-  --popover: oklch(1 0 0);                 /* White popover */
+  --popover: oklch(1 0 0); /* White popover */
   --popover-foreground: oklch(0.15 0.01 250);
-  
+
   /* Primary: Vibrant orange-red from logo #FF4D2D (unchanged) */
   --primary: oklch(0.65 0.22 27);
   --primary-foreground: oklch(1 0 0);
-  
+
   /* Secondary: Light gray for subtle backgrounds */
   --secondary: oklch(0.95 0 0);
   --secondary-foreground: oklch(0.25 0.01 250);
-  
+
   --muted: oklch(80.466% 0.00009 271.152);
   --muted-foreground: oklch(61.335% 0.00007 271.152);
-  
+
   /* Accent: Lighter orange variant */
   --accent: oklch(0.92 0.15 27);
   --accent-foreground: oklch(0.65 0.22 27);
-  
+
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: oklch(1 0 0);
-  
+
   --border: oklch(0.92 0 0);
   --input: oklch(1 0 0);
   --ring: oklch(0.65 0.22 27);
-  
+
   --chart-1: oklch(0.65 0.22 27);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  
+
   --radius: 0.625rem;
-  
+
   /* Sidebar: Light version */
   --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.15 0.01 250);

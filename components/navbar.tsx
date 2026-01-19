@@ -23,7 +23,7 @@ export function Navbar() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <nav className="bg-background/80 border-border fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-xl">
+    <nav className="bg-background/90 border-border fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="group flex items-center gap-3">
@@ -44,7 +44,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={`text-sm font-medium transition-colors duration-300 ${
-                  isActive(link.href) ? 'text-primary' : 'text-muted-foreground hover:text-primary'
+                  isActive(link.href) ? 'text-primary' : 'hover:text-primary text-gray-700'
                 }`}
               >
                 {link.label}

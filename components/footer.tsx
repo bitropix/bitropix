@@ -26,7 +26,7 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className=" bg-linear-to-tr from-primary-foreground to-primary-foreground relative overflow-hidden">
+    <footer className="from-primary-foreground to-primary-foreground relative overflow-hidden bg-linear-to-tr">
       {/* Subtle gradient glow */}
       <div className="bg-primary/5 absolute top-0 left-1/2 h-75 w-150 -translate-x-1/2 rounded-full blur-3xl" />
 

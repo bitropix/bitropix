@@ -16,7 +16,7 @@ export function MilestonesSection({ milestones }: MilestonesSectionProps) {
   return (
     <section className="py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           className="mb-16 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -27,8 +27,8 @@ export function MilestonesSection({ milestones }: MilestonesSectionProps) {
           <h2 className="text-foreground mb-4 text-3xl font-bold sm:text-4xl">Milestones We're Proud Of</h2>
         </motion.div>
         <div className="relative">
-          <motion.div 
-            className="from-primary/50 via-border to-primary/50 absolute left-1/2 hidden h-full w-0.5 -translate-x-1/2 transform bg-linear-to-b md:block" 
+          <motion.div
+            className="from-primary/50 via-border to-primary/50 absolute left-1/2 hidden h-full w-0.5 -translate-x-1/2 transform bg-linear-to-b md:block"
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
             transition={{ duration: 1, ease: 'easeInOut' }}
@@ -50,7 +50,7 @@ export function MilestonesSection({ milestones }: MilestonesSectionProps) {
                   <h3 className="text-foreground mt-1 text-xl font-semibold">{milestone.title}</h3>
                   <p className="text-muted-foreground mt-2">{milestone.description}</p>
                 </div>
-                <motion.div 
+                <motion.div
                   className="from-primary to-accent shadow-primary/30 relative z-10 h-4 w-4 shrink-0 rounded-full bg-linear-to-br shadow-lg"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}

@@ -29,7 +29,7 @@ const steps = [
 
 export function ProcessSection() {
   return (
-    <section className="relative overflow-hidden py-20 bg-primary/5">
+    <section className="bg-primary/5 relative overflow-hidden py-20">
       <div className="from-primary/5 to-accent/5 absolute inset-0 bg-linear-to-r via-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
