@@ -38,8 +38,8 @@ export function HeroSection() {
       {/* <div className="bg-primary/20 animate-pulse-glow absolute top-20 right-10 h-125 w-125 rounded-full blur-[100px] z-20" /> */}
       {/* <div className="bg-accent/20 animate-pulse-glow absolute bottom-20 left-10 h-100 w-100 rounded-full blur-[100px] delay-500 z-20" /> */}
 
-      <div className="relative z-30 mx-auto w-full px-[15%] py-8">
-        <div className="flex w-full justify-start gap-12">
+      <div className="relative z-30 mx-auto w-full max-w-3xl text-center py-8">
+        <div className="flex w-full justify-center gap-12">
           {/* Left Content */}
           <div
             className={`space-y-6 transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
@@ -51,12 +51,12 @@ export function HeroSection() {
             </div> */}
 
             {/* Heading */}
-            <h1 className="text-primary max-w-lg text-4xl leading-tight font-bold text-balance sm:text-3xl lg:text-4xl xl:text-6xl">
+            <h1 className="text-primary text-4xl leading-tight font-bold text-balance sm:text-3xl lg:text-4xl xl:text-6xl">
               Transform Your Business with innovation
             </h1>
 
             {/* Description */}
-            <p className="text-background mt-6 max-w-xl rounded text-lg leading-relaxed backdrop-blur-sm">
+            <p className="text-background mt-6 rounded text-lg leading-relaxed backdrop-blur-sm">
               Bitropix delivers cutting-edge IT solutions including software development, digital transformation, cloud
               migrations, and agile hiring to accelerate your growth.
             </p>
