@@ -139,7 +139,7 @@ export default function CareersPage() {
               </div>
               <div className="border-border aspect-[4/3] overflow-hidden rounded border">
                 <img
-                  src="/team-collaboration-in-modern-startup-office-space.jpg"
+                  src="/team.jpg"
                   alt="Team collaboration"
                   className="h-full w-full object-cover opacity-70"
                 />
