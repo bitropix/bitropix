@@ -3,6 +3,8 @@ import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
+import { SendResumeModal } from '@/components/careers/send-resume-modal';
+import { jobOpenings } from '@/lib/careers';
 import {
   Briefcase,
   MapPin,
@@ -54,70 +56,6 @@ const benefits = [
     icon: Users,
     title: 'Team Events',
     description: 'Regular team outings, hackathons, and celebrations.',
-  },
-];
-
-const openings = [
-  {
-    id: 1,
-    title: 'Senior React Developer',
-    department: 'Engineering',
-    location: 'Bangalore / Remote',
-    type: 'Full-time',
-    experience: '4-6 years',
-    skills: ['React', 'TypeScript', 'Next.js', 'Node.js'],
-    description:
-      "We're looking for an experienced React developer to build scalable web applications for our enterprise clients.",
-  },
-  {
-    id: 2,
-    title: 'Full Stack Developer',
-    department: 'Engineering',
-    location: 'Bangalore / Remote',
-    type: 'Full-time',
-    experience: '3-5 years',
-    skills: ['Node.js', 'React', 'PostgreSQL', 'AWS'],
-    description: 'Join our team to work on end-to-end development of our product suite and client projects.',
-  },
-  {
-    id: 3,
-    title: 'UI/UX Designer',
-    department: 'Design',
-    location: 'Bangalore',
-    type: 'Full-time',
-    experience: '3-5 years',
-    skills: ['Figma', 'User Research', 'Prototyping', 'Design Systems'],
-    description: 'Create beautiful, user-centered designs that solve complex problems and delight users.',
-  },
-  {
-    id: 4,
-    title: 'DevOps Engineer',
-    department: 'Engineering',
-    location: 'Remote',
-    type: 'Full-time',
-    experience: '3-5 years',
-    skills: ['AWS', 'Docker', 'Kubernetes', 'CI/CD'],
-    description: 'Help us build and maintain robust infrastructure for our products and client solutions.',
-  },
-  {
-    id: 5,
-    title: 'Flutter Developer',
-    department: 'Mobile',
-    location: 'Bangalore / Remote',
-    type: 'Full-time',
-    experience: '2-4 years',
-    skills: ['Flutter', 'Dart', 'Firebase', 'REST APIs'],
-    description: 'Build cross-platform mobile applications with beautiful UI and seamless performance.',
-  },
-  {
-    id: 6,
-    title: 'Business Development Executive',
-    department: 'Sales',
-    location: 'Bangalore',
-    type: 'Full-time',
-    experience: '2-4 years',
-    skills: ['B2B Sales', 'Lead Generation', 'CRM', 'Negotiation'],
-    description: 'Drive business growth by identifying and closing new opportunities in the IT services space.',
   },
 ];
 
@@ -249,7 +187,7 @@ export default function CareersPage() {
               </p>
             </div>
             <div className="space-y-6">
-              {openings.map((job) => (
+              {jobOpenings.map((job) => (
                 <Card
                   key={job.id}
                   className="bg-card/30 border-border hover:border-primary/30 hover:shadow-primary/5 transition-all duration-300 hover:shadow-lg"
@@ -277,7 +215,7 @@ export default function CareersPage() {
                         asChild
                         className="bg-primary hover:bg-primary/90 hover:shadow-primary/25 transition-all duration-300 hover:shadow-lg"
                       >
-                        <Link href={`/contact?job=${encodeURIComponent(job.title)}`}>
+                        <Link href={`/careers/${job.slug}`}>
                           Apply Now <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>
@@ -311,14 +249,7 @@ export default function CareersPage() {
               We're always interested in meeting talented people. Send us your resume and we'll keep you in mind for
               future opportunities.
             </p>
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-background text-foreground border-background hover:bg-background/90 transition-all duration-300"
-              asChild
-            >
-              <Link href="/contact">Send Your Resume</Link>
-            </Button>
+            <SendResumeModal />
           </div>
         </section>
       </main>

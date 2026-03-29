@@ -1,9 +1,8 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
-import { Target, Eye, Heart, Users, Globe, Linkedin, Twitter } from 'lucide-react';
+import { Target, Eye, Heart, Users, Globe } from 'lucide-react';
 import { MilestonesSection } from '@/components/home/milestones-section';
 
 export const metadata = {
@@ -56,29 +55,6 @@ const milestones = [
     year: '2025',
     title: '50+ Clients',
     description: 'Reached the milestone of serving 50+ happy clients across industries.',
-  },
-];
-
-const team = [
-  {
-    name: 'Arunendrra Ganguly',
-    role: 'CEO',
-    bio: '18+ years in Data platform and Digital transformation.',
-  },
-  {
-    name: 'Diwakar Jha',
-    role: 'CTO',
-    bio: 'Expert in cloud architecture and enterprise solutions.',
-  },
-  {
-    name: 'Kapil Sinha',
-    role: 'COO',
-    bio: 'Designer with passion for user experience.',
-  },
-  {
-    name: 'Gaurav Kushwaha',
-    role: 'CMO',
-    bio: 'Driving seamless delivery through strategy and execution.',
   },
 ];
 
@@ -209,57 +185,6 @@ export default function AboutPage() {
         </section>
 
         <MilestonesSection milestones={milestones} />
-
-        <section className="relative overflow-hidden py-20">
-          <div className="from-primary/5 to-accent/5 absolute inset-0 bg-linear-to-r via-transparent" />
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-16 text-center">
-              <p className="text-primary mb-2 font-semibold">Our Team</p>
-              <h2 className="text-foreground mb-4 text-3xl font-bold sm:text-4xl">Meet the Leadership</h2>
-              <p className="text-muted-foreground mx-auto max-w-2xl">
-                Our experienced leadership team brings together decades of expertise in technology and business.
-              </p>
-            </div>
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {team.map((member) => (
-                <Card
-                  key={member.name}
-                  className="bg-card/30 border-border hover:border-primary/30 group text-center transition-all duration-300"
-                >
-                  <CardContent className="pt-8">
-                    <div className="from-primary/20 to-accent/20 group-hover:from-primary/30 group-hover:to-accent/30 mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-br transition-all">
-                      <span className="text-primary text-3xl font-bold">
-                        {member.name
-                          .split(' ')
-                          .map((n) => n[0])
-                          .join('')}
-                      </span>
-                    </div>
-                    <h3 className="text-foreground text-lg font-semibold">{member.name}</h3>
-                    <p className="text-primary mb-2 text-sm">{member.role}</p>
-                    <p className="text-muted-foreground mb-4 text-sm">{member.bio}</p>
-                    {/* <div className="flex justify-center gap-3">
-                      <a
-                        href="#"
-                        className="w-8 h-8 rounded bg-secondary/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
-                        aria-label="LinkedIn"
-                      >
-                        <Linkedin className="h-4 w-4" />
-                      </a>
-                      <a
-                        href="#"
-                        className="w-8 h-8 rounded bg-secondary/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
-                        aria-label="Twitter"
-                      >
-                        <Twitter className="h-4 w-4" />
-                      </a>
-                    </div> */}
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
 
         <section className="relative overflow-hidden py-20">
           <div className="from-primary via-primary/90 to-accent absolute inset-0 bg-linear-to-r" />

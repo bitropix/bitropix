@@ -133,10 +133,10 @@ export function Footer() {
                   <Phone className="text-primary h-4 w-4" />
                 </div>
                 <a
-                  href="tel:+919004569903"
+                  href="tel:+919318454571"
                   className="text-muted-foreground hover:text-primary text-sm transition-colors"
                 >
-                  +91 9004569903
+                  +91 9318454571
                 </a>
               </li>
 
@@ -151,7 +151,7 @@ export function Footer() {
         </div>
 
         <div className="border-border mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
-          <p className="text-muted-foreground text-sm">&copy; 2025 Bitropix. All rights reserved.</p>
+          <p className="text-muted-foreground text-sm">&copy; {new Date().getFullYear()} Bitropix. All rights reserved.</p>
           <div className="flex gap-6">
             <Link
               href="/privacy"

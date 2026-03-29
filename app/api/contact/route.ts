@@ -303,7 +303,7 @@ export async function POST(request: NextRequest) {
               <div class="footer">
                 <p><strong>Bitropix</strong> | Noida, Uttar Pradesh</p>
                 <p>Email: <a href="mailto:info@bitropix.com">info@bitropix.com</a></p>
-                <p>Phone: <a href="tel:+919004569903">+91 9004569903</a> | <a href="tel:+919318454571">+91 9318454571</a></p>
+                <p>Phone: <a href="tel:+919318454571">+91 9318454571</a> | <a href="tel:+919318454571">+91 9318454571</a></p>
               </div>
             </div>
           </body>
