@@ -426,7 +426,7 @@ export default function ProductsPage() {
         {/* CTA Section */}
         <section className="relative overflow-hidden py-20">
           <div className="absolute inset-0 bg-linear-to-r from-[#E03B37] via-[#E03B37]/90 to-[#c42f2b]" />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:30px_30px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
             <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">
               Not Sure Which Solution Is Right for You?

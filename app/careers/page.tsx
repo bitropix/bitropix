@@ -174,7 +174,7 @@ export default function CareersPage() {
                     ))}
                   </div>
                 </div>
-                <div className="aspect-[4/3] overflow-hidden rounded border border-white/10">
+                <div className="aspect-4/3 overflow-hidden rounded border border-white/10">
                   <img
                     src="/professional-team-meeting-in-modern-office-discuss.jpg"
                     alt="Team collaboration"
@@ -278,7 +278,7 @@ export default function CareersPage() {
 
         <section className="relative overflow-hidden py-20">
           <div className="absolute inset-0 bg-linear-to-r from-[#E03B37] via-[#E03B37]/90 to-[#c42f2b]" />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:30px_30px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
             <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Don't See the Right Role?</h2>
             <p className="mx-auto mb-8 max-w-2xl text-white/80">

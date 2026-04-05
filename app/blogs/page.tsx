@@ -74,7 +74,7 @@ export default function BlogsPage() {
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20">
           <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="absolute top-20 right-20 h-[300px] w-[300px] rounded-full bg-[#E03B37]/10 blur-[100px]" />
+          <div className="absolute top-20 right-20 h-75 w-75 rounded-full bg-[#E03B37]/10 blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
             <BreadcrumbNav items={[{ label: 'Blog' }]} />
             <FadeIn>
@@ -121,7 +121,7 @@ export default function BlogsPage() {
                 <Link href={`/blogs/${featuredPost.slug}`} className="group block">
                   <Card className="overflow-hidden border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
                     <div className="grid md:grid-cols-2">
-                      <div className="relative aspect-video overflow-hidden md:aspect-auto md:min-h-[350px]">
+                      <div className="relative aspect-video overflow-hidden md:aspect-auto md:min-h-87.5">
                         <Image
                           src={featuredPost.image}
                           alt={featuredPost.title}
@@ -233,8 +233,8 @@ export default function BlogsPage() {
 
         {/* Newsletter Section */}
         <section className="relative overflow-hidden py-20">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#E03B37] via-[#E03B37]/90 to-[#c62828]" />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-[size:30px_30px]" />
+          <div className="absolute inset-0 bg-linear-to-r from-[#E03B37] via-[#E03B37]/90 to-[#c62828]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
             <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Subscribe to Our Newsletter</h2>
             <p className="mx-auto mb-8 max-w-2xl text-white/80">

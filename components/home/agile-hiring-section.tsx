@@ -71,7 +71,7 @@ export function AgileHiringSection() {
                 key={benefit.title}
                 className="bg-card/50 border-border hover:border-primary/30 hover:bg-card/80 group flex gap-4 rounded border p-6 backdrop-blur-sm transition-all duration-300"
               >
-                <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 flex h-12 w-12 shrink-0 items-center justify-center rounded bg-gradient-to-br transition-all">
+                <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 flex h-12 w-12 shrink-0 items-center justify-center rounded bg-linear-to-br transition-all">
                   <benefit.icon className="text-primary h-6 w-6" />
                 </div>
                 <div>

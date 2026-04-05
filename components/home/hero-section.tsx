@@ -110,19 +110,19 @@ export function HeroSection() {
 
       {/* Content */}
       <div
-        className={`relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-5 text-center transition-all duration-700 ${
+        className={`relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-5 text-center transition-all duration-700 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
         }`}
       >
-        <h1 className="text-[clamp(1.75rem,6vw,3.75rem)] leading-[1.15] font-bold tracking-tight text-white">
+        <h1 className="text-[clamp(2.75rem,8vw,4.75rem)] leading-[1.15] font-bold tracking-tight text-white">
           Innovate. Transform. <span className="text-[#E03B37]">Deliver.</span>
         </h1>
 
-        <p className="mt-4 max-w-2xl text-[clamp(0.875rem,2.5vw,1.125rem)] leading-relaxed text-gray-400">
+        <p className="mt-4 max-w-2xl text-[clamp(1.275rem,2.5vw,1.525rem)] leading-relaxed text-gray-400">
           IT services &amp; digital marketing agency helping businesses grow with technology and strategy.
         </p>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 flex flex-wrap-reverse justify-center gap-3">
           <Button
             size="lg"
             asChild

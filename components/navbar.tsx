@@ -72,13 +72,13 @@ export function Navbar() {
 
           {/* Desktop Phone + CTA */}
           <div className="hidden items-center gap-4 lg:flex">
-            <a
+            <Link
               href="tel:+919318454571"
               className="flex items-center gap-1.5 text-sm text-gray-400 transition-colors duration-300 hover:text-white"
             >
               <Phone className="h-3.5 w-3.5" />
               +91 9318454571
-            </a>
+            </Link>
             <Button asChild className="bg-[#E03B37] text-white hover:bg-[#E03B37]/90">
               <Link href="/contact">Get Started</Link>
             </Button>
@@ -86,11 +86,11 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="rounded-md p-2 text-gray-300 hover:text-white lg:hidden"
+            className="rounded-md text-gray-300 hover:text-white lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isOpen ? <X className="h-10 w-10" /> : <Menu className="h-10 w-10" />}
           </button>
         </div>
 
