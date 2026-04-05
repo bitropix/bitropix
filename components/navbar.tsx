@@ -2,91 +2,133 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
-  { href: '/about', label: 'About Us' },
-  // { href: "/careers", label: "Careers" },
-  // { href: "/blogs", label: "Blogs" },
+  { href: '/blogs', label: 'Blog' },
+  { href: '/about', label: 'About' },
+  { href: '/careers', label: 'Careers' },
   { href: '/contact', label: 'Contact' },
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
+  const isHome = pathname === '/';
   const isActive = (href: string) => pathname === href;
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // On home page: transparent when at top, solid on scroll
+  // On other pages: always solid
+  const showSolidBg = !isHome || scrolled || isOpen;
+
   return (
-    <nav className="bg-background/90 border-border fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-xl">
+    <nav
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ease-in-out ${
+        showSolidBg
+          ? 'border-b border-white/5 bg-[#0a0a12] shadow-lg shadow-black/20 backdrop-blur-xl'
+          : 'border-b border-transparent bg-transparent'
+      }`}
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="group flex items-center gap-3">
-            <div className="relative">
-              <div className="bg-primary/20 absolute inset-0 rounded blur-md transition-all group-hover:blur-lg" />
-              <Image src="/images/logo.png" alt="Bitropix Logo" width={40} height={40} className="relative" />
-            </div>
+          <Link href="/" className="group flex items-center gap-2.5">
+            <Image src="/images/logo.png" alt="Bitropix Logo" width={36} height={36} />
             <div className="flex flex-col">
-              <span className="text-foreground text-xl font-bold">Bitropix</span>
-              <span className="text-primary text-[10px] font-medium tracking-wider">Innovate. Transform. Deliver.</span>
+              <span className="text-2xl font-bold tracking-widest text-white uppercase">Bitropix</span>
+              <span className="text-[9px] font-medium tracking-wider text-[#E03B37]">
+                Innovate. Transform. Deliver.
+              </span>
             </div>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden items-center gap-6 md:flex">
+          <div className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors duration-300 ${
-                  isActive(link.href) ? 'text-primary' : 'hover:text-primary text-gray-700'
+                className={`rounded-md px-3 py-2 text-sm font-medium transition-colors duration-300 ${
+                  isActive(link.href) ? 'text-[#E03B37]' : 'text-gray-300 hover:text-white'
                 }`}
               >
                 {link.label}
               </Link>
             ))}
-            <Button
-              asChild
-              className="bg-primary hover:bg-primary/90 hover:shadow-primary/25 transition-all duration-300 hover:shadow-lg"
+          </div>
+
+          {/* Desktop Phone + CTA */}
+          <div className="hidden items-center gap-4 lg:flex">
+            <a
+              href="tel:+919318454571"
+              className="flex items-center gap-1.5 text-sm text-gray-400 transition-colors duration-300 hover:text-white"
             >
+              <Phone className="h-3.5 w-3.5" />
+              +91 9318454571
+            </a>
+            <Button asChild className="bg-[#E03B37] text-white hover:bg-[#E03B37]/90">
               <Link href="/contact">Get Started</Link>
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="p-2 md:hidden" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <button
+            className="rounded-md p-2 text-gray-300 hover:text-white lg:hidden"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
 
         {/* Mobile Menu */}
-        {isOpen && (
-          <div className="border-border animate-fade-in from-background to-secondary/50 border-t bg-linear-to-b py-4 md:hidden">
-            <div className="flex flex-col gap-4">
-              {navLinks.map((link, index) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`animate-slide-up text-sm font-medium transition-colors ${
-                    isActive(link.href) ? 'text-primary' : 'text-muted-foreground hover:text-primary'
-                  }`}
-                  style={{ animationDelay: `${index * 50}ms` }}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.label}
+        <div
+          className={`overflow-hidden transition-all duration-500 ease-in-out lg:hidden ${
+            isOpen ? 'max-h-125 pb-4 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="flex flex-col gap-1 pt-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`rounded-md px-3 py-2.5 text-sm font-medium transition-colors duration-300 ${
+                  isActive(link.href) ? 'text-[#E03B37]' : 'text-gray-400 hover:text-white'
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="mt-2 flex flex-col gap-3 border-t border-white/10 pt-3">
+              <a
+                href="tel:+919318454571"
+                className="flex items-center gap-2 px-3 text-sm text-gray-400 hover:text-white"
+              >
+                <Phone className="h-4 w-4" />
+                +91 9318454571
+              </a>
+              <Button asChild className="bg-[#E03B37] text-white hover:bg-[#E03B37]/90">
+                <Link href="/contact" onClick={() => setIsOpen(false)}>
+                  Get Started
                 </Link>
-              ))}
-              <Button asChild className="animate-slide-up w-fit" style={{ animationDelay: '350ms' }}>
-                <Link href="/contact">Get Started</Link>
               </Button>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );

@@ -1,4 +1,7 @@
+'use client';
+
 import { Search, Pencil, Code, Rocket } from 'lucide-react';
+import { FadeIn } from '@/components/animate';
 
 const steps = [
   {
@@ -29,36 +32,40 @@ const steps = [
 
 export function ProcessSection() {
   return (
-    <section className="bg-primary/5 relative overflow-hidden py-20">
-      <div className="from-primary/5 to-accent/5 absolute inset-0 bg-linear-to-r via-transparent" />
+    <section className="relative overflow-hidden bg-[#0e0e18] py-20">
+      <div className="absolute inset-0 bg-linear-to-r from-[#E03B37]/5 via-transparent to-[#E03B37]/5" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center">
-          <p className="text-primary mb-2 font-semibold">Our Process</p>
-          <h2 className="text-foreground mb-4 text-3xl font-bold text-balance sm:text-4xl">How We Work</h2>
-          <p className="text-muted-foreground mx-auto max-w-2xl">
-            A streamlined process designed to deliver exceptional results on time and within budget.
-          </p>
-        </div>
+        <FadeIn>
+          <div className="mb-16 text-center">
+            <p className="mb-2 font-semibold text-[#E03B37]">Our Process</p>
+            <h2 className="mb-4 text-3xl font-bold text-balance text-white sm:text-4xl">How We Work</h2>
+            <p className="mx-auto max-w-2xl text-gray-400">
+              A streamlined process designed to deliver exceptional results on time and within budget.
+            </p>
+          </div>
+        </FadeIn>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, index) => (
-            <div key={step.number} className="group relative">
-              {/* Connecting line */}
-              {index < steps.length - 1 && (
-                <div className="from-border absolute top-12 left-full z-0 hidden h-0.5 w-full -translate-x-1/2 bg-linear-to-r to-transparent lg:block" />
-              )}
-              <div className="relative z-10 text-center">
-                <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 relative mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-br transition-all duration-500">
-                  <step.icon className="text-primary h-10 w-10" />
-                  <span className="from-primary to-accent text-primary-foreground shadow-primary/20 absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br text-sm font-bold shadow-lg">
-                    {step.number}
-                  </span>
+            <FadeIn key={step.number} delay={index * 0.15}>
+              <div className="group relative">
+                {/* Connecting line */}
+                {index < steps.length - 1 && (
+                  <div className="absolute top-12 left-full z-0 hidden h-0.5 w-full -translate-x-1/2 bg-linear-to-r from-white/10 to-transparent lg:block" />
+                )}
+                <div className="relative z-10 text-center">
+                  <div className="relative mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all duration-500 group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
+                    <step.icon className="h-10 w-10 text-[#E03B37]" />
+                    <span className="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37] to-[#E03B37]/80 text-sm font-bold text-white shadow-lg shadow-[#E03B37]/20">
+                      {step.number}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 text-xl font-semibold text-white">{step.title}</h3>
+                  <p className="text-sm leading-relaxed text-gray-400">{step.description}</p>
                 </div>
-                <h3 className="text-foreground mb-2 text-xl font-semibold">{step.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
               </div>
-            </div>
+            </FadeIn>
           ))}
         </div>
       </div>

@@ -23,12 +23,12 @@ export function MilestonesSection({ milestones }: MilestonesSectionProps) {
           transition={{ duration: 0.6 }}
           viewport={{ once: false, margin: '-100px' }}
         >
-          <p className="text-primary mb-2 font-semibold">Our Journey</p>
-          <h2 className="text-foreground mb-4 text-3xl font-bold sm:text-4xl">Milestones We're Proud Of</h2>
+          <p className="mb-2 font-semibold text-[#E03B37]">Our Journey</p>
+          <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Milestones We're Proud Of</h2>
         </motion.div>
         <div className="relative">
           <motion.div
-            className="from-primary/50 via-border to-primary/50 absolute left-1/2 hidden h-full w-0.5 -translate-x-1/2 transform bg-linear-to-b md:block"
+            className="absolute left-1/2 hidden h-full w-0.5 -translate-x-1/2 transform bg-linear-to-b from-[#E03B37]/50 via-white/10 to-[#E03B37]/50 md:block"
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
             transition={{ duration: 1, ease: 'easeInOut' }}
@@ -46,12 +46,12 @@ export function MilestonesSection({ milestones }: MilestonesSectionProps) {
                 viewport={{ once: false, margin: '-100px' }}
               >
                 <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                  <span className="text-primary text-lg font-bold">{milestone.year}</span>
-                  <h3 className="text-foreground mt-1 text-xl font-semibold">{milestone.title}</h3>
-                  <p className="text-muted-foreground mt-2">{milestone.description}</p>
+                  <span className="text-lg font-bold text-[#E03B37]">{milestone.year}</span>
+                  <h3 className="mt-1 text-xl font-semibold text-white">{milestone.title}</h3>
+                  <p className="mt-2 text-gray-400">{milestone.description}</p>
                 </div>
                 <motion.div
-                  className="from-primary to-accent shadow-primary/30 relative z-10 h-4 w-4 shrink-0 rounded-full bg-linear-to-br shadow-lg"
+                  className="relative z-10 h-4 w-4 shrink-0 rounded-full bg-linear-to-br from-[#E03B37] to-[#E03B37]/80 shadow-lg shadow-[#E03B37]/30"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   transition={{ duration: 0.4, delay: index * 0.15 + 0.2 }}

@@ -11,7 +11,7 @@ const testimonials = [
     name: 'Satendra Raghav',
     role: 'CEO, Tourillo Pvt. Ltd.',
     content:
-      'We had an excellent experience working with this developer. They captured Tourillo vision beautifully and delivered a website that reflects our brand’s elegance, purpose, and passion for travel. The design is engaging, user-friendly, and perfectly aligned with our focus on personalized journeys and responsible tourism. Their attention to detail, creativity, and professionalism truly stood out. We are extremely happy with the outcome.',
+      "We had an excellent experience working with this developer. They captured Tourillo vision beautifully and delivered a website that reflects our brand's elegance, purpose, and passion for travel. The design is engaging, user-friendly, and perfectly aligned with our focus on personalized journeys and responsible tourism. Their attention to detail, creativity, and professionalism truly stood out. We are extremely happy with the outcome.",
     rating: 5,
   },
   {
@@ -25,7 +25,7 @@ const testimonials = [
     name: 'Arnab Gupta',
     role: 'Founder, Fincafe',
     content:
-      'Working with them was a great experience. They perfectly understood Fincafe’s vision and translated it into a clean, professional, and impactful website. The design, content flow, and overall user experience truly reflect our brand and mission. Highly reliable, creative, and responsive throughout the project—we are extremely satisfied with the final result.',
+      "Working with them was a great experience. They perfectly understood Fincafe's vision and translated it into a clean, professional, and impactful website. The design, content flow, and overall user experience truly reflect our brand and mission. Highly reliable, creative, and responsive throughout the project — we are extremely satisfied with the final result.",
     rating: 5,
   },
   {
@@ -106,14 +106,14 @@ export function TestimonialsSection() {
 
   return (
     <section className="relative overflow-hidden py-20">
-      <div className="from-secondary/30 via-background to-background absolute inset-0 bg-linear-to-b" />
-      <div className="bg-primary/5 absolute top-0 right-1/4 h-75 w-75 rounded-full blur-[100px]" />
+      <div className="absolute inset-0 bg-linear-to-b from-[#0e0e18] via-[#0a0a12] to-[#0a0a12]" />
+      <div className="absolute top-0 right-1/4 h-75 w-75 rounded-full bg-[#E03B37]/5 blur-[100px]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
-          <p className="text-primary mb-2 font-semibold">Testimonials</p>
-          <h2 className="text-foreground mb-4 text-3xl font-bold text-balance sm:text-4xl">What Our Clients Say</h2>
-          <p className="text-muted-foreground mx-auto max-w-2xl">
+          <p className="mb-2 font-semibold text-[#E03B37]">Testimonials</p>
+          <h2 className="mb-4 text-3xl font-bold text-balance text-white sm:text-4xl">What Our Clients Say</h2>
+          <p className="mx-auto max-w-2xl text-gray-400">
             Don't just take our word for it. Here's what our clients have to say about working with us.
           </p>
         </div>
@@ -147,18 +147,18 @@ export function TestimonialsSection() {
                 }}
                 className="absolute w-full"
               >
-                <Card className="bg-card/50 border-border hover:border-primary/30 group relative backdrop-blur-sm transition-all duration-300">
+                <Card className="group relative border-white/10 bg-[#111119] backdrop-blur-sm transition-all duration-300 hover:border-[#E03B37]/30">
                   <CardContent className="flex flex-col pt-8 pb-6">
-                    <Quote className="text-primary/20 group-hover:text-primary/30 absolute top-6 right-6 h-8 w-8 transition-colors" />
+                    <Quote className="absolute top-6 right-6 h-8 w-8 text-[#E03B37]/20 transition-colors group-hover:text-[#E03B37]/30" />
                     <div className="mb-4 flex gap-1">
                       {Array.from({ length: testimonials[currentIndex].rating }).map((_, i) => (
-                        <Star key={i} className="fill-primary text-primary h-4 w-4" />
+                        <Star key={i} className="h-4 w-4 fill-[#E03B37] text-[#E03B37]" />
                       ))}
                     </div>
-                    <p className="text-muted-foreground mb-6 leading-relaxed">"{testimonials[currentIndex].content}"</p>
+                    <p className="mb-6 leading-relaxed text-gray-400">"{testimonials[currentIndex].content}"</p>
                     <div className="mt-auto flex items-center gap-3">
-                      <div className="from-primary/20 to-accent/20 flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br">
-                        <span className="text-primary font-semibold">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/20">
+                        <span className="font-semibold text-[#E03B37]">
                           {testimonials[currentIndex].name
                             .split(' ')
                             .map((n) => n[0])
@@ -166,8 +166,8 @@ export function TestimonialsSection() {
                         </span>
                       </div>
                       <div>
-                        <p className="text-foreground font-semibold">{testimonials[currentIndex].name}</p>
-                        <p className="text-muted-foreground text-sm">{testimonials[currentIndex].role}</p>
+                        <p className="font-semibold text-white">{testimonials[currentIndex].name}</p>
+                        <p className="text-sm text-gray-400">{testimonials[currentIndex].role}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -182,7 +182,7 @@ export function TestimonialsSection() {
               variant="outline"
               size="icon"
               onClick={() => paginate(-1)}
-              className="hover:bg-primary/10 hover:border-primary/50 transition-all"
+              className="border-white/10 transition-all hover:border-[#E03B37]/50 hover:bg-[#E03B37]/10"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -195,7 +195,7 @@ export function TestimonialsSection() {
                   key={index}
                   onClick={() => goToSlide(index)}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    index === currentIndex ? 'bg-primary w-8' : 'bg-muted-foreground/30 w-2'
+                    index === currentIndex ? 'w-8 bg-[#E03B37]' : 'w-2 bg-gray-500/30'
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
                 />
@@ -206,7 +206,7 @@ export function TestimonialsSection() {
               variant="outline"
               size="icon"
               onClick={() => paginate(1)}
-              className="hover:bg-primary/10 hover:border-primary/50 transition-all"
+              className="border-white/10 transition-all hover:border-[#E03B37]/50 hover:bg-[#E03B37]/10"
               aria-label="Next testimonial"
             >
               <ChevronRight className="h-4 w-4" />

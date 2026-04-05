@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { FadeIn } from '@/components/animate';
 
 const stats = [
   { value: 50, suffix: '+', label: 'Projects Completed' },
@@ -53,7 +54,7 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
   }, [isVisible, value]);
 
   return (
-    <div ref={ref} className="text-primary-foreground mb-2 text-4xl font-bold sm:text-5xl">
+    <div ref={ref} className="mb-2 text-4xl font-bold text-white sm:text-5xl">
       {count}
       {suffix}
     </div>
@@ -63,16 +64,18 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
 export function StatsSection() {
   return (
     <section className="relative overflow-hidden py-16">
-      <div className="from-primary/90 via-primary/80 to-primary/90 absolute inset-0 bg-linear-to-r" />
+      <div className="absolute inset-0 bg-linear-to-r from-[#E03B37]/90 via-[#E03B37]/80 to-[#E03B37]/90" />
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <AnimatedNumber value={stat.value} suffix={stat.suffix} />
-              <p className="text-primary-foreground/80">{stat.label}</p>
-            </div>
+          {stats.map((stat, index) => (
+            <FadeIn key={stat.label} delay={index * 0.1}>
+              <div className="text-center">
+                <AnimatedNumber value={stat.value} suffix={stat.suffix} />
+                <p className="text-white/80">{stat.label}</p>
+              </div>
+            </FadeIn>
           ))}
         </div>
       </div>

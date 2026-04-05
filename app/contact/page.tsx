@@ -12,17 +12,21 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { BreadcrumbNav } from '@/components/breadcrumb-nav';
+import { FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from '@/components/animate';
 import {
   Mail,
   Phone,
   MapPin,
   Clock,
-  MessageSquare,
   Linkedin,
   Instagram,
-  CheckCircle2,
-  XCircle,
   Send,
+  Zap,
+  CalendarCheck,
+  Handshake,
+  FileCheck,
+  ExternalLink,
 } from 'lucide-react';
 
 const contactInfo = [
@@ -62,12 +66,69 @@ const services = [
   'Other',
 ];
 
+const organizationTypes = [
+  { value: 'startup', label: 'Startup' },
+  { value: 'smb-msme', label: 'SMB / MSME' },
+  { value: 'enterprise', label: 'Enterprise' },
+  { value: 'education', label: 'Education' },
+  { value: 'self-employed', label: 'Self-Employed' },
+];
+
+const faqs = [
+  {
+    q: 'How long does a typical project take?',
+    a: 'Project timelines vary based on scope. A simple website takes 4-6 weeks, while complex applications can take 3-6 months.',
+  },
+  {
+    q: 'Do you provide post-launch support?',
+    a: 'Yes! We offer various support packages including maintenance, updates, and technical support to ensure smooth operations.',
+  },
+  {
+    q: 'Can I hire dedicated developers?',
+    a: 'Our agile hiring model lets you hire dedicated specialists who work exclusively for your company.',
+  },
+];
+
+const contactPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contact Bitropix',
+  description: 'Get in touch with Bitropix for a free IT consultation and project quote.',
+  url: 'https://bitropix.com/contact',
+  mainEntity: {
+    '@type': 'Organization',
+    name: 'Bitropix',
+    telephone: '+91-9318454571',
+    email: 'info@bitropix.com',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Noida',
+      addressRegion: 'Uttar Pradesh',
+      addressCountry: 'IN',
+    },
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.a,
+    },
+  })),
+};
+
 export default function ContactPage() {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
     phone: '',
     company: '',
+    organizationType: '',
     service: '',
     budget: '',
     message: '',
@@ -116,7 +177,7 @@ export default function ContactPage() {
       toast.success((t) => (
         <div className="flex items-start gap-3">
           <div>
-            <p className="font-semibold text-gray-900">Message sent successfully!</p>
+            <p className="font-semibold">Message sent successfully!</p>
           </div>
         </div>
       ));
@@ -127,6 +188,7 @@ export default function ContactPage() {
         email: '',
         phone: '',
         company: '',
+        organizationType: '',
         service: '',
         budget: '',
         message: '',
@@ -140,18 +202,12 @@ export default function ContactPage() {
         (t) => (
           <div className="flex items-start gap-3">
             <div>
-              <p className="font-semibold text-gray-900">Failed to send message</p>
+              <p className="font-semibold">Failed to send message</p>
             </div>
           </div>
         ),
         {
           duration: 5000,
-          style: {
-            background: '#fff',
-            padding: '16px',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-          },
         }
       );
     } finally {
@@ -161,319 +217,381 @@ export default function ContactPage() {
 
   return (
     <>
+      {/* Schema Markup */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+
       <Navbar />
       <main className="pt-16">
-        <section className="bg-primary/5 relative overflow-hidden py-20">
-          {/* <div className="from-secondary/50 via-background to-primary/5 absolute inset-0 bg-linear-to-br" /> */}
-          {/* <div className="bg-primary/10 absolute right-0 bottom-0 h-125 w-125 rounded-full blur-[100px]" /> */}
+        {/* Hero Section */}
+        <section className="relative overflow-hidden bg-[#0e0e18] py-20">
+          <div className="absolute right-0 bottom-0 h-80 w-80 rounded-full bg-[#E03B37]/10 blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <p className="text-primary mb-2 font-semibold">Get In Touch</p>
-            <h1 className="text-foreground mb-6 text-4xl font-bold sm:text-5xl">
-              Let's Build Something Great Together
-            </h1>
-            <p className="text-muted-foreground mx-auto max-w-3xl text-lg">
-              Have a project in mind? Want to learn more about our services? We'd love to hear from you. Reach out and
-              let's start a conversation.
+            <BreadcrumbNav items={[{ label: 'Contact' }]} />
+            <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full bg-[#E03B37]/10 px-4 py-1.5 text-sm font-semibold text-[#E03B37]">
+              <Zap className="h-4 w-4" />
+              Response time: Within 2 hours
+            </div>
+            <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl">Get Your Free IT Consultation Today</h1>
+            <p className="mx-auto max-w-3xl text-lg text-gray-400">
+              Whether you need a custom software solution, want to modernize your infrastructure, or are looking for a
+              technology partner — we are here to help. Tell us about your project and get a tailored proposal.
             </p>
           </div>
         </section>
 
-        <section className="border-border border-b py-12">
+        {/* Contact Info Cards */}
+        <section className="border-b border-white/10 py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {contactInfo.map((info) => (
-                <Card
-                  key={info.title}
-                  className="bg-card/30 border-border hover:border-primary/30 group transition-all duration-300"
-                >
-                  <CardContent className="pt-6">
-                    <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 mb-4 flex h-12 w-12 items-center justify-center rounded bg-linear-to-br transition-all">
-                      <info.icon className="text-primary h-6 w-6" />
-                    </div>
-                    <h3 className="text-foreground mb-2 font-semibold">{info.title}</h3>
-                    {info.details.map((detail) => (
-                      <p key={detail} className="text-muted-foreground text-sm">
-                        {detail}
-                      </p>
-                    ))}
-                  </CardContent>
-                </Card>
+                <StaggerItem key={info.title}>
+                  <Card className="group border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30">
+                    <CardContent className="pt-6">
+                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
+                        <info.icon className="h-6 w-6 text-[#E03B37]" />
+                      </div>
+                      <h3 className="mb-2 font-semibold text-white">{info.title}</h3>
+                      {info.details.map((detail) => (
+                        <p key={detail} className="text-sm text-gray-400">
+                          {detail}
+                        </p>
+                      ))}
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
+        {/* Form + Sidebar Section */}
         <section className="py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-6 lg:grid-cols-2">
-              <Card className="bg-card/30 border-border border-2 p-6 transition-all duration-300">
-                <div className="mb-8">
-                  <h2 className="text-foreground mb-3 text-3xl font-bold">Send Us a Message</h2>
-                  <p className="text-muted-foreground text-base">
-                    Fill out the form below and we'll get back to you within 24 hours.
-                  </p>
-                </div>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid gap-6 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="name" className="text-foreground text-sm font-medium">
-                        Full Name <span className="text-red-500">*</span>
-                      </Label>
-                      <Input
-                        id="name"
-                        placeholder="John Doe"
-                        required
-                        value={formState.name}
-                        onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 border-2 transition-all focus:ring-2"
-                        minLength={2}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email" className="text-foreground text-sm font-medium">
-                        Email Address <span className="text-red-500">*</span>
-                      </Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="john@company.com"
-                        required
-                        value={formState.email}
-                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                        className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 border-2 transition-all focus:ring-2"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-6 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="phone" className="text-foreground text-sm font-medium">
-                        Phone Number
-                      </Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="+91 98765 43210"
-                        value={formState.phone}
-                        onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
-                        className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 border-2 transition-all focus:ring-2"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="company" className="text-foreground text-sm font-medium">
-                        Company Name
-                      </Label>
-                      <Input
-                        id="company"
-                        placeholder="Your Company"
-                        value={formState.company}
-                        onChange={(e) => setFormState({ ...formState, company: e.target.value })}
-                        className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 border-2 transition-all focus:ring-2"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-6 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="service" className="text-foreground text-sm font-medium">
-                        Service Interested In <span className="text-red-500">*</span>
-                      </Label>
-                      <Select
-                        required
-                        value={formState.service}
-                        onValueChange={(value) => setFormState({ ...formState, service: value })}
-                      >
-                        <SelectTrigger className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 w-full border-2 transition-all focus:ring-2">
-                          <SelectValue placeholder="Select a service" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {services.map((service) => (
-                            <SelectItem key={service} value={service.toLowerCase().replace(/\s+/g, '-')}>
-                              {service}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="budget" className="text-foreground text-sm font-medium">
-                        Budget Range
-                      </Label>
-                      <Select
-                        value={formState.budget}
-                        onValueChange={(value) => setFormState({ ...formState, budget: value })}
-                      >
-                        <SelectTrigger className="border-border bg-background focus:border-primary focus:ring-primary/20 h-11 w-full border-2 transition-all focus:ring-2">
-                          <SelectValue placeholder="Select budget" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="under-5l">Under ₹5 Lakhs</SelectItem>
-                          <SelectItem value="5l-15l">₹5 - 15 Lakhs</SelectItem>
-                          <SelectItem value="15l-30l">₹15 - 30 Lakhs</SelectItem>
-                          <SelectItem value="above-30l">Above ₹30 Lakhs</SelectItem>
-                          <SelectItem value="not-sure">Not Sure Yet</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message" className="text-foreground text-sm font-medium">
-                      Project Details <span className="text-red-500">*</span>
-                    </Label>
-                    <Textarea
-                      id="message"
-                      placeholder="Tell us about your project requirements, timeline, and any specific needs..."
-                      rows={6}
-                      required
-                      value={formState.message}
-                      onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      className="border-border bg-background focus:border-primary focus:ring-primary/20 h-40 resize-none border-2 transition-all focus:ring-2"
-                      minLength={10}
-                    />
-                    <div className="flex items-center justify-between">
-                      <p className="text-muted-foreground text-xs">{formState.message.length}/10 characters minimum</p>
-                      <p className="text-muted-foreground text-xs">{formState.message.length}/500</p>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-end pt-2">
-                    <Button
-                      type="submit"
-                      size="lg"
-                      disabled={isLoading}
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground hover:shadow-primary/25 h-12 w-full cursor-pointer px-8 text-base font-semibold shadow-lg transition-all duration-300 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-                    >
-                      {isLoading ? (
-                        <>
-                          <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="mr-2 h-5 w-5" />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </form>
-              </Card>
-              <div className="space-y-6">
-                <Card className="bg-card/30 border-border hover:border-primary/30 border-2 transition-all duration-300">
-                  <CardContent className="pt-6">
-                    <h3 className="text-foreground mb-4 text-lg font-semibold">Connect With Us</h3>
-                    <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
-                      Follow us on social media to stay updated with our latest projects, insights, and company news.
+              {/* Contact Form */}
+              <FadeInLeft>
+                <Card className="border-2 border-white/10 bg-[#111119] p-6 transition-all duration-300">
+                  <div className="mb-8">
+                    <h2 className="mb-3 text-3xl font-bold text-white">Send Us a Message</h2>
+                    <p className="text-base text-gray-400">
+                      Fill out the form below and we will get back to you within 2 hours during business days.
                     </p>
-                    <div className="flex gap-4">
-                      <a
-                        href="https://www.linkedin.com/company/bitropix/about/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-primary/90 flex h-12 w-12 items-center justify-center rounded bg-linear-to-br transition-all duration-300 hover:scale-110 hover:text-white hover:shadow-lg"
-                        aria-label="LinkedIn"
-                      >
-                        <Linkedin className="h-5 w-5" />
-                      </a>
-                      <a
-                        href="https://www.instagram.com/bitropix/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="from-primary/20 to-primary/5 text-primary hover:from-primary hover:to-primary/90 flex h-12 w-12 items-center justify-center rounded bg-linear-to-br transition-all duration-300 hover:scale-110 hover:text-white hover:shadow-lg"
-                        aria-label="Instagram"
-                      >
-                        <Instagram className="h-5 w-5" />
-                      </a>
-                    </div>
-                  </CardContent>
-                </Card>
+                  </div>
 
-                <Card className="bg-card/30 border-primary/20 group hover:border-primary/40 overflow-hidden border-2 transition-all duration-300">
-                  <CardContent className="relative pt-6">
-                    <div className="bg-primary/5 group-hover:bg-primary/10 absolute top-0 right-0 h-24 w-24 rounded-full blur-2xl transition-all duration-300" />
-                    <div className="relative">
-                      <div className="mb-3 flex items-start gap-3">
-                        <div className="from-primary/20 to-primary/5 flex h-10 w-10 shrink-0 items-center justify-center rounded bg-linear-to-br">
-                          <Clock className="text-primary h-5 w-5" />
-                        </div>
-                        <div>
-                          <h3 className="text-foreground text-base font-semibold">Quick Response Guarantee</h3>
-                        </div>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid gap-6 sm:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="name" className="text-sm font-medium text-white">
+                          Full Name <span className="text-red-500">*</span>
+                        </Label>
+                        <Input
+                          id="name"
+                          placeholder="John Doe"
+                          required
+                          value={formState.name}
+                          onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                          className="h-11 border-2 border-white/10 bg-[#111119] text-white transition-all placeholder:text-gray-500 focus:border-[#E03B37] focus:ring-2 focus:ring-[#E03B37]/20"
+                          minLength={2}
+                        />
                       </div>
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        We value your time. Our team responds to all inquiries within 24 hours during business days. For
-                        urgent matters, please call us directly at{' '}
-                        <span className="text-primary font-medium">+91 9318454571</span>.
+                      <div className="space-y-2">
+                        <Label htmlFor="email" className="text-sm font-medium text-white">
+                          Email Address <span className="text-red-500">*</span>
+                        </Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="john@company.com"
+                          required
+                          value={formState.email}
+                          onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                          className="h-11 border-2 border-white/10 bg-[#111119] text-white transition-all placeholder:text-gray-500 focus:border-[#E03B37] focus:ring-2 focus:ring-[#E03B37]/20"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid gap-6 sm:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="phone" className="text-sm font-medium text-white">
+                          Phone Number
+                        </Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          placeholder="+91 98765 43210"
+                          value={formState.phone}
+                          onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
+                          className="h-11 border-2 border-white/10 bg-[#111119] text-white transition-all placeholder:text-gray-500 focus:border-[#E03B37] focus:ring-2 focus:ring-[#E03B37]/20"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="company" className="text-sm font-medium text-white">
+                          Company Name
+                        </Label>
+                        <Input
+                          id="company"
+                          placeholder="Your Company"
+                          value={formState.company}
+                          onChange={(e) => setFormState({ ...formState, company: e.target.value })}
+                          className="h-11 border-2 border-white/10 bg-[#111119] text-white transition-all placeholder:text-gray-500 focus:border-[#E03B37] focus:ring-2 focus:ring-[#E03B37]/20"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Organization Type - New Field */}
+                    <div className="space-y-2">
+                      <Label htmlFor="organizationType" className="text-sm font-medium text-white">
+                        Organization Type
+                      </Label>
+                      <div className="flex flex-wrap gap-2">
+                        {organizationTypes.map((org) => (
+                          <button
+                            key={org.value}
+                            type="button"
+                            onClick={() => setFormState({ ...formState, organizationType: org.value })}
+                            className={`rounded-full border-2 px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                              formState.organizationType === org.value
+                                ? 'border-[#E03B37] bg-[#E03B37]/10 text-[#E03B37]'
+                                : 'border-white/10 bg-[#111119] text-gray-400 hover:border-[#E03B37]/30 hover:bg-[#E03B37]/5'
+                            }`}
+                          >
+                            {org.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="grid gap-6 sm:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="service" className="text-sm font-medium text-white">
+                          Service Interested In <span className="text-red-500">*</span>
+                        </Label>
+                        <Select
+                          required
+                          value={formState.service}
+                          onValueChange={(value) => setFormState({ ...formState, service: value })}
+                        >
+                          <SelectTrigger className="h-11 w-full border-2 border-white/10 bg-[#111119] text-white transition-all focus:border-[#E03B37] focus:ring-2 focus:ring-[#E03B37]/20">
+                            <SelectValue placeholder="Select a service" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {services.map((service) => (
+                              <SelectItem key={service} value={service.toLowerCase().replace(/\s+/g, '-')}>
+                                {service}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="budget" className="text-sm font-medium text-white">
+                          Budget Range
+                        </Label>
+                        <Select
+                          value={formState.budget}
+                          onValueChange={(value) => setFormState({ ...formState, budget: value })}
+                        >
+                          <SelectTrigger className="h-11 w-full border-2 border-white/10 bg-[#111119] text-white transition-all focus:border-[#E03B37] focus:ring-2 focus:ring-[#E03B37]/20">
+                            <SelectValue placeholder="Select budget" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="under-5l">Under 5 Lakhs</SelectItem>
+                            <SelectItem value="5l-15l">5 - 15 Lakhs</SelectItem>
+                            <SelectItem value="15l-30l">15 - 30 Lakhs</SelectItem>
+                            <SelectItem value="above-30l">Above 30 Lakhs</SelectItem>
+                            <SelectItem value="not-sure">Not Sure Yet</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="message" className="text-sm font-medium text-white">
+                        Project Details <span className="text-red-500">*</span>
+                      </Label>
+                      <Textarea
+                        id="message"
+                        placeholder="Tell us about your project requirements, timeline, and any specific needs..."
+                        rows={6}
+                        required
+                        value={formState.message}
+                        onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                        className="h-40 resize-none border-2 border-white/10 bg-[#111119] text-white transition-all placeholder:text-gray-500 focus:border-[#E03B37] focus:ring-2 focus:ring-[#E03B37]/20"
+                        minLength={10}
+                      />
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-gray-500">{formState.message.length}/10 characters minimum</p>
+                        <p className="text-xs text-gray-500">{formState.message.length}/500</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end pt-2">
+                      <Button
+                        type="submit"
+                        size="lg"
+                        disabled={isLoading}
+                        className="h-12 w-full cursor-pointer bg-[#E03B37] px-8 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-xl hover:shadow-[#E03B37]/25 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                      >
+                        {isLoading ? (
+                          <>
+                            <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="mr-2 h-5 w-5" />
+                            Get Free Consultation
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </form>
+                </Card>
+              </FadeInLeft>
+
+              {/* Sidebar */}
+              <FadeInRight>
+                <div className="space-y-6">
+                  {/* Connect With Us */}
+                  <Card className="border-2 border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30">
+                    <CardContent className="pt-6">
+                      <h3 className="mb-4 text-lg font-semibold text-white">Connect With Us</h3>
+                      <p className="mb-6 text-sm leading-relaxed text-gray-400">
+                        Follow us on social media to stay updated with our latest projects, insights, and company news.
                       </p>
-                    </div>
-                  </CardContent>
-                </Card>
+                      <div className="flex gap-4">
+                        <a
+                          href="https://www.linkedin.com/company/bitropix/about/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex h-12 w-12 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 text-[#E03B37] transition-all duration-300 hover:scale-110 hover:from-[#E03B37] hover:to-[#E03B37]/90 hover:text-white hover:shadow-lg"
+                          aria-label="LinkedIn"
+                        >
+                          <Linkedin className="h-5 w-5" />
+                        </a>
+                        <a
+                          href="https://www.instagram.com/bitropix/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex h-12 w-12 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 text-[#E03B37] transition-all duration-300 hover:scale-110 hover:from-[#E03B37] hover:to-[#E03B37]/90 hover:text-white hover:shadow-lg"
+                          aria-label="Instagram"
+                        >
+                          <Instagram className="h-5 w-5" />
+                        </a>
+                      </div>
+                    </CardContent>
+                  </Card>
 
-                <Card className="from-primary/10 to-secondary/10 border-primary/20 border-2 bg-linear-to-br">
-                  <CardContent className="pt-6">
-                    <h3 className="text-foreground mb-3 text-base font-semibold">What Happens Next?</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3">
-                        <div className="bg-primary/20 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                          <span className="text-primary text-xs font-bold">1</span>
+                  {/* Response Guarantee */}
+                  <Card className="group overflow-hidden border-2 border-[#E03B37]/20 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/40">
+                    <CardContent className="relative pt-6">
+                      <div className="absolute top-0 right-0 h-24 w-24 rounded-full bg-[#E03B37]/5 blur-2xl transition-all duration-300 group-hover:bg-[#E03B37]/10" />
+                      <div className="relative">
+                        <div className="mb-3 flex items-start gap-3">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
+                            <Zap className="h-5 w-5 text-[#E03B37]" />
+                          </div>
+                          <div>
+                            <h3 className="text-base font-semibold text-white">2-Hour Response Guarantee</h3>
+                            <p className="text-sm font-medium text-[#E03B37]">During business hours</p>
+                          </div>
                         </div>
-                        <p className="text-muted-foreground text-sm">We review your project details within 2 hours</p>
+                        <p className="text-sm leading-relaxed text-gray-400">
+                          We value your time. Our team responds to all inquiries within 2 hours during business days.
+                          For urgent matters, please call us directly at{' '}
+                          <span className="font-medium text-[#E03B37]">+91 9318454571</span>.
+                        </p>
                       </div>
-                      <div className="flex items-start gap-3">
-                        <div className="bg-primary/20 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                          <span className="text-primary text-xs font-bold">2</span>
+                    </CardContent>
+                  </Card>
+
+                  {/* What Happens Next */}
+                  <Card className="border-2 border-[#E03B37]/20 bg-linear-to-br from-[#E03B37]/10 to-[#161622]">
+                    <CardContent className="pt-6">
+                      <h3 className="mb-4 text-base font-semibold text-white">What Happens After You Reach Out?</h3>
+                      <div className="space-y-4">
+                        <div className="flex items-start gap-3">
+                          <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E03B37]/20">
+                            <FileCheck className="h-4 w-4 text-[#E03B37]" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold text-white">We Review Your Requirements</p>
+                            <p className="text-xs text-gray-500">
+                              Within 2 hours, our team analyzes your project scope and goals.
+                            </p>
+                          </div>
                         </div>
-                        <p className="text-muted-foreground text-sm">Our expert gets in touch within 24 hours</p>
+                        <div className="flex items-start gap-3">
+                          <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E03B37]/20">
+                            <CalendarCheck className="h-4 w-4 text-[#E03B37]" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold text-white">Discovery Call Scheduled</p>
+                            <p className="text-xs text-gray-500">
+                              A domain expert reaches out within 24 hours to set up a call.
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E03B37]/20">
+                            <Handshake className="h-4 w-4 text-[#E03B37]" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold text-white">Tailored Proposal Delivered</p>
+                            <p className="text-xs text-gray-500">
+                              You receive a detailed proposal with timeline, tech stack, and pricing.
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex items-start gap-3">
-                        <div className="bg-primary/20 mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                          <span className="text-primary text-xs font-bold">3</span>
-                        </div>
-                        <p className="text-muted-foreground text-sm">We schedule a call to discuss your needs</p>
+                    </CardContent>
+                  </Card>
+
+                  {/* Google Maps Placeholder */}
+                  <Card className="overflow-hidden border-2 border-white/10 bg-[#111119]">
+                    <div className="flex h-48 items-center justify-center bg-[#161622]">
+                      <div className="text-center">
+                        <MapPin className="mx-auto mb-2 h-8 w-8 text-[#E03B37]" />
+                        <p className="mb-1 text-sm font-semibold text-white">Bitropix - Noida, Uttar Pradesh</p>
+                        <a
+                          href="https://maps.google.com/?q=Noida+Uttar+Pradesh+India"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-medium text-[#E03B37] transition-colors hover:text-[#E03B37]/80"
+                        >
+                          View on Google Maps
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+                  </Card>
+                </div>
+              </FadeInRight>
             </div>
           </div>
         </section>
 
+        {/* FAQ Section */}
         <section className="relative overflow-hidden py-20">
-          <div className="from-secondary/20 via-background to-background absolute inset-0 bg-linear-to-b" />
+          <div className="absolute inset-0 bg-linear-to-b from-[#161622] via-[#0a0a12] to-[#0a0a12]" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <h2 className="text-foreground mb-4 text-2xl font-bold">Frequently Asked Questions</h2>
-            <p className="text-muted-foreground mx-auto mb-8 max-w-2xl">
+            <h2 className="mb-4 text-2xl font-bold text-white">Frequently Asked Questions</h2>
+            <p className="mx-auto mb-8 max-w-2xl text-gray-400">
               Have questions? Check out our FAQ section or reach out to us directly.
             </p>
-            <div className="grid gap-6 text-left md:grid-cols-3">
-              {[
-                {
-                  q: 'How long does a typical project take?',
-                  a: 'Project timelines vary based on scope. A simple website takes 4-6 weeks, while complex applications can take 3-6 months.',
-                },
-                {
-                  q: 'Do you provide post-launch support?',
-                  a: 'Yes! We offer various support packages including maintenance, updates, and technical support to ensure smooth operations.',
-                },
-                {
-                  q: 'Can I hire dedicated developers?',
-                  a: 'Our agile hiring model lets you hire dedicated specialists who work exclusively for your company.',
-                },
-              ].map((faq) => (
-                <Card
-                  key={faq.q}
-                  className="bg-card/30 border-border hover:border-primary/30 border-2 transition-all duration-300 hover:shadow-lg"
-                >
-                  <CardContent className="pt-6">
-                    <h3 className="text-foreground mb-3 text-base font-semibold">{faq.q}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{faq.a}</p>
-                  </CardContent>
-                </Card>
+            <StaggerContainer className="grid gap-6 text-left md:grid-cols-3">
+              {faqs.map((faq) => (
+                <StaggerItem key={faq.q}>
+                  <Card className="border-2 border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg">
+                    <CardContent className="pt-6">
+                      <h3 className="mb-3 text-base font-semibold text-white">{faq.q}</h3>
+                      <p className="text-sm leading-relaxed text-gray-400">{faq.a}</p>
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
       </main>

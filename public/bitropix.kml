@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Bitropix</name>
+    <description>Bitropix - IT Services &amp; Digital Marketing Agency in Noida, India</description>
+    <Placemark>
+      <name>Bitropix Office</name>
+      <description>Bitropix IT Services &amp; Digital Marketing Agency - Noida, Uttar Pradesh</description>
+      <Point>
+        <coordinates>77.3764,28.6273928,0</coordinates>
+      </Point>
+      <address>Sector 62, Noida, Uttar Pradesh 201301, India</address>
+      <phoneNumber>+91-9318454571</phoneNumber>
+    </Placemark>
+  </Document>
+</kml>

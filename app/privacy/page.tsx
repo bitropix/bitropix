@@ -2,6 +2,8 @@ import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { FadeIn } from '@/components/animate';
+import { BreadcrumbNav } from '@/components/breadcrumb-nav';
 import {
   Shield,
   Lock,
@@ -153,36 +155,36 @@ export default function PrivacyPage() {
       <main className="pt-16">
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20">
-          <div className="from-primary/10 via-background to-accent/5 absolute inset-0 bg-linear-to-br" />
-          <div className="bg-primary/10 absolute top-20 left-10 h-100 w-100 rounded-full blur-[100px]" />
+          <div className="absolute inset-0 bg-[#0e0e18]" />
+          <div className="absolute top-20 left-10 h-100 w-100 rounded-full bg-[#E03B37]/10 blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              {/* <div className="from-primary/20 to-primary/5 mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br">
-                <Shield className="text-primary h-10 w-10" />
-              </div> */}
-              <p className="text-primary mb-2 font-semibold">Privacy Policy</p>
-              <h1 className="text-foreground mb-6 text-4xl font-bold text-balance sm:text-5xl">
-                Your Privacy Matters to Us
-              </h1>
-              <p className="text-muted-foreground mx-auto max-w-3xl text-lg">
-                We are committed to protecting your personal information and being transparent about how we collect,
-                use, and safeguard your data.
-              </p>
-              <p className="text-muted-foreground mt-4 text-sm">Last updated: 30th May, 2025</p>
+              <BreadcrumbNav items={[{ label: 'Privacy Policy' }]} />
+              <FadeIn>
+                <p className="mb-2 font-semibold text-[#E03B37]">Privacy Policy</p>
+                <h1 className="mb-6 text-4xl font-bold text-balance text-white sm:text-5xl">
+                  Your Privacy Matters to Us
+                </h1>
+                <p className="mx-auto max-w-3xl text-lg text-gray-400">
+                  We are committed to protecting your personal information and being transparent about how we collect,
+                  use, and safeguard your data.
+                </p>
+                <p className="mt-4 text-sm text-gray-400">Last updated: 30th May, 2025</p>
+              </FadeIn>
             </div>
           </div>
         </section>
 
         {/* Quick Navigation */}
-        <section className="bg-secondary/30 border-border border-y py-8">
+        <section className="border-y border-white/10 bg-[#0e0e18] py-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <p className="text-muted-foreground mb-4 text-center text-sm font-semibold">Quick Navigation</p>
+            <p className="mb-4 text-center text-sm font-semibold text-gray-400">Quick Navigation</p>
             <div className="flex flex-wrap justify-center gap-3">
               {sections.map((section) => (
                 <a
                   key={section.id}
                   href={`#${section.id}`}
-                  className="text-foreground hover:bg-primary/10 hover:text-primary border-border bg-card/50 rounded-full border px-4 py-2 text-sm transition-all duration-300"
+                  className="rounded-full border border-white/10 bg-[#111119] px-4 py-2 text-sm text-white transition-all duration-300 hover:bg-[#E03B37]/10 hover:text-[#E03B37]"
                 >
                   {section.title}
                 </a>
@@ -196,93 +198,95 @@ export default function PrivacyPage() {
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <div className="space-y-16">
               {sections.map((section, index) => (
-                <div key={section.id} id={section.id} className="scroll-mt-24">
-                  <div className="bg-card/30 border-border group hover:border-primary/30 rounded p-8 transition-all duration-300">
-                    <div className="mb-6 flex items-start gap-4">
-                      <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 flex h-12 w-12 shrink-0 items-center justify-center rounded bg-linear-to-br transition-all">
-                        <section.icon className="text-primary h-6 w-6" />
+                <FadeIn key={section.id}>
+                  <div id={section.id} className="scroll-mt-24">
+                    <div className="group rounded border border-white/10 bg-[#111119] p-8 transition-all duration-300 hover:border-[#E03B37]/30">
+                      <div className="mb-6 flex items-start gap-4">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
+                          <section.icon className="h-6 w-6 text-[#E03B37]" />
+                        </div>
+                        <div className="flex-1">
+                          <h2 className="mb-3 text-2xl font-bold text-white">{section.title}</h2>
+                          {section.content && <p className="leading-relaxed text-gray-400">{section.content}</p>}
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h2 className="text-foreground mb-3 text-2xl font-bold">{section.title}</h2>
-                        {section.content && <p className="text-muted-foreground leading-relaxed">{section.content}</p>}
-                      </div>
+
+                      {section.items && (
+                        <ul className="space-y-2">
+                          {section.items.map((item) => (
+                            <li key={item} className="flex items-start gap-3 text-gray-400">
+                              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#E03B37]" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {section.subsections && (
+                        <div className="mt-6 space-y-6">
+                          {section.subsections.map((subsection, idx) => (
+                            <div key={idx}>
+                              <h3 className="mb-3 font-semibold text-white">{subsection.subtitle}</h3>
+                              <ul className="space-y-2">
+                                {subsection.items.map((item) => (
+                                  <li key={item} className="flex items-start gap-3 text-gray-400">
+                                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#E03B37]" />
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-
-                    {section.items && (
-                      <ul className="space-y-2">
-                        {section.items.map((item) => (
-                          <li key={item} className="text-muted-foreground flex items-start gap-3">
-                            <CheckCircle2 className="text-primary mt-0.5 h-5 w-5 shrink-0" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    {section.subsections && (
-                      <div className="mt-6 space-y-6">
-                        {section.subsections.map((subsection, idx) => (
-                          <div key={idx}>
-                            <h3 className="text-foreground mb-3 font-semibold">{subsection.subtitle}</h3>
-                            <ul className="space-y-2">
-                              {subsection.items.map((item) => (
-                                <li key={item} className="text-muted-foreground flex items-start gap-3">
-                                  <CheckCircle2 className="text-primary mt-0.5 h-5 w-5 shrink-0" />
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
-                      </div>
-                    )}
                   </div>
-                </div>
+                </FadeIn>
               ))}
 
               {/* Contact Section */}
-              <div id="contact" className="scroll-mt-24">
-                <div className="bg-card/30 border-primary/30 rounded border p-8">
-                  <div className="mb-6 flex items-start gap-4">
-                    <div className="from-primary/30 to-primary/10 flex h-12 w-12 shrink-0 items-center justify-center rounded bg-linear-to-br">
-                      <Mail className="text-primary h-6 w-6" />
-                    </div>
-                    <div className="flex-1">
-                      <h2 className="text-foreground mb-3 text-2xl font-bold">Contact Us</h2>
-                      <p className="text-muted-foreground mb-4 leading-relaxed">
-                        If you have any questions about this Privacy Policy, please contact us at:
-                      </p>
-                      <a
-                        href="mailto:info@bitropix.com"
-                        className="text-primary inline-flex items-center gap-2 font-semibold hover:underline"
-                      >
-                        <Mail className="h-4 w-4" />
-                        info@bitropix.com
-                      </a>
+              <FadeIn>
+                <div id="contact" className="scroll-mt-24">
+                  <div className="rounded border border-[#E03B37]/30 bg-[#111119] p-8">
+                    <div className="mb-6 flex items-start gap-4">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/30 to-[#E03B37]/10">
+                        <Mail className="h-6 w-6 text-[#E03B37]" />
+                      </div>
+                      <div className="flex-1">
+                        <h2 className="mb-3 text-2xl font-bold text-white">Contact Us</h2>
+                        <p className="mb-4 leading-relaxed text-gray-400">
+                          If you have any questions about this Privacy Policy, please contact us at:
+                        </p>
+                        <a
+                          href="mailto:info@bitropix.com"
+                          className="inline-flex items-center gap-2 font-semibold text-[#E03B37] hover:underline"
+                        >
+                          <Mail className="h-4 w-4" />
+                          info@bitropix.com
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </FadeIn>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
         <section className="relative overflow-hidden py-20">
-          <div className="from-primary via-primary/90 to-accent absolute inset-0 bg-linear-to-r" />
+          <div className="absolute inset-0 bg-linear-to-r from-[#E03B37] via-[#E03B37]/90 to-[#c62828]" />
           <div className="absolute inset-0 bg-[linear-linear(rgba(0,0,0,0.1)_1px,transparent_1px),linear-linear(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <h2 className="text-primary-foreground mb-4 text-3xl font-bold sm:text-4xl">
-              Questions About Your Privacy?
-            </h2>
-            <p className="text-primary-foreground/80 mx-auto mb-8 max-w-2xl">
+            <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Questions About Your Privacy?</h2>
+            <p className="mx-auto mb-8 max-w-2xl text-white/80">
               We're here to help. Reach out to us if you have any concerns or questions about how we handle your data.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-background text-foreground border-background hover:bg-background/90 transition-all duration-300"
+                className="border-[#0a0a12] bg-[#0a0a12] text-white transition-all duration-300 hover:bg-[#0a0a12]/90"
                 asChild
               >
                 <Link href="/contact">Contact Us</Link>
@@ -290,7 +294,7 @@ export default function PrivacyPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 bg-transparent transition-all duration-300"
+                className="border-white/30 bg-transparent text-white transition-all duration-300 hover:bg-white/10"
                 asChild
               >
                 <Link href="/about">About Us</Link>

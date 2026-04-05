@@ -2,6 +2,7 @@
 
 import { Award, Zap, HeartHandshake, Lightbulb } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { FadeIn, FadeInLeft, FadeInRight } from '@/components/animate';
 
 const reasons = [
   {
@@ -53,52 +54,58 @@ export function WhyUsSection() {
 
       {/* Parallax background element */}
       <div
-        className="bg-primary/5 absolute top-1/2 right-0 z-10 h-75 w-75 -translate-y-1/2 rounded-full blur-[100px]"
+        className="absolute top-1/2 right-0 z-10 h-75 w-75 -translate-y-1/2 rounded-full bg-[#E03B37]/5 blur-[100px]"
         style={{ transform: `translateY(${offsetY}px)` }}
       />
 
       <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div className="relative">
-            <div className="relative aspect-4/3 overflow-hidden rounded shadow">
-              <img
-                src="/professional-team-meeting-in-modern-office-discuss.jpg"
-                alt="Our team at work"
-                className="h-full w-full object-cover"
-              />
-              {/* <div className="from-background via-background/50 absolute inset-0 bg-linear-to-t to-transparent" /> */}
+          <FadeInLeft>
+            <div className="relative">
+              <div className="relative aspect-4/3 overflow-hidden rounded shadow">
+                <img
+                  src="/professional-team-meeting-in-modern-office-discuss.jpg"
+                  alt="Our team at work"
+                  className="h-full w-full object-cover"
+                />
+                {/* <div className="from-background via-background/50 absolute inset-0 bg-linear-to-t to-transparent" /> */}
+              </div>
+              {/* Floating stat card */}
+              <div className="absolute -right-6 -bottom-6 rounded bg-linear-to-br from-[#E03B37] to-[#E03B37]/80 p-6 text-white shadow-lg shadow-[#E03B37]/20">
+                <p className="text-4xl font-bold">98%</p>
+                <p className="text-sm opacity-90">Client Retention Rate</p>
+              </div>
             </div>
-            {/* Floating stat card */}
-            <div className="from-primary to-accent text-primary-foreground shadow-primary/20 absolute -right-6 -bottom-6 rounded bg-linear-to-br p-6 shadow-lg">
-              <p className="text-4xl font-bold">98%</p>
-              <p className="text-sm opacity-90">Client Retention Rate</p>
-            </div>
-          </div>
+          </FadeInLeft>
 
-          <div>
-            <p className="text-primary mb-2 font-semibold">Why Choose Us</p>
-            <h2 className="text-secondary mb-6 text-3xl font-bold text-balance sm:text-4xl">
-              Your Trusted Technology Partner
-            </h2>
-            <p className="text-muted mb-8 leading-relaxed">
-              We combine technical excellence with business acumen to deliver solutions that not only work but drive
-              real business value.
-            </p>
+          <FadeInRight>
+            <div>
+              <p className="mb-2 font-semibold text-[#E03B37]">Why Choose Us</p>
+              <h2 className="mb-6 text-3xl font-bold text-balance text-white sm:text-4xl">
+                Your Trusted Technology Partner
+              </h2>
+              <p className="mb-8 leading-relaxed text-gray-400">
+                We combine technical excellence with business acumen to deliver solutions that not only work but drive
+                real business value.
+              </p>
 
-            <div className="grid gap-6 sm:grid-cols-2">
-              {reasons.map((reason) => (
-                <div key={reason.title} className="group flex gap-4">
-                  <div className="from-primary/20 to-primary/5 group-hover:from-primary/30 group-hover:to-primary/10 flex h-10 w-10 shrink-0 items-center justify-center rounded bg-linear-to-br transition-all">
-                    <reason.icon className="text-primary h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-primary mb-1 font-semibold">{reason.title}</h3>
-                    <p className="text-muted text-sm leading-relaxed">{reason.description}</p>
-                  </div>
-                </div>
-              ))}
+              <div className="grid gap-6 sm:grid-cols-2">
+                {reasons.map((reason, index) => (
+                  <FadeIn key={reason.title} delay={index * 0.1}>
+                    <div className="group flex gap-4">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
+                        <reason.icon className="h-5 w-5 text-[#E03B37]" />
+                      </div>
+                      <div>
+                        <h3 className="mb-1 font-semibold text-[#E03B37]">{reason.title}</h3>
+                        <p className="text-sm leading-relaxed text-gray-400">{reason.description}</p>
+                      </div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
             </div>
-          </div>
+          </FadeInRight>
         </div>
       </div>
     </section>
