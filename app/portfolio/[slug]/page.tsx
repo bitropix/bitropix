@@ -108,7 +108,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         {/* Hero Section */}
         <section className="relative overflow-hidden py-16 sm:py-20">
           <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#E03B37]/8 via-transparent to-transparent" />
+          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
+          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid items-center gap-12 lg:grid-cols-2">
               <FadeInLeft>

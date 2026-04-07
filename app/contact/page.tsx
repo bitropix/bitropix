@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { BreadcrumbNav } from '@/components/breadcrumb-nav';
-import { FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from '@/components/animate';
+import { FadeIn, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from '@/components/animate';
 import {
   Mail,
   Phone,
@@ -211,19 +211,28 @@ export default function ContactPage() {
         <BreadcrumbNav items={[{ label: 'Contact' }]} />
 
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-[#0e0e18] py-20">
-          <div className="absolute right-0 bottom-0 h-80 w-80 rounded-full bg-[#E03B37]/10 blur-[100px]" />
-          <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full bg-[#E03B37]/10 px-4 py-1.5 text-sm font-semibold text-[#E03B37]">
-              <Zap className="h-4 w-4" />
-              Response time: Within 2 hours
+        <section className="relative overflow-hidden py-16 sm:py-24">
+          <div className="absolute inset-0 bg-[#0e0e18]" />
+          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
+          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
+          <FadeIn>
+            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
+                Response time: Within 2 hours
+              </span>
+              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+                Get Your Free{' '}
+                <span className="bg-linear-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">
+                  IT Consultation
+                </span>{' '}
+                Today
+              </h1>
+              <p className="mx-auto max-w-2xl text-lg text-gray-400">
+                Whether you need a custom software solution, want to modernize your infrastructure, or are looking for a
+                technology partner — we are here to help. Tell us about your project and get a tailored proposal.
+              </p>
             </div>
-            <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl">Get Your Free IT Consultation Today</h1>
-            <p className="mx-auto max-w-3xl text-lg text-gray-400">
-              Whether you need a custom software solution, want to modernize your infrastructure, or are looking for a
-              technology partner — we are here to help. Tell us about your project and get a tailored proposal.
-            </p>
-          </div>
+          </FadeIn>
         </section>
 
         {/* Contact Info Cards */}

@@ -14,7 +14,7 @@ interface MilestonesSectionProps {
 
 export function MilestonesSection({ milestones }: MilestonesSectionProps) {
   return (
-    <section className="py-20">
+    <section className="bg-[#0a0a12] py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           className="mb-16 text-center"

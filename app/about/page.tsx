@@ -1,11 +1,9 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { BreadcrumbNav } from '@/components/breadcrumb-nav';
 import { FadeIn, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from '@/components/animate';
 import Link from 'next/link';
-import { Target, Eye, Heart, Users, Globe, Award, ArrowRight, Linkedin } from 'lucide-react';
+import { Target, Eye, Heart, Users, Globe, Award, ArrowRight } from 'lucide-react';
 import { MilestonesSection } from '@/components/home/milestones-section';
 import Image from 'next/image';
 
@@ -74,39 +72,6 @@ const stats = [
   { value: '98%', label: 'Client Satisfaction' },
 ];
 
-const teamMembers = [
-  {
-    name: 'Diwakar Jha',
-    role: 'Founder & CEO',
-    description: 'Visionary leader with 5+ years in IT strategy and business development.',
-    image: '/placeholder-user.jpg',
-  },
-  {
-    name: 'Rahul Sharma',
-    role: 'Chief Technology Officer',
-    description: 'Full-stack architect specializing in scalable cloud-native solutions.',
-    image: '/placeholder-user.jpg',
-  },
-  {
-    name: 'Priya Verma',
-    role: 'Head of Design',
-    description: 'Award-winning designer passionate about creating intuitive user experiences.',
-    image: '/placeholder-user.jpg',
-  },
-  {
-    name: 'Amit Kumar',
-    role: 'Head of Marketing',
-    description: 'Digital marketing expert driving growth through data-driven strategies.',
-    image: '/placeholder-user.jpg',
-  },
-  {
-    name: 'Manish Singh',
-    role: 'Lead Developer',
-    description: 'Senior engineer with deep expertise in React, Next.js, and backend systems.',
-    image: '/placeholder-user.jpg',
-  },
-];
-
 const awards = [
   {
     title: 'Top IT Services Company 2025',
@@ -141,19 +106,49 @@ export default function AboutPage() {
       <Navbar />
       <main className="pt-16">
         <BreadcrumbNav items={[{ label: 'About Us' }]} />
+
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-[#0e0e18] py-24">
-          <div className="absolute inset-0 bg-linear-to-br from-[#E03B37]/10 via-[#0e0e18] to-[#c62828]/5" />
-          <div className="absolute top-20 right-10 h-100 w-100 rounded-full bg-[#E03B37]/10 blur-[100px]" />
-          <div className="absolute top-20 left-10 h-100 w-100 rounded-full bg-[#E03B37]/10 blur-[100px]" />
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="relative overflow-hidden py-16 sm:py-24">
+          <div className="absolute inset-0 bg-[#0e0e18]" />
+          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
+          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
+          <FadeIn>
+            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
+                About Us
+              </span>
+              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+                Who{' '}
+                <span className="bg-linear-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">We Are</span>
+              </h1>
+              <p className="mx-auto max-w-2xl text-lg text-gray-400">
+                Founded in 2023, Bitropix is a leading IT services company based in Noida, India. We have grown from a
+                small team with a big vision to a powerhouse of 25+ professionals serving 50+ clients across industries.
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
+                >
+                  Work With Us <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/services"
+                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+                >
+                  Our Services
+                </Link>
+              </div>
+            </div>
+          </FadeIn>
+        </section>
+
+        {/* About Detail Section */}
+        <section className="bg-[#0a0a12] py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid items-center gap-12 lg:grid-cols-2">
               <FadeInLeft>
                 <div>
-                  <p className="mb-3 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">About Us</p>
-                  <h1 className="mb-6 text-4xl font-bold text-balance text-white sm:text-5xl lg:text-6xl">
-                    Who We Are
-                  </h1>
                   <p className="mb-6 text-lg leading-relaxed text-gray-400">
                     Founded in 2023, Bitropix is a leading IT services company based in Noida, India. In just two years,
                     we have grown from a small team with a big vision to a powerhouse of 25+ professionals serving{' '}
@@ -165,20 +160,6 @@ export default function AboutPage() {
                     real, measurable results. Our team of passionate developers, designers, and strategists works
                     tirelessly to turn your vision into reality.
                   </p>
-                  <div className="mt-8 flex flex-wrap gap-4">
-                    <Button
-                      size="lg"
-                      className="bg-[#E03B37] text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
-                      asChild
-                    >
-                      <Link href="/contact">
-                        Work With Us <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                    <Button size="lg" variant="outline" className="border-white/10 text-white hover:bg-white/5" asChild>
-                      <Link href="/services">Our Services</Link>
-                    </Button>
-                  </div>
                 </div>
               </FadeInLeft>
               <FadeInRight>
@@ -219,11 +200,11 @@ export default function AboutPage() {
         </section>
 
         {/* Mission & Vision */}
-        <section className="py-20">
+        <section className="bg-[#0a0a12] py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn>
               <div className="grid gap-12 md:grid-cols-2">
-                <div className="group relative overflow-hidden rounded border border-white/10 bg-[#111119] p-8 transition-colors hover:border-[#E03B37]/40">
+                <div className="group relative overflow-hidden rounded-lg border border-white/10 bg-[#111119] p-8 transition-colors hover:border-[#E03B37]/40">
                   <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-[#E03B37]/5 blur-3xl transition-colors group-hover:bg-[#E03B37]/10" />
                   <div className="relative">
                     <div className="mb-6 flex h-14 w-14 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
@@ -237,7 +218,7 @@ export default function AboutPage() {
                     </p>
                   </div>
                 </div>
-                <div className="group relative overflow-hidden rounded border border-white/10 bg-[#111119] p-8 transition-colors hover:border-[#E03B37]/30">
+                <div className="group relative overflow-hidden rounded-lg border border-white/10 bg-[#111119] p-8 transition-colors hover:border-[#E03B37]/30">
                   <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-[#c62828]/5 blur-3xl transition-colors group-hover:bg-[#c62828]/10" />
                   <div className="relative">
                     <div className="mb-6 flex h-14 w-14 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
@@ -256,45 +237,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Team Section */}
-        {/* <section className="relative overflow-hidden bg-[#0e0e18] py-20">
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-16 text-center">
-              <p className="mb-2 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">Our Team</p>
-              <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Meet the People Behind Bitropix</h2>
-              <p className="mx-auto max-w-2xl text-gray-400">
-                A passionate team of engineers, designers, and strategists united by a shared mission to build
-                exceptional digital products.
-              </p>
-            </div>
-            <StaggerContainer className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-              {teamMembers.map((member) => (
-                <StaggerItem key={member.name}>
-                  <Card className="group overflow-hidden border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30">
-                    <div className="relative aspect-square overflow-hidden">
-                      <Image
-                        src={member.image}
-                        width={400}
-                        height={400}
-                        alt={`${member.name} - ${member.role} at Bitropix`}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-linear-to-t from-[#0a0a12]/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    </div>
-                    <CardContent className="pt-4 text-center">
-                      <h3 className="text-lg font-semibold text-white">{member.name}</h3>
-                      <p className="mb-2 text-sm font-medium text-[#E03B37]">{member.role}</p>
-                      <p className="text-xs leading-relaxed text-gray-400">{member.description}</p>
-                    </CardContent>
-                  </Card>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section> */}
-
         {/* Values Section */}
-        <section className="py-20">
+        <section className="bg-[#0e0e18] py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-16 text-center">
               <p className="mb-2 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">Our Values</p>
@@ -323,7 +267,7 @@ export default function AboutPage() {
         <MilestonesSection milestones={milestones} />
 
         {/* Awards & Recognition */}
-        <section className="py-20">
+        <section className="bg-[#0e0e18] py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-16 text-center">
               <p className="mb-2 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">Recognition</p>
@@ -334,21 +278,19 @@ export default function AboutPage() {
             </div>
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {awards.map((award) => (
-                <Card
+                <div
                   key={award.title}
-                  className="group border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30"
+                  className="group flex items-start gap-4 rounded-lg border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30"
                 >
-                  <CardContent className="flex items-start gap-4 pt-6">
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
-                      <Award className="h-7 w-7 text-[#E03B37]" />
-                    </div>
-                    <div>
-                      <h3 className="mb-1 font-semibold text-white">{award.title}</h3>
-                      <p className="text-sm font-medium text-[#E03B37]">{award.organization}</p>
-                      <p className="text-xs text-gray-400">{award.year}</p>
-                    </div>
-                  </CardContent>
-                </Card>
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
+                    <Award className="h-7 w-7 text-[#E03B37]" />
+                  </div>
+                  <div>
+                    <h3 className="mb-1 font-semibold text-white">{award.title}</h3>
+                    <p className="text-sm font-medium text-[#E03B37]">{award.organization}</p>
+                    <p className="text-xs text-gray-400">{award.year}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -364,24 +306,18 @@ export default function AboutPage() {
               Whether you are looking for a technology partner or a career opportunity, we would love to hear from you.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white bg-white text-[#0a0a12] transition-all duration-300 hover:bg-white/90"
-                asChild
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-lg border border-white bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all duration-300 hover:bg-white/90"
               >
-                <Link href="/contact">
-                  Start a Project <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white/30 bg-transparent text-white transition-all duration-300 hover:bg-white/10"
-                asChild
+                Start a Project <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/careers"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/30 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
               >
-                <Link href="/careers">View Careers</Link>
-              </Button>
+                View Careers
+              </Link>
             </div>
           </div>
         </section>

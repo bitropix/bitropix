@@ -1,8 +1,5 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -124,7 +121,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const relatedPosts = getRelatedPosts(post.slug, post.category);
 
-  // Find previous and next posts for navigation
   const currentIndex = blogPosts.findIndex((p) => p.slug === post.slug);
   const prevPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
   const nextPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
@@ -145,15 +141,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     publisher: {
       '@type': 'Organization',
       name: 'Bitropix',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://www.bitropix.com/images/logo.png',
-      },
+      logo: { '@type': 'ImageObject', url: 'https://www.bitropix.com/images/logo.png' },
     },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://www.bitropix.com/blogs/${post.slug}`,
-    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.bitropix.com/blogs/${post.slug}` },
     keywords: post.tags.join(', '),
     wordCount: post.content.replace(/<[^>]*>/g, '').split(/\s+/).length,
     articleSection: post.category,
@@ -163,24 +153,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://www.bitropix.com',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Blog',
-        item: 'https://www.bitropix.com/blogs',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: post.title,
-        item: `https://www.bitropix.com/blogs/${post.slug}`,
-      },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.bitropix.com' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.bitropix.com/blogs' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `https://www.bitropix.com/blogs/${post.slug}` },
     ],
   };
 
@@ -193,22 +168,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <BreadcrumbNav items={[{ label: 'Blog', href: '/blogs' }, { label: post.title }]} />
 
         {/* Article Header */}
-        <section className="relative overflow-hidden py-12 sm:py-16">
+        <section className="relative overflow-hidden py-16 sm:py-24">
           <div className="absolute inset-0 bg-[#0e0e18]" />
+          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
+          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
           <FadeIn>
             <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-              <div className="mb-6 flex flex-wrap items-center justify-center gap-3">
-                <Badge variant="secondary" className="border border-[#E03B37]/20 bg-[#E03B37]/10 text-[#E03B37]">
-                  {post.category}
-                </Badge>
-                {post.tags.slice(0, 3).map((tag) => (
-                  <Badge key={tag} variant="outline" className="border-white/10 text-gray-400">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
+                {post.category}
+              </span>
               <h1 className="mb-6 text-3xl leading-tight font-bold text-white sm:text-4xl lg:text-5xl">{post.title}</h1>
-              <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-400">{post.excerpt}</p>
+              <p className="mx-auto mb-6 max-w-2xl text-lg text-gray-400">{post.excerpt}</p>
               <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400">
                 <span className="flex items-center gap-2">
                   <User className="h-4 w-4" /> {post.author}
@@ -225,23 +195,25 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </section>
 
         {/* Featured Image */}
-        <FadeIn>
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <div className="relative aspect-video overflow-hidden rounded">
-              <Image
-                src={post.image}
-                alt={post.title}
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 1280px) 100vw, 1280px"
-              />
+        <div className="bg-[#0a0a12]">
+          <FadeIn>
+            <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+              <div className="relative aspect-video overflow-hidden rounded-lg">
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 1280px) 100vw, 1280px"
+                />
+              </div>
             </div>
-          </div>
-        </FadeIn>
+          </FadeIn>
+        </div>
 
         {/* Article Content + Sidebar */}
-        <section className="py-12 sm:py-16">
+        <section className="bg-[#0a0a12] py-12 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-12 lg:grid-cols-3">
               {/* Main Content */}
@@ -256,13 +228,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <div className="flex flex-wrap items-center gap-3">
                     <Tag className="h-5 w-5 text-gray-400" />
                     {post.tags.map((tag) => (
-                      <Badge
+                      <span
                         key={tag}
-                        variant="outline"
-                        className="border-white/10 text-gray-400 transition-colors hover:border-[#E03B37]/30 hover:bg-[#E03B37]/10"
+                        className="rounded-full border border-white/10 px-3 py-1 text-xs text-gray-400 transition-colors hover:border-[#E03B37]/30 hover:bg-[#E03B37]/10"
                       >
                         {tag}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -273,7 +244,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
 
                 {/* Author Info */}
-                <div className="mt-8 rounded border border-white/10 bg-[#111119] p-6 sm:p-8">
+                <div className="mt-8 rounded-lg border border-white/10 bg-[#111119] p-6 sm:p-8">
                   <div className="flex items-start gap-4">
                     <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#E03B37]/10 text-xl font-bold text-[#E03B37]">
                       {post.author.charAt(0)}
@@ -293,33 +264,31 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {/* Post Navigation */}
                 <div className="mt-8 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-2">
                   {prevPost ? (
-                    <Link href={`/blogs/${prevPost.slug}`} className="group">
-                      <Card className="h-full border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30">
-                        <CardContent className="p-5">
-                          <span className="mb-2 flex items-center gap-1 text-xs text-gray-400">
-                            <ArrowLeft className="h-3 w-3" /> Previous Article
-                          </span>
-                          <p className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-[#E03B37]">
-                            {prevPost.title}
-                          </p>
-                        </CardContent>
-                      </Card>
+                    <Link
+                      href={`/blogs/${prevPost.slug}`}
+                      className="group rounded-lg border border-white/10 bg-[#111119] p-5 transition-all duration-300 hover:border-[#E03B37]/30"
+                    >
+                      <span className="mb-2 flex items-center gap-1 text-xs text-gray-400">
+                        <ArrowLeft className="h-3 w-3" /> Previous Article
+                      </span>
+                      <p className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-[#E03B37]">
+                        {prevPost.title}
+                      </p>
                     </Link>
                   ) : (
                     <div />
                   )}
                   {nextPost && (
-                    <Link href={`/blogs/${nextPost.slug}`} className="group">
-                      <Card className="h-full border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30">
-                        <CardContent className="p-5 text-right">
-                          <span className="mb-2 flex items-center justify-end gap-1 text-xs text-gray-400">
-                            Next Article <ArrowRight className="h-3 w-3" />
-                          </span>
-                          <p className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-[#E03B37]">
-                            {nextPost.title}
-                          </p>
-                        </CardContent>
-                      </Card>
+                    <Link
+                      href={`/blogs/${nextPost.slug}`}
+                      className="group rounded-lg border border-white/10 bg-[#111119] p-5 text-right transition-all duration-300 hover:border-[#E03B37]/30"
+                    >
+                      <span className="mb-2 flex items-center justify-end gap-1 text-xs text-gray-400">
+                        Next Article <ArrowRight className="h-3 w-3" />
+                      </span>
+                      <p className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-[#E03B37]">
+                        {nextPost.title}
+                      </p>
                     </Link>
                   )}
                 </div>
@@ -330,77 +299,68 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <FadeIn delay={0.2}>
                   <div className="sticky top-24 space-y-8">
                     {/* Categories */}
-                    <Card className="border-white/10 bg-[#111119]">
-                      <CardHeader>
-                        <CardTitle className="text-lg text-white">Categories</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="space-y-2">
-                          {categories
-                            .filter((c) => c !== 'All')
-                            .map((category) => (
-                              <li key={category}>
-                                <Link
-                                  href="/blogs"
-                                  className="flex items-center justify-between py-1.5 text-sm text-gray-400 transition-colors hover:text-[#E03B37]"
-                                >
-                                  <span>{category}</span>
-                                  <ChevronRight className="h-4 w-4" />
-                                </Link>
-                              </li>
-                            ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
+                    <div className="rounded-lg border border-white/10 bg-[#111119] p-6">
+                      <h3 className="mb-4 text-lg font-semibold text-white">Categories</h3>
+                      <ul className="space-y-2">
+                        {categories
+                          .filter((c) => c !== 'All')
+                          .map((category) => (
+                            <li key={category}>
+                              <Link
+                                href="/blogs"
+                                className="flex items-center justify-between py-1.5 text-sm text-gray-400 transition-colors hover:text-[#E03B37]"
+                              >
+                                <span>{category}</span>
+                                <ChevronRight className="h-4 w-4" />
+                              </Link>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
 
                     {/* Related Posts */}
                     {relatedPosts.length > 0 && (
-                      <Card className="border-white/10 bg-[#111119]">
-                        <CardHeader>
-                          <CardTitle className="text-lg text-white">Related Articles</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-4">
-                            {relatedPosts.map((related) => (
-                              <li key={related.id}>
-                                <Link href={`/blogs/${related.slug}`} className="group flex gap-3">
-                                  <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded">
-                                    <Image
-                                      src={related.image}
-                                      alt={related.title}
-                                      fill
-                                      className="object-cover opacity-70 transition-opacity group-hover:opacity-90"
-                                      sizes="80px"
-                                    />
-                                  </div>
-                                  <div className="min-w-0">
-                                    <p className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-[#E03B37]">
-                                      {related.title}
-                                    </p>
-                                    <p className="mt-1 text-xs text-gray-400">{related.date}</p>
-                                  </div>
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                      </Card>
+                      <div className="rounded-lg border border-white/10 bg-[#111119] p-6">
+                        <h3 className="mb-4 text-lg font-semibold text-white">Related Articles</h3>
+                        <ul className="space-y-4">
+                          {relatedPosts.map((related) => (
+                            <li key={related.id}>
+                              <Link href={`/blogs/${related.slug}`} className="group flex gap-3">
+                                <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded">
+                                  <Image
+                                    src={related.image}
+                                    alt={related.title}
+                                    fill
+                                    className="object-cover opacity-70 transition-opacity group-hover:opacity-90"
+                                    sizes="80px"
+                                  />
+                                </div>
+                                <div className="min-w-0">
+                                  <p className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-[#E03B37]">
+                                    {related.title}
+                                  </p>
+                                  <p className="mt-1 text-xs text-gray-400">{related.date}</p>
+                                </div>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
 
                     {/* Newsletter CTA */}
-                    <Card className="border border-[#E03B37]/20 bg-[#E03B37]/5">
-                      <CardContent className="p-6">
-                        <h3 className="mb-2 font-bold text-white">Stay Updated</h3>
-                        <p className="mb-4 text-sm text-gray-400">
-                          Get the latest insights delivered to your inbox. No spam, just quality content.
-                        </p>
-                        <Link href="/blogs">
-                          <Button className="w-full" size="sm">
-                            Subscribe to Newsletter
-                          </Button>
-                        </Link>
-                      </CardContent>
-                    </Card>
+                    <div className="rounded-lg border border-[#E03B37]/20 bg-[#E03B37]/5 p-6">
+                      <h3 className="mb-2 font-bold text-white">Stay Updated</h3>
+                      <p className="mb-4 text-sm text-gray-400">
+                        Get the latest insights delivered to your inbox. No spam, just quality content.
+                      </p>
+                      <Link
+                        href="/blogs"
+                        className="inline-flex w-full items-center justify-center rounded-lg bg-[#E03B37] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#E03B37]/90"
+                      >
+                        Subscribe to Newsletter
+                      </Link>
+                    </div>
                   </div>
                 </FadeIn>
               </aside>
@@ -409,7 +369,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </section>
 
         {/* Read Next Section */}
-        <section className="border-t border-white/10 py-16">
+        <section className="border-t border-white/10 bg-[#0e0e18] py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="mb-8 text-2xl font-bold text-white">Read Next</h2>
             <StaggerContainer className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -418,8 +378,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 .slice(0, 3)
                 .map((readNext) => (
                   <StaggerItem key={readNext.id}>
-                    <Link href={`/blogs/${readNext.slug}`} className="group">
-                      <Card className="h-full overflow-hidden border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
+                    <Link href={`/blogs/${readNext.slug}`} className="group block">
+                      <div className="h-full overflow-hidden rounded-lg border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
                         <div className="relative aspect-video overflow-hidden">
                           <Image
                             src={readNext.image}
@@ -429,7 +389,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
                         </div>
-                        <CardContent className="p-6">
+                        <div className="p-6">
                           <div className="mb-3 flex items-center gap-2">
                             <span className="rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-2 py-1 text-xs font-medium text-[#E03B37]">
                               {readNext.category}
@@ -447,8 +407,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                               <Clock className="h-3 w-3" /> {readNext.readTime}
                             </span>
                           </div>
-                        </CardContent>
-                      </Card>
+                        </div>
+                      </div>
                     </Link>
                   </StaggerItem>
                 ))}

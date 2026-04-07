@@ -59,19 +59,27 @@ export default function BlogsPage() {
         <BreadcrumbNav items={[{ label: 'Blog' }]} />
 
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20">
+        <section className="relative overflow-hidden py-16 sm:py-24">
           <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="absolute top-20 right-20 h-75 w-75 rounded-full bg-[#E03B37]/10 blur-[100px]" />
-          <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <FadeIn>
-              <p className="mb-2 font-semibold text-[#E03B37]">Our Blog</p>
-              <h1 className="mb-6 text-4xl font-bold text-balance text-white sm:text-5xl">Insights & Tech Stories</h1>
-              <p className="mx-auto max-w-3xl text-lg text-gray-400">
+          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
+          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
+          <FadeIn>
+            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
+                Our Blog
+              </span>
+              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+                Insights &{' '}
+                <span className="bg-linear-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">
+                  Tech Stories
+                </span>
+              </h1>
+              <p className="mx-auto max-w-2xl text-lg text-gray-400">
                 Stay updated with the latest in technology, digital marketing, cloud computing, and best practices from
                 our team of experts.
               </p>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
         </section>
 
         {/* Category Filter */}

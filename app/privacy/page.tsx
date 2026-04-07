@@ -155,24 +155,28 @@ export default function PrivacyPage() {
       <main className="pt-16">
         <BreadcrumbNav items={[{ label: 'Privacy Policy' }]} />
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20">
+        <section className="relative overflow-hidden py-16 sm:py-24">
           <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="absolute top-20 left-10 h-100 w-100 rounded-full bg-[#E03B37]/10 blur-[100px]" />
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <FadeIn>
-                <p className="mb-2 font-semibold text-[#E03B37]">Privacy Policy</p>
-                <h1 className="mb-6 text-4xl font-bold text-balance text-white sm:text-5xl">
-                  Your Privacy Matters to Us
-                </h1>
-                <p className="mx-auto max-w-3xl text-lg text-gray-400">
-                  We are committed to protecting your personal information and being transparent about how we collect,
-                  use, and safeguard your data.
-                </p>
-                <p className="mt-4 text-sm text-gray-400">Last updated: 30th May, 2025</p>
-              </FadeIn>
+          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
+          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
+          <FadeIn>
+            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
+                Privacy Policy
+              </span>
+              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+                Your Privacy{' '}
+                <span className="bg-linear-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">
+                  Matters to Us
+                </span>
+              </h1>
+              <p className="mx-auto max-w-2xl text-lg text-gray-400">
+                We are committed to protecting your personal information and being transparent about how we collect,
+                use, and safeguard your data.
+              </p>
+              <p className="mt-4 text-sm text-gray-400">Last updated: 30th May, 2025</p>
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         {/* Quick Navigation */}

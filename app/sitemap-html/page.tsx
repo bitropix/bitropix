@@ -33,13 +33,29 @@ export default function SitemapHtmlPage() {
       <Navbar />
       <main className="pt-16">
         <BreadcrumbNav items={[{ label: 'Sitemap' }]} />
+        {/* Hero Section */}
+        <section className="relative overflow-hidden py-16 sm:py-24">
+          <div className="absolute inset-0 bg-[#0e0e18]" />
+          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
+          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
+          <FadeIn>
+            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
+                Sitemap
+              </span>
+              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+                All{' '}
+                <span className="bg-linear-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">Pages</span>
+              </h1>
+              <p className="mx-auto max-w-2xl text-lg text-gray-400">
+                A complete list of all pages on the Bitropix website.
+              </p>
+            </div>
+          </FadeIn>
+        </section>
+
         <section className="py-20">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <FadeIn>
-              <h1 className="mb-4 text-4xl font-bold text-white">Sitemap</h1>
-              <p className="mb-12 text-lg text-gray-400">A complete list of all pages on the Bitropix website.</p>
-            </FadeIn>
-
             <StaggerContainer className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
               {/* Main Pages */}
               <StaggerItem>

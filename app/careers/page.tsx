@@ -123,29 +123,35 @@ export default function CareersPage() {
       <Navbar />
       <main className="bg-[#0a0a12] pt-16">
         <BreadcrumbNav items={[{ label: 'Careers' }]} />
-        <section className="relative overflow-hidden py-20">
+        <section className="relative overflow-hidden py-16 sm:py-24">
           <div className="absolute inset-0 bg-[#0e0e18]" />
           <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
           <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
-          <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <FadeIn>
-              <p className="mb-2 font-semibold text-[#E03B37]">Careers at Bitropix</p>
-              <h1 className="mb-6 text-4xl font-bold text-balance text-white sm:text-5xl">Build the Future With Us</h1>
-              <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-400">
+          <FadeIn>
+            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
+                Careers at Bitropix
+              </span>
+              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+                Build the Future{' '}
+                <span className="bg-linear-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">
+                  With Us
+                </span>
+              </h1>
+              <p className="mx-auto max-w-2xl text-lg text-gray-400">
                 Join a team of passionate innovators who are transforming businesses through technology. We're always
                 looking for talented individuals who share our vision.
               </p>
-              <Button
-                size="lg"
-                className="bg-[#E03B37] text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
-                asChild
-              >
-                <a href="#openings">
-                  View Open Positions <ArrowRight className="ml-2 h-4 w-4" />
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
+                <a
+                  href="#openings"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
+                >
+                  View Open Positions <ArrowRight className="h-4 w-4" />
                 </a>
-              </Button>
-            </FadeIn>
-          </div>
+              </div>
+            </div>
+          </FadeIn>
         </section>
 
         <section className="py-20">

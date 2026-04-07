@@ -4,6 +4,7 @@ import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BreadcrumbNav } from '@/components/breadcrumb-nav';
+import { FadeIn } from '@/components/animate';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -172,41 +173,41 @@ export default function ProductsPage() {
       <main className="bg-[#0a0a12] pt-16">
         <BreadcrumbNav items={[{ label: 'Products' }]} />
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20">
+        <section className="relative overflow-hidden py-16 sm:py-24">
           <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="absolute right-0 bottom-0 h-125 w-125 rounded-full bg-[#E03B37]/10 blur-[100px]" />
-          <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full bg-[#E03B37]/10 px-4 py-1.5 text-sm font-semibold text-[#E03B37]">
-              <Zap className="h-4 w-4" />
-              Deploy in Weeks, Not Months
-            </div>
-            <h1 className="mb-6 text-4xl font-bold text-balance text-white sm:text-5xl">
-              Enterprise-Grade Solutions Built for Indian Businesses
-            </h1>
-            <p className="mx-auto mb-8 max-w-3xl text-lg text-gray-400">
-              Pre-built, battle-tested solutions with GST compliance, UPI integration, and localized workflows.
-              Customize and deploy quickly to meet your unique business requirements.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button
-                size="lg"
-                asChild
-                className="bg-[#E03B37] text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
-              >
-                <Link href="/contact">
-                  Get a Free Demo <ArrowRight className="ml-2 h-4 w-4" />
+          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
+          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
+          <FadeIn>
+            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
+                Our Products
+              </span>
+              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+                Enterprise-Grade Solutions{' '}
+                <span className="bg-linear-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">
+                  Built for Indian Businesses
+                </span>
+              </h1>
+              <p className="mx-auto max-w-2xl text-lg text-gray-400">
+                Pre-built, battle-tested solutions with GST compliance, UPI integration, and localized workflows.
+                Customize and deploy quickly to meet your unique business requirements.
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
+                >
+                  Get a Free Demo <ArrowRight className="h-4 w-4" />
                 </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                asChild
-                className="border-white/10 bg-transparent text-white hover:border-[#E03B37]/50 hover:bg-[#E03B37]/5"
-              >
-                <Link href="#comparison">Compare Solutions</Link>
-              </Button>
+                <Link
+                  href="#comparison"
+                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+                >
+                  Compare Solutions
+                </Link>
+              </div>
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         {/* Quick Navigation */}
