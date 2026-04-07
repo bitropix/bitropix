@@ -3,6 +3,7 @@ import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { BreadcrumbNav } from '@/components/breadcrumb-nav';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -169,6 +170,7 @@ export default function ProductsPage() {
 
       <Navbar />
       <main className="bg-[#0a0a12] pt-16">
+        <BreadcrumbNav items={[{ label: 'Products' }]} />
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20">
           <div className="absolute inset-0 bg-[#0e0e18]" />

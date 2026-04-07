@@ -1,7 +1,5 @@
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { BreadcrumbNav } from '@/components/breadcrumb-nav';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
 import Link from 'next/link';
@@ -262,12 +260,12 @@ export default function ServicesPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Navbar />
       <main className="pt-16">
+        <BreadcrumbNav items={[{ label: 'Services' }]} />
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-[#0e0e18] py-24">
           <div className="absolute top-20 right-10 h-80 w-80 rounded-full bg-[#E03B37]/8 blur-[120px]" />
           <div className="absolute bottom-10 left-10 h-60 w-60 rounded-full bg-[#E03B37]/5 blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <BreadcrumbNav items={[{ label: 'Services' }]} />
             <FadeIn>
               <p className="mb-3 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">Our Services</p>
               <h1 className="mb-6 text-4xl font-bold text-balance text-white sm:text-5xl lg:text-6xl">
@@ -280,25 +278,25 @@ export default function ServicesPage() {
                 India and beyond.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button
-                  size="lg"
-                  className="bg-[#E03B37] text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
-                  asChild
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
                 >
-                  <Link href="/contact">
-                    Get a Free Consultation <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" className="border-white/10 text-white hover:bg-white/5" asChild>
-                  <Link href="#web">Explore Services</Link>
-                </Button>
+                  Get a Free Consultation <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="#web"
+                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+                >
+                  Explore Services
+                </Link>
               </div>
             </FadeIn>
           </div>
         </section>
 
         {/* Why Choose Us */}
-        <section className="py-20">
+        <section className="bg-[#0a0a12] py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-16 text-center">
               <p className="mb-2 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">Why Bitropix</p>
@@ -311,15 +309,13 @@ export default function ServicesPage() {
             <StaggerContainer className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {whyChooseUs.map((item) => (
                 <StaggerItem key={item.title}>
-                  <Card className="group border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30">
-                    <CardContent className="pt-6 text-center">
-                      <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
-                        <item.icon className="h-8 w-8 text-[#E03B37]" />
-                      </div>
-                      <h3 className="mb-2 text-lg font-semibold text-white">{item.title}</h3>
-                      <p className="text-sm leading-relaxed text-gray-400">{item.description}</p>
-                    </CardContent>
-                  </Card>
+                  <div className="group rounded-lg border border-white/10 bg-[#111119] p-6 text-center transition-all duration-300 hover:border-[#E03B37]/30">
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
+                      <item.icon className="h-8 w-8 text-[#E03B37]" />
+                    </div>
+                    <h3 className="mb-2 text-lg font-semibold text-white">{item.title}</h3>
+                    <p className="text-sm leading-relaxed text-gray-400">{item.description}</p>
+                  </div>
                 </StaggerItem>
               ))}
             </StaggerContainer>
@@ -390,14 +386,12 @@ export default function ServicesPage() {
                         </div>
                       </div>
 
-                      <Button
-                        asChild
-                        className="bg-[#E03B37] text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
+                      <Link
+                        href="/contact"
+                        className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
                       >
-                        <Link href="/contact">
-                          Get a Quote <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
+                        Get a Quote <ArrowRight className="h-4 w-4" />
+                      </Link>
                     </div>
 
                     <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
@@ -461,24 +455,18 @@ export default function ServicesPage() {
               No commitment required. We will analyze your requirements and provide a tailored solution roadmap.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white bg-white text-[#0a0a12] transition-all duration-300 hover:bg-white/90"
-                asChild
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-lg border border-white bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all duration-300 hover:bg-white/90"
               >
-                <Link href="/contact">
-                  Start Your Project <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white/30 bg-transparent text-white transition-all duration-300 hover:bg-white/10"
-                asChild
+                Start Your Project <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/30 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
               >
-                <Link href="/about">Learn About Us</Link>
-              </Button>
+                Learn About Us
+              </Link>
             </div>
           </div>
         </section>

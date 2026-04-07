@@ -1,6 +1,6 @@
 'use client';
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { ChevronDown } from 'lucide-react';
 import { FadeIn } from '@/components/animate';
 
 const faqs = [
@@ -38,27 +38,27 @@ const faqs = [
 
 export function FAQSection() {
   return (
-    <section className="bg-[#0a0a12] py-20">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <section className="bg-[#0e0e18] py-20">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
-          <div className="mb-12 text-center">
-            <p className="mb-2 font-semibold tracking-wide text-[#E03B37] uppercase">FAQ</p>
+          <div className="mb-16 text-center">
+            <p className="mb-2 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">FAQ</p>
             <h2 className="mb-4 text-3xl font-bold text-balance text-white sm:text-4xl">Frequently Asked Questions</h2>
-            <p className="text-gray-400">Everything you need to know about working with Bitropix.</p>
+            <p className="mx-auto max-w-2xl text-gray-400">Everything you need to know about working with Bitropix.</p>
           </div>
-        </FadeIn>
-
-        <FadeIn delay={0.2}>
-          <Accordion type="single" collapsible className="w-full">
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-left text-base font-medium text-white">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="leading-relaxed text-gray-400">{faq.answer}</AccordionContent>
-              </AccordionItem>
+              <details key={index} className="group rounded border border-white/10 bg-[#111119]">
+                <summary className="flex cursor-pointer items-center justify-between p-6 font-semibold text-white">
+                  <span>{faq.question}</span>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-gray-400 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="border-t border-white/10 px-6 pt-4 pb-6 leading-relaxed text-gray-400">
+                  {faq.answer}
+                </div>
+              </details>
             ))}
-          </Accordion>
+          </div>
         </FadeIn>
       </div>
     </section>

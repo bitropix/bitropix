@@ -153,13 +153,13 @@ export default function PrivacyPage() {
     <>
       <Navbar />
       <main className="pt-16">
+        <BreadcrumbNav items={[{ label: 'Privacy Policy' }]} />
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20">
           <div className="absolute inset-0 bg-[#0e0e18]" />
           <div className="absolute top-20 left-10 h-100 w-100 rounded-full bg-[#E03B37]/10 blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <BreadcrumbNav items={[{ label: 'Privacy Policy' }]} />
               <FadeIn>
                 <p className="mb-2 font-semibold text-[#E03B37]">Privacy Policy</p>
                 <h1 className="mb-6 text-4xl font-bold text-balance text-white sm:text-5xl">

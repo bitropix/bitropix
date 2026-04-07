@@ -32,9 +32,9 @@ export default function SitemapHtmlPage() {
     <>
       <Navbar />
       <main className="pt-16">
+        <BreadcrumbNav items={[{ label: 'Sitemap' }]} />
         <section className="py-20">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <BreadcrumbNav items={[{ label: 'Sitemap' }]} />
             <FadeIn>
               <h1 className="mb-4 text-4xl font-bold text-white">Sitemap</h1>
               <p className="mb-12 text-lg text-gray-400">A complete list of all pages on the Bitropix website.</p>

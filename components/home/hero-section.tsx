@@ -128,14 +128,14 @@ export function HeroSection() {
             asChild
             className="h-11 bg-[#E03B37] px-6 text-sm font-medium text-white hover:bg-[#E03B37]/90"
           >
-            <Link href="/contact" className='flex items-center justify-center'>
-              <span>Get Free Consultation</span> <ArrowRight className="h-5 w-5 mt-0.5" />
+            <Link href="/contact" className="flex items-center justify-center">
+              <span>Get Free Consultation</span> <ArrowRight className="mt-0.5 h-5 w-5" />
             </Link>
           </Button>
           <Button
             size="lg"
             asChild
-            className="h-11 bg-transparent border border-[#E03B37] hover:bg-[#E03B37] px-6 text-sm font-medium text-white"
+            className="h-11 border border-[#E03B37] bg-transparent px-6 text-sm font-medium text-white hover:bg-[#E03B37]"
           >
             <Link href="/services">Our Services</Link>
           </Button>

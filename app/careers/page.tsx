@@ -122,12 +122,12 @@ export default function CareersPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Navbar />
       <main className="bg-[#0a0a12] pt-16">
+        <BreadcrumbNav items={[{ label: 'Careers' }]} />
         <section className="relative overflow-hidden py-20">
           <div className="absolute inset-0 bg-[#0e0e18]" />
           <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
           <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <BreadcrumbNav items={[{ label: 'Careers' }]} />
             <FadeIn>
               <p className="mb-2 font-semibold text-[#E03B37]">Careers at Bitropix</p>
               <h1 className="mb-6 text-4xl font-bold text-balance text-white sm:text-5xl">Build the Future With Us</h1>

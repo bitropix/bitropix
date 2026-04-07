@@ -2,8 +2,6 @@
 
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Clock, User, ArrowRight, Tag, Search } from 'lucide-react';
@@ -33,18 +31,8 @@ export default function BlogsPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: 'https://www.bitropix.com',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Blog',
-        item: 'https://www.bitropix.com/blogs',
-      },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.bitropix.com' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.bitropix.com/blogs' },
     ],
   };
 
@@ -58,10 +46,7 @@ export default function BlogsPage() {
     publisher: {
       '@type': 'Organization',
       name: 'Bitropix',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://www.bitropix.com/images/logo.png',
-      },
+      logo: { '@type': 'ImageObject', url: 'https://www.bitropix.com/images/logo.png' },
     },
   };
 
@@ -71,12 +56,13 @@ export default function BlogsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListingSchema) }} />
       <Navbar />
       <main className="pt-16">
+        <BreadcrumbNav items={[{ label: 'Blog' }]} />
+
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20">
           <div className="absolute inset-0 bg-[#0e0e18]" />
           <div className="absolute top-20 right-20 h-75 w-75 rounded-full bg-[#E03B37]/10 blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <BreadcrumbNav items={[{ label: 'Blog' }]} />
             <FadeIn>
               <p className="mb-2 font-semibold text-[#E03B37]">Our Blog</p>
               <h1 className="mb-6 text-4xl font-bold text-balance text-white sm:text-5xl">Insights & Tech Stories</h1>
@@ -89,7 +75,7 @@ export default function BlogsPage() {
         </section>
 
         {/* Category Filter */}
-        <section className="border-b border-white/10 py-8">
+        <section className="border-b border-white/10 bg-[#0a0a12] py-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap justify-center gap-3">
               {categories.map((category) => (
@@ -112,14 +98,14 @@ export default function BlogsPage() {
           </div>
         </section>
 
-        {/* Featured Article - only show when "All" is selected */}
+        {/* Featured Article */}
         {activeCategory === 'All' && (
-          <section className="py-16">
+          <section className="bg-[#0a0a12] py-16">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <h2 className="mb-8 text-2xl font-bold text-white">Featured Article</h2>
               <ScaleIn>
                 <Link href={`/blogs/${featuredPost.slug}`} className="group block">
-                  <Card className="overflow-hidden border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
+                  <div className="overflow-hidden rounded-lg border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
                     <div className="grid md:grid-cols-2">
                       <div className="relative aspect-video overflow-hidden md:aspect-auto md:min-h-87.5">
                         <Image
@@ -130,7 +116,7 @@ export default function BlogsPage() {
                           sizes="(max-width: 768px) 100vw, 50vw"
                         />
                       </div>
-                      <CardContent className="flex flex-col justify-center p-8">
+                      <div className="flex flex-col justify-center p-8">
                         <div className="mb-4 flex items-center gap-2">
                           <Tag className="h-4 w-4 text-[#E03B37]" />
                           <span className="text-sm font-medium text-[#E03B37]">{featuredPost.category}</span>
@@ -150,9 +136,9 @@ export default function BlogsPage() {
                             <Clock className="h-4 w-4" /> {featuredPost.readTime}
                           </span>
                         </div>
-                      </CardContent>
+                      </div>
                     </div>
-                  </Card>
+                  </div>
                 </Link>
               </ScaleIn>
             </div>
@@ -171,16 +157,19 @@ export default function BlogsPage() {
               <div className="py-20 text-center">
                 <Search className="mx-auto mb-4 h-12 w-12 text-gray-400" />
                 <p className="text-lg text-gray-400">No articles found in this category yet.</p>
-                <Button variant="outline" className="mt-4" onClick={() => setActiveCategory('All')}>
+                <button
+                  onClick={() => setActiveCategory('All')}
+                  className="mt-4 rounded-lg border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+                >
                   View All Articles
-                </Button>
+                </button>
               </div>
             ) : (
               <StaggerContainer className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {visiblePosts.map((post) => (
                   <StaggerItem key={post.id}>
-                    <Link href={`/blogs/${post.slug}`} className="group">
-                      <Card className="h-full overflow-hidden border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
+                    <Link href={`/blogs/${post.slug}`} className="group block">
+                      <div className="h-full overflow-hidden rounded-lg border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
                         <div className="relative aspect-video overflow-hidden">
                           <Image
                             src={post.image}
@@ -190,7 +179,7 @@ export default function BlogsPage() {
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
                         </div>
-                        <CardContent className="p-6">
+                        <div className="p-6">
                           <div className="mb-3 flex items-center gap-2">
                             <span className="rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-2 py-1 text-xs font-medium text-[#E03B37]">
                               {post.category}
@@ -208,8 +197,8 @@ export default function BlogsPage() {
                               <Clock className="h-3 w-3" /> {post.readTime}
                             </span>
                           </div>
-                        </CardContent>
-                      </Card>
+                        </div>
+                      </div>
                     </Link>
                   </StaggerItem>
                 ))}
@@ -218,14 +207,12 @@ export default function BlogsPage() {
 
             {hasMore && (
               <div className="mt-12 text-center">
-                <Button
-                  variant="outline"
-                  size="lg"
+                <button
                   onClick={() => setVisibleCount((prev) => prev + 6)}
-                  className="border-white/10 bg-transparent transition-all duration-300 hover:border-[#E03B37]/50 hover:bg-[#E03B37]/5"
+                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-[#E03B37]/50 hover:bg-[#E03B37]/5"
                 >
-                  Load More Articles <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                  Load More Articles <ArrowRight className="h-4 w-4" />
+                </button>
               </div>
             )}
           </div>
@@ -244,11 +231,14 @@ export default function BlogsPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 rounded border-0 bg-[#0a0a12] px-4 py-3 text-white focus:ring-2 focus:ring-[#0a0a12]"
+                className="flex-1 rounded-lg border border-white/20 bg-[#0a0a12] px-4 py-3 text-white placeholder-gray-500 focus:border-white/40 focus:ring-2 focus:ring-[#0a0a12] focus:outline-none"
               />
-              <Button type="submit" className="bg-white text-[#0a0a12] transition-all hover:bg-white/90">
+              <button
+                type="submit"
+                className="rounded-lg bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all hover:bg-white/90"
+              >
                 Subscribe
-              </Button>
+              </button>
             </form>
           </div>
         </section>

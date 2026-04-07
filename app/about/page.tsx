@@ -140,13 +140,13 @@ export default function AboutPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Navbar />
       <main className="pt-16">
+        <BreadcrumbNav items={[{ label: 'About Us' }]} />
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-[#0e0e18] py-24">
           <div className="absolute inset-0 bg-linear-to-br from-[#E03B37]/10 via-[#0e0e18] to-[#c62828]/5" />
           <div className="absolute top-20 right-10 h-100 w-100 rounded-full bg-[#E03B37]/10 blur-[100px]" />
           <div className="absolute top-20 left-10 h-100 w-100 rounded-full bg-[#E03B37]/10 blur-[100px]" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <BreadcrumbNav items={[{ label: 'About Us' }]} />
             <div className="grid items-center gap-12 lg:grid-cols-2">
               <FadeInLeft>
                 <div>

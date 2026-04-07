@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ChevronRight, Home } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 interface BreadcrumbItem {
   label: string;
@@ -12,27 +12,28 @@ interface BreadcrumbNavProps {
 
 export function BreadcrumbNav({ items }: BreadcrumbNavProps) {
   return (
-    <nav aria-label="Breadcrumb" className="mb-6">
-      <ol className="flex flex-wrap items-center gap-1.5 text-sm">
-        <li className="flex items-center gap-1.5">
-          <Link href="/" className="text-gray-500 transition-colors hover:text-[#E03B37]">
-            <Home className="h-3.5 w-3.5" />
-          </Link>
-          <ChevronRight className="h-3 w-3 text-gray-600" />
-        </li>
-        {items.map((item, index) => (
-          <li key={item.label} className="flex items-center gap-1.5">
-            {item.href && index < items.length - 1 ? (
-              <Link href={item.href} className="text-gray-500 transition-colors hover:text-[#E03B37]">
-                {item.label}
-              </Link>
-            ) : (
-              <span className="text-gray-300">{item.label}</span>
-            )}
-            {index < items.length - 1 && <ChevronRight className="h-3 w-3 text-gray-600" />}
+    <nav className="border-b border-white/10 bg-[#0a0a12]" aria-label="Breadcrumb">
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <ol className="flex items-center gap-2 text-sm text-gray-400">
+          <li>
+            <Link href="/" className="transition-colors hover:text-[#E03B37]">
+              Home
+            </Link>
           </li>
-        ))}
-      </ol>
+          {items.map((item, index) => (
+            <li key={item.label} className="flex items-center gap-2">
+              <ChevronRight className="h-4 w-4" />
+              {item.href && index < items.length - 1 ? (
+                <Link href={item.href} className="transition-colors hover:text-[#E03B37]">
+                  {item.label}
+                </Link>
+              ) : (
+                <span className="font-medium text-white">{item.label}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </div>
     </nav>
   );
 }

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Tag, ChevronRight } from 'lucide-react';
+import { BreadcrumbNav } from '@/components/breadcrumb-nav';
 import { blogPosts, getBlogBySlug, getRelatedPosts, categories } from '@/lib/blog-data';
 import type { Metadata } from 'next';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
@@ -189,30 +190,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <Navbar />
       <main className="pt-16">
-        {/* Breadcrumb */}
-        <nav className="border-b border-white/10" aria-label="Breadcrumb">
-          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-            <ol className="flex items-center gap-2 text-sm text-gray-400">
-              <li>
-                <Link href="/" className="transition-colors hover:text-[#E03B37]">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <ChevronRight className="h-4 w-4" />
-              </li>
-              <li>
-                <Link href="/blogs" className="transition-colors hover:text-[#E03B37]">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <ChevronRight className="h-4 w-4" />
-              </li>
-              <li className="line-clamp-1 font-medium text-white">{post.title}</li>
-            </ol>
-          </div>
-        </nav>
+        <BreadcrumbNav items={[{ label: 'Blog', href: '/blogs' }, { label: post.title }]} />
 
         {/* Article Header */}
         <section className="relative overflow-hidden py-12 sm:py-16">

@@ -47,10 +47,10 @@ export default async function RolePage({ params }: RolePageProps) {
     <>
       <Navbar />
       <main className="bg-[#0a0a12] pt-16">
+        <BreadcrumbNav items={[{ label: 'Careers', href: '/careers' }, { label: job.title }]} />
         <section className="relative overflow-hidden py-20">
           <div className="absolute inset-0 bg-[#0e0e18]" />
           <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-            <BreadcrumbNav items={[{ label: 'Careers', href: '/careers' }, { label: job.title }]} />
             <FadeIn>
               <FadeInLeft>
                 <Card className="border border-white/10 bg-[#111119]/30 p-6 sm:p-8">
