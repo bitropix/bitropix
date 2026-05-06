@@ -22,6 +22,9 @@ export const metadata = {
   title: 'Privacy Policy - Bitropix | Data Protection & Privacy',
   description:
     'Learn how Bitropix collects, uses, and protects your personal information. Our commitment to data privacy and security.',
+  alternates: {
+    canonical: 'https://www.bitropix.com/privacy',
+  },
 };
 
 const sections = [

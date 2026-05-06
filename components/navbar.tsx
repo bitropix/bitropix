@@ -47,7 +47,7 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="group flex items-center gap-2.5">
-            <Image src="/images/logo.png" alt="Bitropix Logo" width={36} height={36} />
+            <Image src="/images/logo.png" alt="Bitropix Logo" width={36} height={36} priority />
             <div className="flex flex-col">
               <span className="text-2xl font-bold tracking-widest text-white uppercase">Bitropix</span>
               <span className="text-[9px] font-medium tracking-wider text-[#E03B37]">

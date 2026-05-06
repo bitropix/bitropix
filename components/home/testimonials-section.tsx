@@ -15,13 +15,6 @@ const testimonials = [
     rating: 5,
   },
   {
-    name: 'Sachin Sharma',
-    role: 'Founder, Advancedbeauty.in',
-    content:
-      'An absolute pleasure to work with! The professionalism, creativity, and attention to detail were exceptional. From understanding my preferences to delivering flawless hair and makeup at my doorstep, the entire experience was seamless and stress-free. Truly talented, punctual, and highly skilled—I could not have asked for a better artist.',
-    rating: 5,
-  },
-  {
     name: 'Arnab Gupta',
     role: 'Founder, Fincafe',
     content:

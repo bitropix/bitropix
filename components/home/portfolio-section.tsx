@@ -1,15 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
+import { LivePreview } from '@/components/live-preview';
 import { portfolioProjects } from '@/lib/portfolio-data';
 
 export function PortfolioSection() {
   return (
     <section className="relative overflow-hidden bg-[#0e0e18] py-20">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#E03B37]/5 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-[#E03B37]/5 via-transparent to-transparent" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <div className="mb-16 text-center">
@@ -28,16 +28,10 @@ export function PortfolioSection() {
           {portfolioProjects.map((project) => (
             <StaggerItem key={project.id}>
               <Link href={`/portfolio/${project.slug}`} className="group block">
-                <div className="h-full cursor-pointer overflow-hidden rounded-lg border border-white/10 bg-[#111119] transition-all duration-500 hover:-translate-y-1 hover:border-[#E03B37]/30 hover:shadow-xl hover:shadow-[#E03B37]/5">
-                  <div className="relative aspect-[16/9] overflow-hidden">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#111119] via-transparent to-transparent opacity-60" />
+                <div className="h-full cursor-pointer overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-500 hover:-translate-y-1 hover:border-[#E03B37]/30 hover:shadow-xl hover:shadow-[#E03B37]/5">
+                  <div className="relative aspect-video overflow-hidden">
+                    <LivePreview url={project.url} image={project.image} title={project.title} />
+                    <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#111119] via-transparent to-transparent opacity-60" />
                     <div className="absolute top-4 right-4">
                       <span className="rounded-full bg-[#E03B37] px-3 py-1 text-xs font-medium text-white">
                         {project.category}

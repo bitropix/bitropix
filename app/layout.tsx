@@ -6,8 +6,8 @@ import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import NextTopLoader from 'nextjs-toploader';
 
-const geist = Geist({ subsets: ['latin'], variable: '--font-geist' });
-const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' });
+const geist = Geist({ subsets: ['latin'], variable: '--font-geist', display: 'optional' });
+const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono', display: 'optional' });
 
 const SITE_URL = 'https://www.bitropix.com';
 
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: SITE_URL,
+    canonical: '/',
   },
   openGraph: {
     type: 'website',
@@ -82,13 +82,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/images/logo.png', type: 'image/svg+xml' },
-      { url: '/images/logo.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/logo.png', type: 'image/webp' },
+      { url: '/images/logo.png', sizes: '32x32', type: 'image/webp' },
+      { url: '/images/logo.png', sizes: '192x192', type: 'image/webp' },
     ],
-    apple: '/apple-icon.png',
-  },
-  verification: {
-    google: 'your-google-verification-code',
+    shortcut: '/images/logo.png',
+    apple: '/images/logo.png',
   },
   category: 'technology',
 };
@@ -100,13 +99,20 @@ export default function RootLayout({
 }>) {
   const organizationSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': ['Organization', 'ProfessionalService'],
+    '@id': `${SITE_URL}/#organization`,
     name: 'Bitropix',
     url: SITE_URL,
-    logo: `${SITE_URL}/images/logo.png`,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}/images/logo.png`,
+      width: 512,
+      height: 512,
+    },
+    email: 'info@bitropix.com',
     description:
       'Bitropix is a leading IT services and digital marketing agency in Noida, India offering website development, app development, SEO, digital marketing, cloud solutions, and more.',
-    foundingDate: '2023',
+    foundingDate: '2023-01-01',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Noida',
@@ -125,33 +131,23 @@ export default function RootLayout({
       },
     ],
     sameAs: ['https://www.linkedin.com/company/bitropix/', 'https://www.instagram.com/bitropix/'],
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '50',
-      bestRating: '5',
-    },
   };
 
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
     name: 'Bitropix',
     url: SITE_URL,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${SITE_URL}/blogs?search={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    inLanguage: 'en-IN',
   };
 
   const localBusinessSchema = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
+    '@type': ['LocalBusiness', 'ProfessionalService'],
     '@id': `${SITE_URL}/#localbusiness`,
+    parentOrganization: { '@id': `${SITE_URL}/#organization` },
     name: 'Bitropix',
     image: `${SITE_URL}/images/logo.png`,
     url: SITE_URL,
@@ -203,7 +199,6 @@ export default function RootLayout({
         <meta name="geo.placename" content="Noida" />
         <meta name="geo.position" content="28.6273928;77.3764" />
         <meta name="ICBM" content="28.6273928, 77.3764" />
-        <link rel="canonical" href={SITE_URL} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />

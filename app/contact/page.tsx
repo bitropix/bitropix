@@ -241,7 +241,7 @@ export default function ContactPage() {
             <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {contactInfo.map((info) => (
                 <StaggerItem key={info.title}>
-                  <div className="group rounded-lg border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30">
+                  <div className="group rounded border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30">
                     <div className="mb-4 flex h-12 w-12 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
                       <info.icon className="h-6 w-6 text-[#E03B37]" />
                     </div>
@@ -264,7 +264,7 @@ export default function ContactPage() {
             <div className="grid gap-6 lg:grid-cols-2">
               {/* Contact Form */}
               <FadeInLeft>
-                <div className="rounded-lg border border-white/10 bg-[#111119] p-6">
+                <div className="rounded border border-white/10 bg-[#111119] p-6">
                   <div className="mb-8">
                     <h2 className="mb-3 text-3xl font-bold text-white">Send Us a Message</h2>
                     <p className="text-base text-gray-400">
@@ -423,7 +423,7 @@ export default function ContactPage() {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className="inline-flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#E03B37] px-8 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-xl hover:shadow-[#E03B37]/25 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                        className="inline-flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded bg-[#E03B37] px-8 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-xl hover:shadow-[#E03B37]/25 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                       >
                         {isLoading ? (
                           <>
@@ -446,7 +446,7 @@ export default function ContactPage() {
               <FadeInRight>
                 <div className="space-y-6">
                   {/* Connect With Us */}
-                  <div className="rounded-lg border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30">
+                  <div className="rounded border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30">
                     <h3 className="mb-4 text-lg font-semibold text-white">Connect With Us</h3>
                     <p className="mb-6 text-sm leading-relaxed text-gray-400">
                       Follow us on social media to stay updated with our latest projects, insights, and company news.
@@ -474,7 +474,7 @@ export default function ContactPage() {
                   </div>
 
                   {/* Response Guarantee */}
-                  <div className="group relative overflow-hidden rounded-lg border border-[#E03B37]/20 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/40">
+                  <div className="group relative overflow-hidden rounded border border-[#E03B37]/20 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/40">
                     <div className="absolute top-0 right-0 h-24 w-24 rounded-full bg-[#E03B37]/5 blur-2xl transition-all duration-300 group-hover:bg-[#E03B37]/10" />
                     <div className="relative">
                       <div className="mb-3 flex items-start gap-3">
@@ -495,7 +495,7 @@ export default function ContactPage() {
                   </div>
 
                   {/* What Happens Next */}
-                  <div className="rounded-lg border border-[#E03B37]/20 bg-gradient-to-br from-[#E03B37]/10 to-[#111119] p-6">
+                  <div className="rounded border border-[#E03B37]/20 bg-gradient-to-br from-[#E03B37]/10 to-[#111119] p-6">
                     <h3 className="mb-4 text-base font-semibold text-white">What Happens After You Reach Out?</h3>
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
@@ -535,7 +535,7 @@ export default function ContactPage() {
                   </div>
 
                   {/* Google Maps Placeholder */}
-                  <div className="overflow-hidden rounded-lg border border-white/10 bg-[#111119]">
+                  <div className="overflow-hidden rounded border border-white/10 bg-[#111119]">
                     <div className="flex h-48 items-center justify-center bg-[#161622]">
                       <div className="text-center">
                         <MapPin className="mx-auto mb-2 h-8 w-8 text-[#E03B37]" />

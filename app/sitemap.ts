@@ -1,75 +1,101 @@
 import type { MetadataRoute } from 'next';
 import { jobOpenings } from '@/lib/careers';
 import { blogPosts } from '@/lib/blog-data';
+import { portfolioProjects } from '@/lib/portfolio-data';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.bitropix.com';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+const STATIC_LAST_MOD = '2026-05-06';
 
+function parseBlogDate(dateStr: string): Date {
+  const parsed = new Date(dateStr);
+  return isNaN(parsed.getTime()) ? new Date(STATIC_LAST_MOD) : parsed;
+}
+
+export default function sitemap(): MetadataRoute.Sitemap {
   const careerRoleUrls: MetadataRoute.Sitemap = jobOpenings.map((job) => ({
     url: `${SITE_URL}/careers/${job.slug}`,
-    lastModified: now,
+    lastModified: STATIC_LAST_MOD,
     changeFrequency: 'weekly',
     priority: 0.65,
   }));
 
   const blogUrls: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${SITE_URL}/blogs/${post.slug}`,
-    lastModified: now,
+    lastModified: parseBlogDate(post.date),
     changeFrequency: 'monthly',
     priority: 0.7,
+  }));
+
+  const portfolioDetailUrls: MetadataRoute.Sitemap = portfolioProjects.map((project) => ({
+    url: `${SITE_URL}/portfolio/${project.slug}`,
+    lastModified: STATIC_LAST_MOD,
+    changeFrequency: 'monthly',
+    priority: 0.75,
   }));
 
   return [
     {
       url: `${SITE_URL}/`,
-      lastModified: now,
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${SITE_URL}/services`,
-      lastModified: now,
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
+      url: `${SITE_URL}/products`,
+      lastModified: STATIC_LAST_MOD,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/packages`,
+      lastModified: STATIC_LAST_MOD,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/portfolio`,
+      lastModified: STATIC_LAST_MOD,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
       url: `${SITE_URL}/blogs`,
-      lastModified: now,
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: 'weekly',
       priority: 0.75,
     },
     {
       url: `${SITE_URL}/about`,
-      lastModified: now,
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${SITE_URL}/careers`,
-      lastModified: now,
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
       url: `${SITE_URL}/contact`,
-      lastModified: now,
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${SITE_URL}/privacy`,
-      lastModified: now,
+      lastModified: STATIC_LAST_MOD,
       changeFrequency: 'yearly',
       priority: 0.3,
     },
-    {
-      url: `${SITE_URL}/sitemap-html`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.4,
-    },
+    ...portfolioDetailUrls,
     ...blogUrls,
     ...careerRoleUrls,
   ];

@@ -3,16 +3,9 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export function HeroSection() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
   return (
     <section className="relative flex h-screen items-center justify-center overflow-hidden bg-[#0a0a0f]">
       {/* Spinning ring 1 - large, slow */}
@@ -109,17 +102,17 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-size-[60px_60px]" />
 
       {/* Content */}
-      <div
-        className={`relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-5 text-center transition-all duration-700 ${
-          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
-        }`}
-      >
-        <h1 className="text-[clamp(2.75rem,8vw,4.75rem)] leading-[1.15] font-bold tracking-tight text-white">
-          Innovate. Transform. <span className="text-[#E03B37]">Deliver.</span>
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-5 text-center">
+        <p className="mb-3 text-sm font-semibold tracking-[0.2em] text-[#E03B37] uppercase">
+          Innovate · Transform · Deliver
+        </p>
+        <h1 className="text-[clamp(2.25rem,7vw,4.25rem)] leading-[1.15] font-bold tracking-tight text-balance text-white">
+          Web Development &amp; Digital Marketing <span className="text-[#E03B37]">Agency in Noida, India</span>
         </h1>
 
-        <p className="mt-4 max-w-2xl text-[clamp(1.275rem,2.5vw,1.525rem)] leading-relaxed text-gray-400">
-          IT services &amp; digital marketing agency helping businesses grow with technology and strategy.
+        <p className="mt-4 max-w-2xl text-[clamp(1.125rem,2.2vw,1.4rem)] leading-relaxed text-gray-400">
+          Bitropix builds high-performance websites, mobile apps, and SEO-driven growth engines for startups and
+          enterprises across India, the US, UK, UAE, and Australia.
         </p>
 
         <div className="mt-8 flex flex-wrap-reverse justify-center gap-3">

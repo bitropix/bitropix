@@ -1,14 +1,15 @@
 'use client';
 
+import Image from 'next/image';
 import { Award, Zap, HeartHandshake, Lightbulb } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FadeIn, FadeInLeft, FadeInRight } from '@/components/animate';
 
 const reasons = [
   {
     icon: Award,
     title: 'Proven Expertise',
-    description: '5+ years of delivering successful projects across industries with a team of certified professionals.',
+    description: 'A team with 5+ years of combined experience delivering successful projects across industries.',
   },
   {
     icon: Zap,
@@ -29,33 +30,35 @@ const reasons = [
 
 export function WhyUsSection() {
   const [offsetY, setOffsetY] = useState(0);
+  const ticking = useRef(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    if (reduceMotion || !finePointer) return;
+
     const handleScroll = () => {
-      setOffsetY(window.scrollY * 0.5);
+      if (ticking.current) return;
+      ticking.current = true;
+      window.requestAnimationFrame(() => {
+        setOffsetY(window.scrollY * 0.5);
+        ticking.current = false;
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <section
-      className="relative overflow-hidden py-20"
-      style={{
-        backgroundImage: 'url(/professional-team-meeting-in-modern-office-discuss.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-      }}
-    >
-      {/* Dark overlay */}
+    <section className="relative overflow-hidden bg-[#0a0a12] py-20">
       <div className="absolute inset-0 bg-black/80" />
 
       {/* Parallax background element */}
       <div
         className="absolute top-1/2 right-0 z-10 h-75 w-75 -translate-y-1/2 rounded-full bg-[#E03B37]/5 blur-[100px]"
-        style={{ transform: `translateY(${offsetY}px)` }}
+        style={{ transform: `translate3d(0, ${offsetY}px, 0)` }}
       />
 
       <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -63,12 +66,13 @@ export function WhyUsSection() {
           <FadeInLeft>
             <div className="relative">
               <div className="relative aspect-4/3 overflow-hidden rounded shadow">
-                <img
+                <Image
                   src="/professional-team-meeting-in-modern-office-discuss.jpg"
-                  alt="Our team at work"
-                  className="h-full w-full object-cover"
+                  alt="Bitropix team collaborating in a modern office"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
                 />
-                {/* <div className="from-background via-background/50 absolute inset-0 bg-linear-to-t to-transparent" /> */}
               </div>
               {/* Floating stat card */}
               <div className="absolute -right-6 -bottom-6 rounded bg-linear-to-br from-[#E03B37] to-[#E03B37]/80 p-6 text-white shadow-lg shadow-[#E03B37]/20">

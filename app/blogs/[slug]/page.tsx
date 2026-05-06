@@ -198,7 +198,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="bg-[#0a0a12]">
           <FadeIn>
             <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-              <div className="relative aspect-video overflow-hidden rounded-lg">
+              <div className="relative aspect-video overflow-hidden rounded">
                 <Image
                   src={post.image}
                   alt={post.title}
@@ -244,7 +244,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
 
                 {/* Author Info */}
-                <div className="mt-8 rounded-lg border border-white/10 bg-[#111119] p-6 sm:p-8">
+                <div className="mt-8 rounded border border-white/10 bg-[#111119] p-6 sm:p-8">
                   <div className="flex items-start gap-4">
                     <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#E03B37]/10 text-xl font-bold text-[#E03B37]">
                       {post.author.charAt(0)}
@@ -266,7 +266,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   {prevPost ? (
                     <Link
                       href={`/blogs/${prevPost.slug}`}
-                      className="group rounded-lg border border-white/10 bg-[#111119] p-5 transition-all duration-300 hover:border-[#E03B37]/30"
+                      className="group rounded border border-white/10 bg-[#111119] p-5 transition-all duration-300 hover:border-[#E03B37]/30"
                     >
                       <span className="mb-2 flex items-center gap-1 text-xs text-gray-400">
                         <ArrowLeft className="h-3 w-3" /> Previous Article
@@ -281,7 +281,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   {nextPost && (
                     <Link
                       href={`/blogs/${nextPost.slug}`}
-                      className="group rounded-lg border border-white/10 bg-[#111119] p-5 text-right transition-all duration-300 hover:border-[#E03B37]/30"
+                      className="group rounded border border-white/10 bg-[#111119] p-5 text-right transition-all duration-300 hover:border-[#E03B37]/30"
                     >
                       <span className="mb-2 flex items-center justify-end gap-1 text-xs text-gray-400">
                         Next Article <ArrowRight className="h-3 w-3" />
@@ -299,7 +299,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <FadeIn delay={0.2}>
                   <div className="sticky top-24 space-y-8">
                     {/* Categories */}
-                    <div className="rounded-lg border border-white/10 bg-[#111119] p-6">
+                    <div className="rounded border border-white/10 bg-[#111119] p-6">
                       <h3 className="mb-4 text-lg font-semibold text-white">Categories</h3>
                       <ul className="space-y-2">
                         {categories
@@ -320,7 +320,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                     {/* Related Posts */}
                     {relatedPosts.length > 0 && (
-                      <div className="rounded-lg border border-white/10 bg-[#111119] p-6">
+                      <div className="rounded border border-white/10 bg-[#111119] p-6">
                         <h3 className="mb-4 text-lg font-semibold text-white">Related Articles</h3>
                         <ul className="space-y-4">
                           {relatedPosts.map((related) => (
@@ -349,14 +349,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     )}
 
                     {/* Newsletter CTA */}
-                    <div className="rounded-lg border border-[#E03B37]/20 bg-[#E03B37]/5 p-6">
+                    <div className="rounded border border-[#E03B37]/20 bg-[#E03B37]/5 p-6">
                       <h3 className="mb-2 font-bold text-white">Stay Updated</h3>
                       <p className="mb-4 text-sm text-gray-400">
                         Get the latest insights delivered to your inbox. No spam, just quality content.
                       </p>
                       <Link
                         href="/blogs"
-                        className="inline-flex w-full items-center justify-center rounded-lg bg-[#E03B37] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#E03B37]/90"
+                        className="inline-flex w-full items-center justify-center rounded bg-[#E03B37] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#E03B37]/90"
                       >
                         Subscribe to Newsletter
                       </Link>
@@ -379,7 +379,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 .map((readNext) => (
                   <StaggerItem key={readNext.id}>
                     <Link href={`/blogs/${readNext.slug}`} className="group block">
-                      <div className="h-full overflow-hidden rounded-lg border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
+                      <div className="h-full overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
                         <div className="relative aspect-video overflow-hidden">
                           <Image
                             src={readNext.image}

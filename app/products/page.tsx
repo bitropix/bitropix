@@ -45,6 +45,9 @@ export const metadata: Metadata = {
       'Pre-built, battle-tested enterprise solutions that can be customized and deployed quickly for your business.',
     type: 'website',
   },
+  alternates: {
+    canonical: 'https://www.bitropix.com/products',
+  },
 };
 
 const products = [
@@ -195,13 +198,13 @@ export default function ProductsPage() {
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
+                  className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
                 >
                   Get a Free Demo <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
                   href="#comparison"
-                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+                  className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
                 >
                   Compare Solutions
                 </Link>

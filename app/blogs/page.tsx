@@ -113,7 +113,7 @@ export default function BlogsPage() {
               <h2 className="mb-8 text-2xl font-bold text-white">Featured Article</h2>
               <ScaleIn>
                 <Link href={`/blogs/${featuredPost.slug}`} className="group block">
-                  <div className="overflow-hidden rounded-lg border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
+                  <div className="overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
                     <div className="grid md:grid-cols-2">
                       <div className="relative aspect-video overflow-hidden md:aspect-auto md:min-h-87.5">
                         <Image
@@ -167,7 +167,7 @@ export default function BlogsPage() {
                 <p className="text-lg text-gray-400">No articles found in this category yet.</p>
                 <button
                   onClick={() => setActiveCategory('All')}
-                  className="mt-4 rounded-lg border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+                  className="mt-4 rounded border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
                 >
                   View All Articles
                 </button>
@@ -177,7 +177,7 @@ export default function BlogsPage() {
                 {visiblePosts.map((post) => (
                   <StaggerItem key={post.id}>
                     <Link href={`/blogs/${post.slug}`} className="group block">
-                      <div className="h-full overflow-hidden rounded-lg border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
+                      <div className="h-full overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
                         <div className="relative aspect-video overflow-hidden">
                           <Image
                             src={post.image}
@@ -217,7 +217,7 @@ export default function BlogsPage() {
               <div className="mt-12 text-center">
                 <button
                   onClick={() => setVisibleCount((prev) => prev + 6)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-[#E03B37]/50 hover:bg-[#E03B37]/5"
+                  className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-[#E03B37]/50 hover:bg-[#E03B37]/5"
                 >
                   Load More Articles <ArrowRight className="h-4 w-4" />
                 </button>
@@ -239,11 +239,11 @@ export default function BlogsPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 rounded-lg border border-white/20 bg-[#0a0a12] px-4 py-3 text-white placeholder-gray-500 focus:border-white/40 focus:ring-2 focus:ring-[#0a0a12] focus:outline-none"
+                className="flex-1 rounded border border-white/20 bg-[#0a0a12] px-4 py-3 text-white placeholder-gray-500 focus:border-white/40 focus:ring-2 focus:ring-[#0a0a12] focus:outline-none"
               />
               <button
                 type="submit"
-                className="rounded-lg bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all hover:bg-white/90"
+                className="rounded bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all hover:bg-white/90"
               >
                 Subscribe
               </button>

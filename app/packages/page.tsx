@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     'digital marketing plans',
     'Bitropix pricing',
   ],
+  alternates: {
+    canonical: 'https://www.bitropix.com/packages',
+  },
 };
 
 const faqData = [

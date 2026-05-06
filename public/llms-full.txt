@@ -1,0 +1,97 @@
+# Bitropix — Full Reference for AI Agents
+
+> Bitropix is a digital agency headquartered in Noida, India. Founded in 2023, the firm provides end-to-end IT services and digital marketing for startups, SMEs, and enterprises across India, the US, UK, UAE, and Australia. Engagement models include fixed-price projects, hourly billing, and dedicated teams.
+
+## Identity
+
+- Legal name: Bitropix
+- Website: https://www.bitropix.com
+- Email: info@bitropix.com
+- Phone: +91-9318454571
+- Address: Sector 62, Noida, Uttar Pradesh 201301, India
+- Founded: 2023
+- Languages: English, Hindi
+- LinkedIn: https://www.linkedin.com/company/bitropix/
+- Instagram: https://www.instagram.com/bitropix/
+- Service area: India, United States, United Kingdom, United Arab Emirates, Australia
+
+## Services
+
+### Website Development
+Custom websites, web applications, e-commerce stores, progressive web apps, headless CMS, and API integrations. Stack: React, Next.js, Node.js, Python, PHP, PostgreSQL.
+
+### Mobile App Development
+iOS, Android, and cross-platform apps. Stack: React Native, Flutter, Swift, Kotlin. Covers MVP design, backend, app store deployment, and post-launch support.
+
+### UI/UX Design
+User research, wireframes, prototypes, design systems, usability testing. Tools: Figma.
+
+### Digital Marketing & SEO
+Technical SEO, content strategy, link building, Google Ads, Meta Ads, LinkedIn Ads, social media management, analytics dashboards.
+
+### Cloud Migration
+AWS, Microsoft Azure, Google Cloud. Lift-and-shift, replatform, and refactor migrations. Cost optimization and FinOps. DevOps with CI/CD, Kubernetes, Terraform.
+
+### Digital Transformation Consulting
+Strategy, business process automation, legacy modernization, change management.
+
+### Embedded Systems & IoT
+Firmware development, sensor integration, telemetry pipelines, edge inference, MQTT and AWS IoT Core.
+
+## Products
+
+- ERP (Enterprise Resource Planning) — modular finance, inventory, HR, and CRM.
+- HRMS (Human Resource Management System) — payroll, attendance, performance.
+- E-commerce platform — storefront, checkout, fulfillment, marketplace integrations.
+
+## Pricing
+
+- Website packages: starting from INR 25,000.
+- Mobile apps: starting from INR 1,00,000.
+- Enterprise products (ERP/HRMS/E-commerce): starting from INR 1,00,000–2,00,000.
+- Custom and dedicated team pricing available on request.
+
+## Process
+
+1. Free discovery call.
+2. Detailed proposal with scope, timeline, and milestones.
+3. Iterative agile delivery with weekly demos.
+4. UAT, deployment, and handover.
+5. Optional ongoing maintenance and support.
+
+## Differentiators
+
+- India-based pricing with global delivery quality.
+- Senior engineers and designers (no offshoring of leads).
+- Transparent fixed-price proposals and milestone billing.
+- 98% client retention.
+
+## Frequently Asked Questions
+
+**What services does Bitropix offer?**
+Web development, mobile app development, UI/UX design, cloud migrations, SEO and digital marketing, ERP, HRMS, e-commerce, embedded systems, IoT.
+
+**How long does a typical project take?**
+Business website: 3–6 weeks. Custom web app or mobile app: 8–16 weeks. Enterprise platforms: 3–6 months.
+
+**Do you work with startups?**
+Yes — startup MVPs are a core focus.
+
+**Where is Bitropix located?**
+Noida, India. We serve clients globally.
+
+**How does pricing work?**
+Fixed-price, hourly, or dedicated team. Every engagement begins with a free consultation and a transparent quote.
+
+## Sitemap
+
+- https://www.bitropix.com/
+- https://www.bitropix.com/about
+- https://www.bitropix.com/services
+- https://www.bitropix.com/packages
+- https://www.bitropix.com/products
+- https://www.bitropix.com/portfolio
+- https://www.bitropix.com/blogs
+- https://www.bitropix.com/careers
+- https://www.bitropix.com/contact
+- https://www.bitropix.com/privacy

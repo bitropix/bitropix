@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
@@ -16,6 +15,7 @@ import {
   Code2,
 } from 'lucide-react';
 import { BreadcrumbNav } from '@/components/breadcrumb-nav';
+import { LivePreview } from '@/components/live-preview';
 import { portfolioProjects, getProjectBySlug } from '@/lib/portfolio-data';
 import { FadeIn, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from '@/components/animate';
 
@@ -130,13 +130,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                       href={project.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
+                      className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
                     >
                       Visit Live Website <ExternalLink className="h-4 w-4" />
                     </a>
                     <Link
                       href="/contact"
-                      className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+                      className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
                     >
                       Start Your Project
                     </Link>
@@ -144,13 +144,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               </FadeInLeft>
               <FadeInRight>
-                <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-white/10 shadow-2xl shadow-[#E03B37]/5">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
+                <div className="relative aspect-[16/10] overflow-hidden rounded border border-white/10 shadow-2xl shadow-[#E03B37]/5">
+                  <LivePreview
+                    url={project.url}
+                    image={project.image}
+                    title={project.title}
                     priority
-                    className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>
@@ -206,8 +205,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-8 lg:grid-cols-2">
               <FadeInLeft>
-                <div className="h-full rounded-lg border border-white/10 bg-[#111119] p-8">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#E03B37]/10">
+                <div className="h-full rounded border border-white/10 bg-[#111119] p-8">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded bg-[#E03B37]/10">
                     <Target className="h-6 w-6 text-[#E03B37]" />
                   </div>
                   <h2 className="mb-4 text-2xl font-bold text-white">The Challenge</h2>
@@ -215,8 +214,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               </FadeInLeft>
               <FadeInRight>
-                <div className="h-full rounded-lg border border-white/10 bg-[#111119] p-8">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#E03B37]/10">
+                <div className="h-full rounded border border-white/10 bg-[#111119] p-8">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded bg-[#E03B37]/10">
                     <Lightbulb className="h-6 w-6 text-[#E03B37]" />
                   </div>
                   <h2 className="mb-4 text-2xl font-bold text-white">Our Solution</h2>
@@ -239,7 +238,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {project.features.map((feature) => (
                 <StaggerItem key={feature}>
-                  <div className="flex h-full items-start gap-3 rounded-lg border border-white/10 bg-[#111119] p-5 transition-all duration-300 hover:border-[#E03B37]/20">
+                  <div className="flex h-full items-start gap-3 rounded border border-white/10 bg-[#111119] p-5 transition-all duration-300 hover:border-[#E03B37]/20">
                     <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#E03B37]" />
                     <p className="text-sm leading-relaxed text-gray-300">{feature}</p>
                   </div>
@@ -261,7 +260,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {project.results.map((result, index) => (
                 <StaggerItem key={result}>
-                  <div className="h-full rounded-lg border border-white/10 bg-[#111119] p-6 text-center transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
+                  <div className="h-full rounded border border-white/10 bg-[#111119] p-6 text-center transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
                     <div className="mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#E03B37]/10 text-lg font-bold text-[#E03B37]">
                       {index + 1}
                     </div>
@@ -279,7 +278,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
               <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
                 <div className="flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-[#E03B37]/10">
+                  <div className="flex h-14 w-14 items-center justify-center rounded bg-[#E03B37]/10">
                     <Globe className="h-7 w-7 text-[#E03B37]" />
                   </div>
                   <div>
@@ -291,7 +290,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
+                  className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
                 >
                   Visit {project.url.replace('https://', '').replace('www.', '').replace(/\/$/, '')}{' '}
                   <ExternalLink className="h-4 w-4" />
@@ -308,7 +307,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {prevProject ? (
                 <Link
                   href={`/portfolio/${prevProject.slug}`}
-                  className="group rounded-lg border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30"
+                  className="group rounded border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30"
                 >
                   <span className="mb-2 flex items-center gap-1 text-xs text-gray-400">
                     <ArrowLeft className="h-3 w-3" /> Previous Project
@@ -324,7 +323,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {nextProject && (
                 <Link
                   href={`/portfolio/${nextProject.slug}`}
-                  className="group rounded-lg border border-white/10 bg-[#111119] p-6 text-right transition-all duration-300 hover:border-[#E03B37]/30"
+                  className="group rounded border border-white/10 bg-[#111119] p-6 text-right transition-all duration-300 hover:border-[#E03B37]/30"
                 >
                   <span className="mb-2 flex items-center justify-end gap-1 text-xs text-gray-400">
                     Next Project <ArrowRight className="h-3 w-3" />
@@ -349,14 +348,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {otherProjects.map((other) => (
                 <StaggerItem key={other.id}>
                   <Link href={`/portfolio/${other.slug}`} className="group block">
-                    <div className="h-full overflow-hidden rounded-lg border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
+                    <div className="h-full overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
                       <div className="relative aspect-video overflow-hidden">
-                        <Image
-                          src={other.image}
-                          alt={other.title}
-                          fill
-                          className="object-cover opacity-70 transition-all duration-500 group-hover:scale-105 group-hover:opacity-90"
+                        <LivePreview
+                          url={other.url}
+                          image={other.image}
+                          title={other.title}
                           sizes="(max-width: 768px) 100vw, 33vw"
+                          imageClassName="object-cover opacity-70 transition-opacity duration-500 group-hover:opacity-90"
                         />
                       </div>
                       <div className="p-6">
@@ -392,7 +391,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
+                className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
               >
                 Get in Touch <ArrowRight className="h-5 w-5" />
               </Link>

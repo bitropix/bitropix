@@ -31,7 +31,60 @@ export async function generateMetadata({ params }: RolePageProps): Promise<Metad
 
   return {
     title: `${job.title} - Careers at Bitropix`,
-    description: `Apply for the ${job.title} role at Bitropix.`,
+    description: `Apply for the ${job.title} role at Bitropix. ${job.description}`,
+    alternates: {
+      canonical: `https://www.bitropix.com/careers/${job.slug}`,
+    },
+  };
+}
+
+const SITE_URL = 'https://www.bitropix.com';
+
+function buildJobPostingSchema(job: ReturnType<typeof getJobBySlug>) {
+  if (!job) return null;
+  const today = new Date();
+  const datePosted = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().slice(0, 10);
+  const validThrough = new Date(today.getFullYear(), today.getMonth() + 3, 1).toISOString().slice(0, 10);
+  const remote = /remote/i.test(job.location);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    title: job.title,
+    description: `${job.description} Required skills: ${job.skills.join(', ')}. Experience: ${job.experience}.`,
+    datePosted,
+    validThrough,
+    employmentType: job.type.toUpperCase().includes('FULL') ? 'FULL_TIME' : 'CONTRACTOR',
+    industry: 'Information Technology',
+    occupationalCategory: job.department,
+    experienceRequirements: job.experience,
+    skills: job.skills.join(', '),
+    hiringOrganization: {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'Bitropix',
+      sameAs: SITE_URL,
+      logo: `${SITE_URL}/images/logo.png`,
+    },
+    jobLocation: {
+      '@type': 'Place',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: job.location.split('/')[0].trim(),
+        addressRegion: 'KA',
+        addressCountry: 'IN',
+      },
+    },
+    ...(remote
+      ? {
+          jobLocationType: 'TELECOMMUTE',
+          applicantLocationRequirements: {
+            '@type': 'Country',
+            name: 'India',
+          },
+        }
+      : {}),
+    directApply: true,
+    url: `${SITE_URL}/careers/${job.slug}`,
   };
 }
 
@@ -43,8 +96,13 @@ export default async function RolePage({ params }: RolePageProps) {
     notFound();
   }
 
+  const jobSchema = buildJobPostingSchema(job);
+
   return (
     <>
+      {jobSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jobSchema) }} />
+      )}
       <Navbar />
       <main className="bg-[#0a0a12] pt-16">
         <BreadcrumbNav items={[{ label: 'Careers', href: '/careers' }, { label: job.title }]} />

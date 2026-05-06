@@ -22,10 +22,10 @@ const footerLinks = {
     { label: 'Privacy Policy', href: '/privacy' },
   ],
   resources: [
-    { label: 'HTML Sitemap', href: '/sitemap' },
-    { label: 'Case Studies', href: '/contact' },
-    { label: 'FAQs', href: '/contact#faq' },
-    { label: 'Partners', href: '/contact' },
+    { label: 'HTML Sitemap', href: '/sitemap-html' },
+    { label: 'Case Studies', href: '/portfolio' },
+    { label: 'FAQs', href: '/services#faq' },
+    { label: 'Packages', href: '/packages' },
   ],
 };
 

@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 import { BreadcrumbNav } from '@/components/breadcrumb-nav';
+import { LivePreview } from '@/components/live-preview';
 import { portfolioProjects } from '@/lib/portfolio-data';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
 
@@ -102,16 +102,15 @@ export default function PortfolioPage() {
                   >
                     {/* Image */}
                     <Link href={`/portfolio/${project.slug}`} className="group">
-                      <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-white/10">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      <div className="relative aspect-[16/10] overflow-hidden rounded border border-white/10">
+                        <LivePreview
+                          url={project.url}
+                          image={project.image}
+                          title={project.title}
                           sizes="(max-width: 1024px) 100vw, 50vw"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                        <div className="absolute right-4 bottom-4 flex items-center gap-2 rounded-full bg-[#E03B37] px-4 py-2 text-sm font-medium text-white opacity-0 transition-all duration-500 group-hover:opacity-100">
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                        <div className="pointer-events-none absolute right-4 bottom-4 flex items-center gap-2 rounded-full bg-[#E03B37] px-4 py-2 text-sm font-medium text-white opacity-0 transition-all duration-500 group-hover:opacity-100">
                           View Project <ArrowRight className="h-4 w-4" />
                         </div>
                       </div>
@@ -156,7 +155,7 @@ export default function PortfolioPage() {
                       <div className="flex flex-wrap gap-3">
                         <Link
                           href={`/portfolio/${project.slug}`}
-                          className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
+                          className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
                         >
                           View Case Study <ArrowRight className="h-4 w-4" />
                         </Link>
@@ -164,7 +163,7 @@ export default function PortfolioPage() {
                           href={project.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+                          className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
                         >
                           Visit Website <ExternalLink className="h-4 w-4" />
                         </a>
@@ -193,7 +192,7 @@ export default function PortfolioPage() {
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
+                className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
               >
                 Start Your Project <ArrowRight className="h-5 w-5" />
               </Link>

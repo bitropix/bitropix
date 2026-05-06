@@ -145,7 +145,7 @@ export default function CareersPage() {
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <a
                   href="#openings"
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
+                  className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
                 >
                   View Open Positions <ArrowRight className="h-4 w-4" />
                 </a>

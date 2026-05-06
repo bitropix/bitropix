@@ -12,6 +12,9 @@ export const metadata = {
   description:
     'Learn about Bitropix, a leading IT services company in Noida, India. Founded in 2023, we serve 50+ clients with expert website development, app development, SEO, and digital marketing solutions.',
   keywords: 'IT company Noida, about Bitropix, IT services India, digital transformation company, tech company Noida',
+  alternates: {
+    canonical: 'https://www.bitropix.com/about',
+  },
 };
 
 const values = [
@@ -128,13 +131,13 @@ export default function AboutPage() {
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
+                  className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
                 >
                   Work With Us <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
                   href="/services"
-                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+                  className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
                 >
                   Our Services
                 </Link>
@@ -204,7 +207,7 @@ export default function AboutPage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <FadeIn>
               <div className="grid gap-12 md:grid-cols-2">
-                <div className="group relative overflow-hidden rounded-lg border border-white/10 bg-[#111119] p-8 transition-colors hover:border-[#E03B37]/40">
+                <div className="group relative overflow-hidden rounded border border-white/10 bg-[#111119] p-8 transition-colors hover:border-[#E03B37]/40">
                   <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-[#E03B37]/5 blur-3xl transition-colors group-hover:bg-[#E03B37]/10" />
                   <div className="relative">
                     <div className="mb-6 flex h-14 w-14 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
@@ -218,7 +221,7 @@ export default function AboutPage() {
                     </p>
                   </div>
                 </div>
-                <div className="group relative overflow-hidden rounded-lg border border-white/10 bg-[#111119] p-8 transition-colors hover:border-[#E03B37]/30">
+                <div className="group relative overflow-hidden rounded border border-white/10 bg-[#111119] p-8 transition-colors hover:border-[#E03B37]/30">
                   <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-[#c62828]/5 blur-3xl transition-colors group-hover:bg-[#c62828]/10" />
                   <div className="relative">
                     <div className="mb-6 flex h-14 w-14 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
@@ -280,7 +283,7 @@ export default function AboutPage() {
               {awards.map((award) => (
                 <div
                   key={award.title}
-                  className="group flex items-start gap-4 rounded-lg border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30"
+                  className="group flex items-start gap-4 rounded border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30"
                 >
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
                     <Award className="h-7 w-7 text-[#E03B37]" />
@@ -308,13 +311,13 @@ export default function AboutPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-white bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all duration-300 hover:bg-white/90"
+                className="inline-flex items-center gap-2 rounded border border-white bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all duration-300 hover:bg-white/90"
               >
                 Start a Project <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/careers"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/30 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded border border-white/30 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
               >
                 View Careers
               </Link>

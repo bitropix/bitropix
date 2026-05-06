@@ -28,6 +28,9 @@ export const metadata = {
     'Bitropix offers expert website development, app development, SEO services, cloud solutions, and digital marketing services in India. Get a free consultation today.',
   keywords:
     'website development, app development, SEO services, digital marketing agency India, cloud migration, UI UX design, IoT solutions, IT company Noida',
+  alternates: {
+    canonical: 'https://www.bitropix.com/services',
+  },
 };
 
 const services = [
@@ -246,18 +249,48 @@ const faqs = [
 ];
 
 export default function ServicesPage() {
+  const SITE_URL = 'https://www.bitropix.com';
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bitropix.com' },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://bitropix.com/services' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${SITE_URL}/services` },
     ],
+  };
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  };
+
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: services.map((service, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Service',
+        name: service.title,
+        description: service.description,
+        url: `${SITE_URL}/services#${service.slug}`,
+        provider: { '@id': `${SITE_URL}/#organization` },
+        areaServed: { '@type': 'Country', name: 'India' },
+      },
+    })),
   };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
       <Navbar />
       <main className="pt-16">
         <BreadcrumbNav items={[{ label: 'Services' }]} />
@@ -285,13 +318,13 @@ export default function ServicesPage() {
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
+                  className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
                 >
                   Get a Free Consultation <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
                   href="#web"
-                  className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+                  className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
                 >
                   Explore Services
                 </Link>
@@ -314,7 +347,7 @@ export default function ServicesPage() {
             <StaggerContainer className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {whyChooseUs.map((item) => (
                 <StaggerItem key={item.title}>
-                  <div className="group rounded-lg border border-white/10 bg-[#111119] p-6 text-center transition-all duration-300 hover:border-[#E03B37]/30">
+                  <div className="group rounded border border-white/10 bg-[#111119] p-6 text-center transition-all duration-300 hover:border-[#E03B37]/30">
                     <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
                       <item.icon className="h-8 w-8 text-[#E03B37]" />
                     </div>
@@ -393,7 +426,7 @@ export default function ServicesPage() {
 
                       <Link
                         href="/contact"
-                        className="inline-flex items-center gap-2 rounded-lg bg-[#E03B37] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
+                        className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
                       >
                         Get a Quote <ArrowRight className="h-4 w-4" />
                       </Link>
@@ -462,13 +495,13 @@ export default function ServicesPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-white bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all duration-300 hover:bg-white/90"
+                className="inline-flex items-center gap-2 rounded border border-white bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all duration-300 hover:bg-white/90"
               >
                 Start Your Project <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/30 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded border border-white/30 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
               >
                 Learn About Us
               </Link>
