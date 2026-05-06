@@ -17,7 +17,7 @@ const faqs = [
   {
     question: 'Do you work with startups and small businesses?',
     answer:
-      'Absolutely. We work with businesses of all sizes — from early-stage startups to established enterprises. Our flexible engagement models and competitive pricing make professional IT services accessible to growing businesses.',
+      'Absolutely. We work with businesses of all sizes - from early-stage startups to established enterprises. Our flexible engagement models and competitive pricing make professional IT services accessible to growing businesses.',
   },
   {
     question: 'What technologies do you specialize in?',

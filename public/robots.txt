@@ -17,7 +17,7 @@ Allow: /
 User-agent: AdsBot-Google
 Allow: /
 
-# AI / LLM crawlers — explicitly allow training & search retrieval
+# AI / LLM crawlers - explicitly allow training & search retrieval
 User-agent: GPTBot
 Allow: /
 

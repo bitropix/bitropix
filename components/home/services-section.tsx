@@ -11,7 +11,7 @@ const services = [
     icon: Globe,
     title: 'Web Development',
     description:
-      'High-performance websites and web applications built with Next.js, React, and modern frameworks. From landing pages to enterprise SaaS platforms — we deliver fast, scalable, and SEO-optimized solutions.',
+      'High-performance websites and web applications built with Next.js, React, and modern frameworks. From landing pages to enterprise SaaS platforms - we deliver fast, scalable, and SEO-optimized solutions.',
   },
   {
     id: 'mobile-development',

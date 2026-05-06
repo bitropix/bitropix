@@ -18,7 +18,7 @@ const testimonials = [
     name: 'Arnab Gupta',
     role: 'Founder, Fincafe',
     content:
-      "Working with them was a great experience. They perfectly understood Fincafe's vision and translated it into a clean, professional, and impactful website. The design, content flow, and overall user experience truly reflect our brand and mission. Highly reliable, creative, and responsive throughout the project — we are extremely satisfied with the final result.",
+      "Working with them was a great experience. They perfectly understood Fincafe's vision and translated it into a clean, professional, and impactful website. The design, content flow, and overall user experience truly reflect our brand and mission. Highly reliable, creative, and responsive throughout the project - we are extremely satisfied with the final result.",
     rating: 5,
   },
   {

@@ -26,7 +26,7 @@ export const portfolioProjects: PortfolioProject[] = [
     title: 'Tourillo',
     tagline: 'Explore the World with Us',
     description:
-      "A comprehensive travel platform offering curated tour packages across India — from the Himalayas to Kerala's backwaters. Tourillo connects travelers with unforgettable experiences through all-inclusive packages featuring hotels, transport, meals, and 24/7 expert consultation.",
+      "A comprehensive travel platform offering curated tour packages across India - from the Himalayas to Kerala's backwaters. Tourillo connects travelers with unforgettable experiences through all-inclusive packages featuring hotels, transport, meals, and 24/7 expert consultation.",
     url: 'https://tourillo.com/',
     image: '/images/portfolio/tourillo.svg',
     category: 'Web Application',
@@ -34,7 +34,7 @@ export const portfolioProjects: PortfolioProject[] = [
     services: ['Web Development', 'UI/UX Design', 'SEO', 'Digital Marketing'],
     features: [
       'Curated tour packages with flexible durations (2-12 days)',
-      'Category-based browsing — Romantic, Religious, Adventure, Family, Nature, Hill Station',
+      'Category-based browsing - Romantic, Religious, Adventure, Family, Nature, Hill Station',
       'All-inclusive packages with hotel, transport & meals',
       '24/7 destination expert consultation',
       'Verified traveler reviews with 5-star rating system',
@@ -44,7 +44,7 @@ export const portfolioProjects: PortfolioProject[] = [
     ],
     techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Node.js'],
     challenge:
-      'The client needed a modern, high-performance travel platform that could handle hundreds of tour packages with dynamic pricing, seasonal promotions, and an intuitive booking flow — all while maintaining lightning-fast page loads and top-tier SEO to compete in the crowded Indian travel market.',
+      'The client needed a modern, high-performance travel platform that could handle hundreds of tour packages with dynamic pricing, seasonal promotions, and an intuitive booking flow - all while maintaining lightning-fast page loads and top-tier SEO to compete in the crowded Indian travel market.',
     solution:
       'We built a server-rendered Next.js application with optimized image loading, structured data for rich search results, and a component-based architecture that makes adding new packages effortless. The platform features category-based filtering, verified reviews, and a streamlined consultation booking system that converts browsers into travelers.',
     results: [
@@ -63,7 +63,7 @@ export const portfolioProjects: PortfolioProject[] = [
     title: 'Advanced Beauty',
     tagline: 'We are the Solution to All Your Beauty Problems!',
     description:
-      'A premium at-home salon service platform serving Noida, Greater Noida, and Delhi NCR. Advanced Beauty connects clients with 18+ professional beauty masters for bridal makeup, nail extensions, hair extensions, eyelash extensions, facials, and spa treatments — all delivered to your doorstep.',
+      'A premium at-home salon service platform serving Noida, Greater Noida, and Delhi NCR. Advanced Beauty connects clients with 18+ professional beauty masters for bridal makeup, nail extensions, hair extensions, eyelash extensions, facials, and spa treatments - all delivered to your doorstep.',
     url: 'https://www.advancedbeauty.in/',
     image: '/images/portfolio/advanced-beauty.svg',
     category: 'E-Commerce Platform',
@@ -120,7 +120,7 @@ export const portfolioProjects: PortfolioProject[] = [
     challenge:
       'Beverly Agrovet required a modern digital presence that could effectively communicate their 25+ years of agrochemical expertise to farmers and agricultural professionals. The website needed to present complex product information in an accessible way while building trust and credibility in a traditionally offline industry.',
     solution:
-      'We created a clean, professional corporate website with an organized product catalog featuring detailed information about each formulation. The site emphasizes trust signals — years of experience, quality assurance processes, and eco-friendly commitments — while providing easy navigation for farmers to find the right products for their crops.',
+      'We created a clean, professional corporate website with an organized product catalog featuring detailed information about each formulation. The site emphasizes trust signals - years of experience, quality assurance processes, and eco-friendly commitments - while providing easy navigation for farmers to find the right products for their crops.',
     results: [
       'Established strong digital presence in the agricultural sector',
       'Organized 25+ products across 6 categories with detailed info',
@@ -148,7 +148,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Service pages for 5 core business verticals',
       'Team showcase with 150+ expert profiles',
       'Company milestones and achievement timeline',
-      'Four pillars branding — Innovation, Reliability, Quality, Excellence',
+      'Four pillars branding - Innovation, Reliability, Quality, Excellence',
       'Project gallery with high-quality imagery',
       'SEO-optimized for infrastructure and construction searches',
       'Lead generation forms for project inquiries',
@@ -157,7 +157,7 @@ export const portfolioProjects: PortfolioProject[] = [
     challenge:
       'Dishaa Vertex Infra needed a website that matched the scale and professionalism of their infrastructure projects. The platform had to showcase 120+ completed projects, communicate their expertise across multiple service verticals, and generate qualified leads from potential clients seeking large-scale construction and engineering services.',
     solution:
-      'We developed a visually impactful corporate website with a project showcase that highlights their most impressive builds — from metropolitan bridges to smart city developments. The site features a structured service presentation, team credentials, and strategic CTAs that convert visitors into qualified project inquiries.',
+      'We developed a visually impactful corporate website with a project showcase that highlights their most impressive builds - from metropolitan bridges to smart city developments. The site features a structured service presentation, team credentials, and strategic CTAs that convert visitors into qualified project inquiries.',
     results: [
       '120+ completed projects showcased effectively',
       '15+ years of excellence communicated through brand storytelling',

@@ -3,7 +3,7 @@
 import { Briefcase } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
 
-// Real engagements only — keep the list short and verifiable.
+// Real engagements only - keep the list short and verifiable.
 const clients = [
   { name: 'Tourillo', industry: 'Travel & Tourism' },
   { name: 'Advanced Beauty', industry: 'Beauty & Wellness' },

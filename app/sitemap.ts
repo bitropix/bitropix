@@ -48,18 +48,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/products`,
-      lastModified: STATIC_LAST_MOD,
-      changeFrequency: 'monthly',
-      priority: 0.85,
-    },
-    {
-      url: `${SITE_URL}/packages`,
-      lastModified: STATIC_LAST_MOD,
-      changeFrequency: 'monthly',
-      priority: 0.85,
-    },
-    {
       url: `${SITE_URL}/portfolio`,
       lastModified: STATIC_LAST_MOD,
       changeFrequency: 'weekly',
@@ -90,7 +78,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${SITE_URL}/faq`,
+      lastModified: STATIC_LAST_MOD,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
       url: `${SITE_URL}/privacy`,
+      lastModified: STATIC_LAST_MOD,
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${SITE_URL}/terms`,
       lastModified: STATIC_LAST_MOD,
       changeFrequency: 'yearly',
       priority: 0.3,

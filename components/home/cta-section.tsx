@@ -28,7 +28,7 @@ export function CTASection() {
               Together
             </h2>
             <p className="mx-auto mb-10 max-w-2xl text-lg text-gray-300">
-              Whether you need a website, mobile app, cloud migration, or a full digital marketing strategy — our team
+              Whether you need a website, mobile app, cloud migration, or a full digital marketing strategy - our team
               is ready to turn your vision into reality.
             </p>
 

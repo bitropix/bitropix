@@ -1,4 +1,4 @@
-# Bitropix — Full Reference for AI Agents
+# Bitropix - Full Reference for AI Agents
 
 > Bitropix is a digital agency headquartered in Noida, India. Founded in 2023, the firm provides end-to-end IT services and digital marketing for startups, SMEs, and enterprises across India, the US, UK, UAE, and Australia. Engagement models include fixed-price projects, hourly billing, and dedicated teams.
 
@@ -38,19 +38,6 @@ Strategy, business process automation, legacy modernization, change management.
 ### Embedded Systems & IoT
 Firmware development, sensor integration, telemetry pipelines, edge inference, MQTT and AWS IoT Core.
 
-## Products
-
-- ERP (Enterprise Resource Planning) — modular finance, inventory, HR, and CRM.
-- HRMS (Human Resource Management System) — payroll, attendance, performance.
-- E-commerce platform — storefront, checkout, fulfillment, marketplace integrations.
-
-## Pricing
-
-- Website packages: starting from INR 25,000.
-- Mobile apps: starting from INR 1,00,000.
-- Enterprise products (ERP/HRMS/E-commerce): starting from INR 1,00,000–2,00,000.
-- Custom and dedicated team pricing available on request.
-
 ## Process
 
 1. Free discovery call.
@@ -69,13 +56,13 @@ Firmware development, sensor integration, telemetry pipelines, edge inference, M
 ## Frequently Asked Questions
 
 **What services does Bitropix offer?**
-Web development, mobile app development, UI/UX design, cloud migrations, SEO and digital marketing, ERP, HRMS, e-commerce, embedded systems, IoT.
+Web development, mobile app development, UI/UX design, cloud migrations, SEO and digital marketing, embedded systems, IoT, and digital transformation consulting.
 
 **How long does a typical project take?**
-Business website: 3–6 weeks. Custom web app or mobile app: 8–16 weeks. Enterprise platforms: 3–6 months.
+Business website: 3–6 weeks. Custom web app or mobile app: 8–16 weeks.
 
 **Do you work with startups?**
-Yes — startup MVPs are a core focus.
+Yes - startup MVPs are a core focus.
 
 **Where is Bitropix located?**
 Noida, India. We serve clients globally.
@@ -88,10 +75,10 @@ Fixed-price, hourly, or dedicated team. Every engagement begins with a free cons
 - https://www.bitropix.com/
 - https://www.bitropix.com/about
 - https://www.bitropix.com/services
-- https://www.bitropix.com/packages
-- https://www.bitropix.com/products
 - https://www.bitropix.com/portfolio
 - https://www.bitropix.com/blogs
 - https://www.bitropix.com/careers
 - https://www.bitropix.com/contact
+- https://www.bitropix.com/faq
 - https://www.bitropix.com/privacy
+- https://www.bitropix.com/terms

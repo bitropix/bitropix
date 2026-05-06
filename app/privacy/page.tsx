@@ -155,7 +155,7 @@ export default function PrivacyPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-16">
+      <main className="min-h-screen bg-[#0a0a12] pt-16">
         <BreadcrumbNav items={[{ label: 'Privacy Policy' }]} />
         {/* Hero Section */}
         <section className="relative overflow-hidden py-16 sm:py-24">
@@ -201,7 +201,7 @@ export default function PrivacyPage() {
         </section>
 
         {/* Content Sections */}
-        <section className="py-20">
+        <section className="bg-[#0a0a12] py-20">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <div className="space-y-16">
               {sections.map((section, index) => (

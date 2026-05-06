@@ -4,8 +4,6 @@ import { Footer } from '@/components/footer';
 import { HeroSection } from '@/components/home/hero-section';
 import { ServicesSection } from '@/components/home/services-section';
 import { ClientsSection } from '@/components/home/clients-section';
-// import { AgileHiringSection } from '@/components/home/agile-hiring-section';
-// import { ProductsSection } from '@/components/home/products-section';
 import { WhyUsSection } from '@/components/home/why-us-section';
 import { TechnologiesSection } from '@/components/home/technologies-section';
 import { ProcessSection } from '@/components/home/process-section';

@@ -18,7 +18,7 @@ export function PortfolioSection() {
               Projects That Speak for Themselves
             </h2>
             <p className="mx-auto max-w-2xl text-lg text-gray-400">
-              From travel platforms to enterprise solutions — we build digital products that drive real business results
+              From travel platforms to enterprise solutions - we build digital products that drive real business results
               across industries.
             </p>
           </div>

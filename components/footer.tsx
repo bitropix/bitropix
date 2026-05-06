@@ -24,8 +24,8 @@ const footerLinks = {
   resources: [
     { label: 'HTML Sitemap', href: '/sitemap-html' },
     { label: 'Case Studies', href: '/portfolio' },
-    { label: 'FAQs', href: '/services#faq' },
-    { label: 'Packages', href: '/packages' },
+    { label: 'FAQs', href: '/faq' },
+    { label: 'Terms of Service', href: '/terms' },
   ],
 };
 

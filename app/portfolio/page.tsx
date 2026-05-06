@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Portfolio - Our Work | Bitropix',
     description:
-      'Explore our portfolio of successful projects. From travel platforms to corporate websites — see the digital solutions we build.',
+      'Explore our portfolio of successful projects. From travel platforms to corporate websites - see the digital solutions we build.',
     type: 'website',
   },
   alternates: {
@@ -65,7 +65,7 @@ export default function PortfolioPage() {
                 </span>
               </h1>
               <p className="mx-auto max-w-2xl text-lg text-gray-400">
-                We don&apos;t just build websites — we craft digital experiences that transform businesses. Explore our
+                We don&apos;t just build websites - we craft digital experiences that transform businesses. Explore our
                 work across industries and see the impact we create.
               </p>
             </div>

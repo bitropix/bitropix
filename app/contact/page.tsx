@@ -229,7 +229,7 @@ export default function ContactPage() {
               </h1>
               <p className="mx-auto max-w-2xl text-lg text-gray-400">
                 Whether you need a custom software solution, want to modernize your infrastructure, or are looking for a
-                technology partner — we are here to help. Tell us about your project and get a tailored proposal.
+                technology partner - we are here to help. Tell us about your project and get a tailored proposal.
               </p>
             </div>
           </FadeIn>
