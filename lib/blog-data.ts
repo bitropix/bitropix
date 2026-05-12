@@ -7,12 +7,22 @@ export interface BlogPost {
   image: string;
   author: string;
   authorRole: string;
+  /** ISO 8601 date string (YYYY-MM-DD) - publication date */
   date: string;
+  /** ISO 8601 date string (YYYY-MM-DD) - last modified date; defaults to `date` */
+  dateModified?: string;
   readTime: string;
   category: string;
   tags: string[];
   metaTitle: string;
   metaDescription: string;
+}
+
+/** Format an ISO date (YYYY-MM-DD) for human display in en-IN locale. */
+export function formatBlogDate(iso: string): string {
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return iso;
+  return new Intl.DateTimeFormat('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }).format(d);
 }
 
 export const categories = [
@@ -83,11 +93,11 @@ export const blogPosts: BlogPost[] = [
     image: '/images/trans.webp',
     author: 'Rahul Verma',
     authorRole: 'CEO & Co-Founder',
-    date: 'Mar 15, 2025',
+    date: '2025-03-15',
     readTime: '10 min read',
     category: 'Digital Transformation',
     tags: ['digital transformation', 'business strategy', 'innovation', 'technology adoption'],
-    metaTitle: 'Complete Guide to Digital Transformation in 2025 | Bitropix',
+    metaTitle: 'Complete Guide to Digital Transformation in 2025',
     metaDescription:
       'Learn how to plan and execute a successful digital transformation strategy in 2025. Covers customer experience, operations, culture, and building a roadmap.',
   },
@@ -143,7 +153,7 @@ export const blogPosts: BlogPost[] = [
     image: '/react-programming-code.jpg',
     author: 'Vikram Patel',
     authorRole: 'Senior Frontend Developer',
-    date: 'Mar 10, 2025',
+    date: '2025-03-10',
     readTime: '8 min read',
     category: 'Development',
     tags: ['react', 'javascript', 'frontend', 'web development', 'react 19'],
@@ -202,7 +212,7 @@ export const blogPosts: BlogPost[] = [
     image: '/cloud-computing-infrastructure.jpg',
     author: 'Ananya Singh',
     authorRole: 'Cloud Solutions Architect',
-    date: 'Mar 5, 2025',
+    date: '2025-03-05',
     readTime: '7 min read',
     category: 'Cloud',
     tags: ['cloud computing', 'cost optimization', 'AWS', 'Azure', 'DevOps'],
@@ -254,11 +264,11 @@ export const blogPosts: BlogPost[] = [
     image: '/artificial-intelligence-neural-network.jpg',
     author: 'Priya Sharma',
     authorRole: 'AI/ML Lead',
-    date: 'Feb 28, 2025',
+    date: '2025-02-28',
     readTime: '12 min read',
     category: 'AI & ML',
     tags: ['artificial intelligence', 'machine learning', 'enterprise AI', 'LLMs', 'automation'],
-    metaTitle: 'Implementing AI in Enterprise: Practical Roadmap 2025 | Bitropix',
+    metaTitle: 'Implementing AI in Enterprise: Practical Roadmap 2025',
     metaDescription:
       'A practical guide to implementing AI in enterprise. Covers high-impact use cases, technology stack, risk management, and measuring AI ROI.',
   },
@@ -308,11 +318,11 @@ export const blogPosts: BlogPost[] = [
     image: '/microservices-architecture.png',
     author: 'Vikram Patel',
     authorRole: 'Senior Frontend Developer',
-    date: 'Feb 20, 2025',
+    date: '2025-02-20',
     readTime: '9 min read',
     category: 'Development',
     tags: ['microservices', 'architecture', 'backend', 'distributed systems', 'kubernetes'],
-    metaTitle: 'Microservices Best Practices: Lessons from 50+ Projects | Bitropix',
+    metaTitle: 'Microservices Best Practices: Lessons from 50+ Projects',
     metaDescription:
       'Practical lessons from 50+ microservices implementations. Covers DDD, API design, data management, observability, and deployment strategies.',
   },
@@ -359,11 +369,11 @@ export const blogPosts: BlogPost[] = [
     image: '/modern-ux-design-interface.jpg',
     author: 'Ananya Singh',
     authorRole: 'Cloud Solutions Architect',
-    date: 'Feb 15, 2025',
+    date: '2025-02-15',
     readTime: '6 min read',
     category: 'Design',
     tags: ['UX design', 'UI trends', 'accessibility', 'design systems', 'spatial computing'],
-    metaTitle: 'Top UX Design Trends 2025: AI, Spatial Computing & More | Bitropix',
+    metaTitle: 'Top UX Design Trends 2025: AI, Spatial Computing & More',
     metaDescription:
       'Discover the UX design trends shaping 2025: AI personalization, spatial interfaces, accessibility-first design, micro-interactions, and design systems.',
   },
@@ -416,11 +426,11 @@ export const blogPosts: BlogPost[] = [
     image: '/devops-automation-pipeline.jpg',
     author: 'Rahul Verma',
     authorRole: 'CEO & Co-Founder',
-    date: 'Feb 8, 2025',
+    date: '2025-02-08',
     readTime: '11 min read',
     category: 'DevOps',
     tags: ['DevOps', 'CI/CD', 'automation', 'Kubernetes', 'infrastructure as code'],
-    metaTitle: 'Complete Guide to DevOps Pipeline Automation 2025 | Bitropix',
+    metaTitle: 'Complete Guide to DevOps Pipeline Automation 2025',
     metaDescription:
       'Learn how to automate your DevOps pipeline. Covers CI/CD, testing automation, security scanning, infrastructure as code, and deployment strategies.',
   },
@@ -471,11 +481,11 @@ export const blogPosts: BlogPost[] = [
     image: '/images/marketing.webp',
     author: 'Priya Sharma',
     authorRole: 'AI/ML Lead',
-    date: 'Jan 25, 2025',
+    date: '2025-01-25',
     readTime: '9 min read',
     category: 'Digital Marketing',
     tags: ['SEO', 'digital marketing', 'content strategy', 'organic traffic', 'Google ranking'],
-    metaTitle: 'SEO Strategies That Work in 2025: Complete Playbook | Bitropix',
+    metaTitle: 'SEO Strategies That Work in 2025: Complete Playbook',
     metaDescription:
       'Proven SEO strategies for 2025 covering technical SEO, content strategy, link building, local SEO, and measuring success. Drive organic growth with Bitropix.',
   },
@@ -529,11 +539,11 @@ export const blogPosts: BlogPost[] = [
     image: '/images/web.webp',
     author: 'Vikram Patel',
     authorRole: 'Senior Frontend Developer',
-    date: 'Jan 18, 2025',
+    date: '2025-01-18',
     readTime: '10 min read',
     category: 'Development',
     tags: ['Next.js', 'React', 'web development', 'App Router', 'server components'],
-    metaTitle: 'Next.js App Router Complete Guide: Build Modern Web Apps | Bitropix',
+    metaTitle: 'Next.js App Router Complete Guide: Build Modern Web Apps',
     metaDescription:
       'Master the Next.js App Router with this guide covering layouts, server components, data fetching, rendering strategies, and production deployment.',
   },
@@ -583,11 +593,11 @@ export const blogPosts: BlogPost[] = [
     image: '/images/app.webp',
     author: 'Rahul Verma',
     authorRole: 'CEO & Co-Founder',
-    date: 'Jan 10, 2025',
+    date: '2025-01-10',
     readTime: '8 min read',
     category: 'Mobile',
     tags: ['mobile development', 'React Native', 'Flutter', 'cross-platform', 'app development'],
-    metaTitle: 'React Native vs Flutter 2025: Complete Comparison Guide | Bitropix',
+    metaTitle: 'React Native vs Flutter 2025: Complete Comparison Guide',
     metaDescription:
       'Honest comparison of React Native and Flutter based on real project experience. Covers architecture, performance, UI, platform support, and recommendations.',
   },
@@ -645,11 +655,11 @@ export const blogPosts: BlogPost[] = [
     image: '/images/marketing.webp',
     author: 'Ananya Singh',
     authorRole: 'Cloud Solutions Architect',
-    date: 'Jan 5, 2025',
+    date: '2025-01-05',
     readTime: '8 min read',
     category: 'E-Commerce',
     tags: ['e-commerce', 'conversion optimization', 'CRO', 'online store', 'digital marketing'],
-    metaTitle: 'E-Commerce CRO: 15 Tactics to Boost Conversion Rates | Bitropix',
+    metaTitle: 'E-Commerce CRO: 15 Tactics to Boost Conversion Rates',
     metaDescription:
       '15 proven e-commerce conversion optimization tactics to increase sales without more traffic. Covers checkout optimization, social proof, mobile design, and more.',
   },
@@ -703,11 +713,11 @@ export const blogPosts: BlogPost[] = [
     image: '/images/marketing.webp',
     author: 'Priya Sharma',
     authorRole: 'AI/ML Lead',
-    date: 'Dec 28, 2024',
+    date: '2024-12-28',
     readTime: '9 min read',
     category: 'Digital Marketing',
     tags: ['social media marketing', 'content strategy', 'digital marketing', 'brand building', 'lead generation'],
-    metaTitle: 'Social Media Marketing Strategy Guide 2025 | Bitropix',
+    metaTitle: 'Social Media Marketing Strategy Guide 2025',
     metaDescription:
       'Build a social media marketing strategy that drives real results. Covers platform selection, content planning, paid ads, analytics, and influencer marketing.',
   },
@@ -759,11 +769,11 @@ export const blogPosts: BlogPost[] = [
     image: '/images/marketing.webp',
     author: 'Rahul Verma',
     authorRole: 'CEO & Co-Founder',
-    date: 'Dec 20, 2024',
+    date: '2024-12-20',
     readTime: '10 min read',
     category: 'Digital Marketing',
     tags: ['PPC', 'Google Ads', 'paid advertising', 'digital marketing', 'SEM'],
-    metaTitle: 'Google Ads Optimization Guide: Maximize PPC ROI | Bitropix',
+    metaTitle: 'Google Ads Optimization Guide: Maximize PPC ROI',
     metaDescription:
       'Advanced Google Ads optimization techniques to maximize ROI. Covers keyword strategy, ad copy, landing pages, smart bidding, audiences, and Performance Max.',
   },
@@ -816,11 +826,11 @@ export const blogPosts: BlogPost[] = [
     image: '/cloud-computing-infrastructure.jpg',
     author: 'Vikram Patel',
     authorRole: 'Senior Frontend Developer',
-    date: 'Dec 15, 2024',
+    date: '2024-12-15',
     readTime: '11 min read',
     category: 'Cloud',
     tags: ['Kubernetes', 'cloud computing', 'DevOps', 'container orchestration', 'production'],
-    metaTitle: 'Kubernetes Production Best Practices Guide 2025 | Bitropix',
+    metaTitle: 'Kubernetes Production Best Practices Guide 2025',
     metaDescription:
       'Best practices for running Kubernetes in production. Covers security, resource management, networking, observability, disaster recovery, and cost optimization.',
   },
@@ -872,11 +882,11 @@ export const blogPosts: BlogPost[] = [
     image: '/images/design.webp',
     author: 'Ananya Singh',
     authorRole: 'Cloud Solutions Architect',
-    date: 'Dec 10, 2024',
+    date: '2024-12-10',
     readTime: '7 min read',
     category: 'Design',
     tags: ['UI/UX design', 'startup design', 'user research', 'prototyping', 'design process'],
-    metaTitle: 'UI/UX Design Process for Startups: Idea to Launch | Bitropix',
+    metaTitle: 'UI/UX Design Process for Startups: Idea to Launch',
     metaDescription:
       'A lean, practical UI/UX design process for startups. Covers user research, wireframing, visual design, prototyping, user testing, and post-launch iteration.',
   },

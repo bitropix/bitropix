@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Careers at Bitropix | Job Openings in IT, Design & Marketing | Noida',
+  title: { absolute: 'Careers at Bitropix | Job Openings in IT, Design & Marketing | Noida' },
   description:
     'Explore career opportunities at Bitropix in Noida, India. We are hiring Full Stack Developers, Flutter Developers, and UI/UX Designers. Join our team of innovators building cutting-edge software solutions.',
   keywords: [

@@ -93,7 +93,7 @@ const contactPageSchema = {
   '@type': 'ContactPage',
   name: 'Contact Bitropix',
   description: 'Get in touch with Bitropix for a free IT consultation and project quote.',
-  url: 'https://bitropix.com/contact',
+  url: 'https://www.bitropix.com/contact',
   mainEntity: {
     '@type': 'Organization',
     name: 'Bitropix',
@@ -108,18 +108,7 @@ const contactPageSchema = {
   },
 };
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
-    '@type': 'Question',
-    name: faq.q,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.a,
-    },
-  })),
-};
+// FAQPage JSON-LD intentionally removed here — canonical source is /faq.
 
 export default function ContactPage() {
   const [formState, setFormState] = useState({
@@ -204,7 +193,6 @@ export default function ContactPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <Navbar />
       <main className="pt-16">

@@ -23,7 +23,7 @@ const services = [
   { name: 'UI/UX Design', href: '/services#design' },
   { name: 'Cloud Services', href: '/services#cloud' },
   { name: 'Digital Marketing', href: '/services#marketing' },
-  { name: 'Digital Transformation', href: '/services#trans' },
+  { name: 'Digital Transformation', href: '/services#digital-transformation' },
   { name: 'Embedded Systems', href: '/services#embedded' },
   { name: 'IoT Solutions', href: '/services#iot' },
 ];

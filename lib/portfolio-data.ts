@@ -53,7 +53,7 @@ export const portfolioProjects: PortfolioProject[] = [
       '3x improvement in page load speed',
       'Seamless mobile experience driving 60% of total bookings',
     ],
-    metaTitle: 'Tourillo - Travel Platform Case Study | Bitropix Portfolio',
+    metaTitle: 'Tourillo - Travel Platform Case Study',
     metaDescription:
       'How Bitropix built Tourillo, a high-performance travel platform with curated tour packages across India. Next.js, React, and modern web technologies.',
   },
@@ -90,7 +90,7 @@ export const portfolioProjects: PortfolioProject[] = [
       '10+ years of founder expertise showcased effectively',
       '50% increase in online bookings after launch',
     ],
-    metaTitle: 'Advanced Beauty - E-Commerce Platform Case Study | Bitropix Portfolio',
+    metaTitle: 'Advanced Beauty - E-Commerce Platform Case Study',
     metaDescription:
       'How Bitropix built Advanced Beauty, a premium at-home salon booking platform for Delhi NCR with e-commerce, service catalog, and booking system.',
   },
@@ -127,7 +127,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Improved brand credibility with professional online showcase',
       'Increased dealer and farmer inquiries through contact system',
     ],
-    metaTitle: 'Beverly Agrovet - Corporate Website Case Study | Bitropix Portfolio',
+    metaTitle: 'Beverly Agrovet - Corporate Website Case Study',
     metaDescription:
       "How Bitropix built Beverly Agrovet's corporate website showcasing 25+ years of agrochemical expertise with product catalogs and farmer-focused design.",
   },
@@ -164,7 +164,7 @@ export const portfolioProjects: PortfolioProject[] = [
       '150+ team member profiles building client confidence',
       'Increased qualified project inquiries from digital channels',
     ],
-    metaTitle: 'Dishaa Vertex Infra - Corporate Website Case Study | Bitropix Portfolio',
+    metaTitle: 'Dishaa Vertex Infra - Corporate Website Case Study',
     metaDescription:
       "How Bitropix built Dishaa Vertex Infra's premium corporate website showcasing 120+ infrastructure projects with modern design and SEO optimization.",
   },

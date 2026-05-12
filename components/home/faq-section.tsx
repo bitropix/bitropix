@@ -37,22 +37,10 @@ const faqs = [
 ];
 
 export function FAQSection() {
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  };
-
+  // FAQPage JSON-LD intentionally removed here — canonical source is /faq.
+  // Visible accordions stay for UX; structured data lives on /faq to avoid duplication.
   return (
     <section className="bg-[#0e0e18] py-20">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <div className="mb-16 text-center">

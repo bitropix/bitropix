@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Blog - Bitropix | Tech Insights & Digital Marketing Tips',
+  title: { absolute: 'Blog | Bitropix - Tech Insights & Digital Marketing Tips' },
   description:
     'Stay updated with the latest insights on technology, digital transformation, software development, SEO, cloud computing, and industry trends from Bitropix experts.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     canonical: 'https://www.bitropix.com/blogs',
   },
   openGraph: {
-    title: 'Blog - Bitropix | Tech Insights & Industry Updates',
+    title: 'Blog | Bitropix - Tech Insights & Industry Updates',
     description:
       'Stay updated with the latest insights on technology, digital transformation, software development, and industry trends from Bitropix experts.',
     url: 'https://www.bitropix.com/blogs',

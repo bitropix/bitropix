@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Clock, User, ArrowRight, Tag, Search } from 'lucide-react';
 import { useState, useMemo } from 'react';
-import { blogPosts, categories, getFeaturedPost } from '@/lib/blog-data';
+import { blogPosts, categories, getFeaturedPost, formatBlogDate } from '@/lib/blog-data';
 import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/animate';
 import { BreadcrumbNav } from '@/components/breadcrumb-nav';
 
@@ -138,7 +138,7 @@ export default function BlogsPage() {
                             <User className="h-4 w-4" /> {featuredPost.author}
                           </span>
                           <span className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" /> {featuredPost.date}
+                            <Calendar className="h-4 w-4" /> {formatBlogDate(featuredPost.date)}
                           </span>
                           <span className="flex items-center gap-1">
                             <Clock className="h-4 w-4" /> {featuredPost.readTime}
@@ -199,7 +199,7 @@ export default function BlogsPage() {
                           <p className="mb-4 line-clamp-2 text-sm text-gray-400">{post.excerpt}</p>
                           <div className="flex items-center justify-between text-xs text-gray-400">
                             <span className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" /> {post.date}
+                              <Calendar className="h-3 w-3" /> {formatBlogDate(post.date)}
                             </span>
                             <span className="flex items-center gap-1">
                               <Clock className="h-3 w-3" /> {post.readTime}

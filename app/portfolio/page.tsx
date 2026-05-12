@@ -9,7 +9,7 @@ import { portfolioProjects } from '@/lib/portfolio-data';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
 
 export const metadata: Metadata = {
-  title: 'Portfolio - Our Work | Bitropix',
+  title: 'Portfolio - Our Work',
   description:
     'Explore our portfolio of successful projects across travel, beauty, agriculture, and infrastructure industries. See how Bitropix delivers digital solutions that drive real results.',
   keywords: [
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     'website design portfolio India',
   ],
   openGraph: {
-    title: 'Portfolio - Our Work | Bitropix',
+    title: 'Portfolio - Our Work',
     description:
       'Explore our portfolio of successful projects. From travel platforms to corporate websites - see the digital solutions we build.',
     type: 'website',

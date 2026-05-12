@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Bitropix | Get Free IT Consultation',
+  title: { absolute: 'Contact Bitropix | Get Free IT Consultation' },
   description:
     'Get in touch with Bitropix for a free IT consultation. Request a quote for web development, mobile apps, ERP, HRMS, and digital marketing services. Response within 2 hours.',
   keywords: [

@@ -15,7 +15,7 @@
 - [UI/UX Design](https://www.bitropix.com/services#design): User research, prototyping, and design systems in Figma.
 - [Digital Marketing & SEO](https://www.bitropix.com/services#marketing): Technical SEO, content marketing, paid media, social media, and analytics.
 - [Cloud Migration](https://www.bitropix.com/services#cloud): AWS, Azure, and Google Cloud architecture, migration, and DevOps.
-- [Digital Transformation](https://www.bitropix.com/services#trans): Strategy and roadmap consulting for legacy modernization.
+- [Digital Transformation](https://www.bitropix.com/services#digital-transformation): Strategy and roadmap consulting for legacy modernization.
 - [Embedded Systems](https://www.bitropix.com/services#embedded): Hardware-firmware integration and low-level systems engineering.
 - [IoT Solutions](https://www.bitropix.com/services#iot): Connected device fleets, telemetry, and edge analytics.
 

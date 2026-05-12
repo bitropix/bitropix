@@ -14,7 +14,7 @@ const SITE_URL = 'https://www.bitropix.com';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Bitropix | Best IT Services & Digital Marketing Agency in India',
+    default: 'Bitropix — IT Services & Digital Marketing Agency in Noida, India',
     template: '%s | Bitropix',
   },
   description:
@@ -54,13 +54,17 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: '/',
+    languages: {
+      'en-IN': '/',
+      'x-default': '/',
+    },
   },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
     url: SITE_URL,
     siteName: 'Bitropix',
-    title: 'Bitropix | Best IT Services & Digital Marketing Agency in India',
+    title: 'Bitropix — IT Services & Digital Marketing Agency in Noida, India',
     description:
       'Transform your business with Bitropix. Leading IT services & digital marketing agency offering web development, app development, SEO, cloud solutions, and more.',
     images: [
@@ -74,7 +78,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bitropix | Best IT Services & Digital Marketing Agency in India',
+    title: 'Bitropix — IT Services & Digital Marketing Agency in Noida, India',
     description:
       'Transform your business with Bitropix. Leading IT services & digital marketing agency offering web development, app development, SEO, cloud solutions, and more.',
     images: [`${SITE_URL}/images/og-image.jpg`],
@@ -82,9 +86,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/images/logo.png', type: 'image/webp' },
-      { url: '/images/logo.png', sizes: '32x32', type: 'image/webp' },
-      { url: '/images/logo.png', sizes: '192x192', type: 'image/webp' },
+      { url: '/images/logo.png', type: 'image/png' },
+      { url: '/images/logo.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/logo.png', sizes: '192x192', type: 'image/png' },
     ],
     shortcut: '/images/logo.png',
     apple: '/images/logo.png',
@@ -130,7 +134,12 @@ export default function RootLayout({
         availableLanguage: ['English', 'Hindi'],
       },
     ],
-    sameAs: ['https://www.linkedin.com/company/bitropix/', 'https://www.instagram.com/bitropix/'],
+    sameAs: [
+      'https://www.linkedin.com/company/bitropix/',
+      'https://www.instagram.com/bitropix/',
+      'https://twitter.com/bitropix',
+      'https://www.facebook.com/bitropix',
+    ],
   };
 
   const websiteSchema = {
@@ -180,7 +189,7 @@ export default function RootLayout({
         closes: '14:00',
       },
     ],
-    priceRange: '$$',
+    priceRange: 'INR 25,000 — INR 10,00,000+',
     areaServed: {
       '@type': 'GeoCircle',
       geoMidpoint: {
@@ -193,12 +202,14 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="dark">
+    <html lang="en-IN" className="dark">
       <head>
         <meta name="geo.region" content="IN-UP" />
         <meta name="geo.placename" content="Noida" />
         <meta name="geo.position" content="28.6273928;77.3764" />
         <meta name="ICBM" content="28.6273928, 77.3764" />
+        <link rel="alternate" type="application/llms.txt" href="/llms.txt" />
+        <link rel="alternate" type="application/vnd.google-earth.kml+xml" href="/bitropix.kml" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />

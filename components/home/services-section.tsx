@@ -7,42 +7,42 @@ import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
 
 const services = [
   {
-    id: 'web-development',
+    id: 'web',
     icon: Globe,
     title: 'Web Development',
     description:
       'High-performance websites and web applications built with Next.js, React, and modern frameworks. From landing pages to enterprise SaaS platforms - we deliver fast, scalable, and SEO-optimized solutions.',
   },
   {
-    id: 'mobile-development',
+    id: 'mobile',
     icon: Smartphone,
     title: 'Mobile Development',
     description:
       'Native and cross-platform mobile apps for iOS and Android using React Native and Flutter. We build apps that users love with seamless UX, push notifications, and offline-first architecture.',
   },
   {
-    id: 'ui-ux-design',
+    id: 'design',
     icon: Palette,
     title: 'UI/UX Design',
     description:
       'Research-driven design that converts visitors into customers. We create intuitive interfaces, design systems, and prototypes that elevate your brand and maximize user engagement.',
   },
   {
-    id: 'cloud-migrations',
+    id: 'cloud',
     icon: Cloud,
     title: 'Cloud Migrations',
     description:
       'Seamless migration to AWS, Azure, or Google Cloud with zero downtime. We architect cloud-native infrastructure that reduces costs by up to 40% while boosting performance and reliability.',
   },
   {
-    id: 'digital-marketing',
+    id: 'marketing',
     icon: TrendingUp,
     title: 'Digital Marketing',
     description:
       'Data-driven SEO, PPC, social media, and content marketing strategies that deliver measurable ROI. We help brands dominate search rankings and grow organic traffic consistently.',
   },
   {
-    id: 'embedded-systems',
+    id: 'embedded',
     icon: Cpu,
     title: 'Embedded Systems',
     description:
@@ -56,7 +56,7 @@ const services = [
       'End-to-end digital transformation consulting that modernizes your legacy systems, automates workflows, and positions your business for the AI-first future with measurable outcomes.',
   },
   {
-    id: 'iot-solutions',
+    id: 'iot',
     icon: Wifi,
     title: 'IoT Solutions',
     description:

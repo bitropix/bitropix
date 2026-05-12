@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: RolePageProps): Promise<Metad
   }
 
   return {
-    title: `${job.title} - Careers at Bitropix`,
+    title: { absolute: `${job.title} - Careers at Bitropix` },
     description: `Apply for the ${job.title} role at Bitropix. ${job.description}`,
     alternates: {
       canonical: `https://www.bitropix.com/careers/${job.slug}`,
@@ -40,12 +40,18 @@ export async function generateMetadata({ params }: RolePageProps): Promise<Metad
 
 const SITE_URL = 'https://www.bitropix.com';
 
+function addDays(iso: string, days: number): string {
+  const d = new Date(iso);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
 function buildJobPostingSchema(job: ReturnType<typeof getJobBySlug>) {
   if (!job) return null;
-  const today = new Date();
-  const datePosted = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().slice(0, 10);
-  const validThrough = new Date(today.getFullYear(), today.getMonth() + 3, 1).toISOString().slice(0, 10);
+  const datePosted = job.postedAt;
+  const validThrough = job.validThrough ?? addDays(job.postedAt, 90);
   const remote = /remote/i.test(job.location);
+  const city = job.city ?? job.location.split('/')[0].trim();
   return {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
@@ -69,11 +75,23 @@ function buildJobPostingSchema(job: ReturnType<typeof getJobBySlug>) {
       '@type': 'Place',
       address: {
         '@type': 'PostalAddress',
-        addressLocality: job.location.split('/')[0].trim(),
-        addressRegion: 'KA',
+        addressLocality: city,
+        addressRegion: job.regionCode,
         addressCountry: 'IN',
       },
     },
+    ...(job.salary && {
+      baseSalary: {
+        '@type': 'MonetaryAmount',
+        currency: job.salary.currency,
+        value: {
+          '@type': 'QuantitativeValue',
+          minValue: job.salary.min,
+          maxValue: job.salary.max,
+          unitText: job.salary.unit,
+        },
+      },
+    }),
     ...(remote
       ? {
           jobLocationType: 'TELECOMMUTE',

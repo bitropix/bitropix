@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { BreadcrumbNav } from '@/components/breadcrumb-nav';
@@ -7,8 +8,8 @@ import { Target, Eye, Heart, Users, Globe, Award, ArrowRight } from 'lucide-reac
 import { MilestonesSection } from '@/components/home/milestones-section';
 import Image from 'next/image';
 
-export const metadata = {
-  title: 'About Bitropix | Leading IT Services Company in Noida, India',
+export const metadata: Metadata = {
+  title: { absolute: 'About Bitropix | Leading IT Services Company in Noida, India' },
   description:
     'Learn about Bitropix, a leading IT services company in Noida, India. Founded in 2023, we serve 50+ clients with expert website development, app development, SEO, and digital marketing solutions.',
   keywords: 'IT company Noida, about Bitropix, IT services India, digital transformation company, tech company Noida',
@@ -98,8 +99,8 @@ export default function AboutPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://bitropix.com' },
-      { '@type': 'ListItem', position: 2, name: 'About', item: 'https://bitropix.com/about' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.bitropix.com' },
+      { '@type': 'ListItem', position: 2, name: 'About', item: 'https://www.bitropix.com/about' },
     ],
   };
 

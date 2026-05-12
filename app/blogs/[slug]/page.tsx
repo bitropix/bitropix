@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Tag, ChevronRight } from 'lucide-react';
 import { BreadcrumbNav } from '@/components/breadcrumb-nav';
-import { blogPosts, getBlogBySlug, getRelatedPosts, categories } from '@/lib/blog-data';
+import { blogPosts, getBlogBySlug, getRelatedPosts, categories, formatBlogDate } from '@/lib/blog-data';
 import type { Metadata } from 'next';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
 
@@ -41,6 +41,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       url: `https://www.bitropix.com/blogs/${post.slug}`,
       type: 'article',
       publishedTime: post.date,
+      modifiedTime: post.dateModified ?? post.date,
       authors: [post.author],
       tags: post.tags,
       images: [
@@ -132,7 +133,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     description: post.metaDescription,
     image: `https://www.bitropix.com${post.image}`,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.dateModified ?? post.date,
     author: {
       '@type': 'Person',
       name: post.author,
@@ -145,9 +146,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.bitropix.com/blogs/${post.slug}` },
     keywords: post.tags.join(', '),
-    wordCount: post.content.replace(/<[^>]*>/g, '').split(/\s+/).length,
+    wordCount: post.content
+      .replace(/<[^>]*>/g, ' ')
+      .split(/\s+/)
+      .filter(Boolean).length,
     articleSection: post.category,
   };
+
+  const displayDate = formatBlogDate(post.date);
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -184,7 +190,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <User className="h-4 w-4" /> {post.author}
                 </span>
                 <time className="flex items-center gap-2" dateTime={post.date}>
-                  <Calendar className="h-4 w-4" /> {post.date}
+                  <Calendar className="h-4 w-4" /> {displayDate}
                 </time>
                 <span className="flex items-center gap-2">
                   <Clock className="h-4 w-4" /> {post.readTime}
@@ -339,7 +345,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                   <p className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-[#E03B37]">
                                     {related.title}
                                   </p>
-                                  <p className="mt-1 text-xs text-gray-400">{related.date}</p>
+                                  <p className="mt-1 text-xs text-gray-400">{formatBlogDate(related.date)}</p>
                                 </div>
                               </Link>
                             </li>
@@ -401,7 +407,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                           <p className="mb-4 line-clamp-2 text-sm text-gray-400">{readNext.excerpt}</p>
                           <div className="flex items-center justify-between text-xs text-gray-400">
                             <span className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" /> {readNext.date}
+                              <Calendar className="h-3 w-3" /> {formatBlogDate(readNext.date)}
                             </span>
                             <span className="flex items-center gap-1">
                               <Clock className="h-3 w-3" /> {readNext.readTime}

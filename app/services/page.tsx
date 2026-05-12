@@ -23,7 +23,7 @@ import {
 import Image from 'next/image';
 
 export const metadata = {
-  title: 'IT Services & Digital Marketing Solutions | Bitropix',
+  title: 'IT Services & Digital Marketing Solutions',
   description:
     'Bitropix offers expert website development, app development, SEO services, cloud solutions, and digital marketing services in India. Get a free consultation today.',
   keywords:
@@ -259,15 +259,7 @@ export default function ServicesPage() {
     ],
   };
 
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
-    })),
-  };
+  // FAQPage JSON-LD intentionally removed here — canonical source is /faq.
 
   const itemListSchema = {
     '@context': 'https://schema.org',
@@ -289,7 +281,6 @@ export default function ServicesPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
       <Navbar />
       <main className="pt-16">

@@ -14,7 +14,7 @@ import { CTASection } from '@/components/home/cta-section';
 import { PortfolioSection } from '@/components/home/portfolio-section';
 
 export const metadata: Metadata = {
-  title: 'Bitropix - IT Services & Digital Marketing Agency in Noida, India',
+  title: { absolute: 'Bitropix — IT Services & Digital Marketing Agency in Noida, India' },
   description:
     "India's fastest-growing IT services and digital marketing agency. Web development, mobile apps, cloud migrations, SEO, and digital transformation for businesses worldwide.",
   keywords: [
@@ -28,10 +28,18 @@ export const metadata: Metadata = {
     'software development India',
   ],
   openGraph: {
-    title: 'Bitropix - IT Services & Digital Marketing Agency',
+    title: 'Bitropix — IT Services & Digital Marketing Agency',
     description:
       "India's fastest-growing IT services and digital marketing agency helping businesses scale with cutting-edge technology.",
     type: 'website',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Bitropix — IT Services & Digital Marketing Agency',
+      },
+    ],
   },
 };
 

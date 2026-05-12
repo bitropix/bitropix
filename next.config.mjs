@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -12,6 +9,21 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   async headers() {
+    // Note: 'unsafe-inline' is required for inline JSON-LD <script> blocks rendered via dangerouslySetInnerHTML.
+    // Switch to nonce-based CSP if/when JSON-LD is moved to external scripts.
+    const csp = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+      "img-src 'self' data: blob: https:",
+      "style-src 'self' 'unsafe-inline'",
+      "font-src 'self' data: https://fonts.gstatic.com",
+      "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+      "frame-ancestors 'self'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "object-src 'none'",
+    ].join('; ');
+
     return [
       {
         source: '/:path*',
@@ -28,6 +40,7 @@ const nextConfig = {
             value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
           },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
+          { key: 'Content-Security-Policy-Report-Only', value: csp },
         ],
       },
       {

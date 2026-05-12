@@ -8,7 +8,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
 import { ChevronDown, HelpCircle, ArrowRight, MessageCircle } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'FAQ - Frequently Asked Questions | Bitropix',
+  title: 'FAQ - Frequently Asked Questions',
   description:
     'Answers to the most common questions about Bitropix services - web development, mobile apps, SEO, digital marketing, cloud, pricing, timelines, and how we work.',
   alternates: {
