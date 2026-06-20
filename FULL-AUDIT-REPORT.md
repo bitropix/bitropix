@@ -1,341 +1,265 @@
-# Bitropix — Full SEO Audit Report
+# Bitropix - Full SEO Audit Report
 
 - **Target:** https://www.bitropix.com/
-- **Audit date:** 2026-05-11
-- **Business type:** Hybrid — Local Service (HQ Noida, IN) + Digital Agency / IT Services
+- **Audit date:** 2026-05-12 (re-audit; previous baseline 2026-05-11)
+- **Business type:** Hybrid - Local Service (HQ Noida, IN) + Digital Agency / IT Services
 - **Industry:** Agency
-- **Pages discovered (sitemap):** 32 (1 home, 9 static, 4 portfolio details, 15 blog posts, 3 careers)
+- **Pages discovered (sitemap):** 33 URLs (now includes `/sitemap-html`)
 - **Infrastructure:** Next.js 15 (App Router) on Vercel, SSR/SSG (Prerendered)
 
 ---
 
-## SEO Health Score: **72 / 100**
+## SEO Health Score: **81 / 100** (▲ +9 vs yesterday's 72)
 
-| Category                      | Weight   | Score | Weighted |
-| ----------------------------- | -------- | ----- | -------- |
-| Technical SEO                 | 22%      | 78    | 17.2     |
-| Content Quality               | 23%      | 70    | 16.1     |
-| On-Page SEO                   | 20%      | 58    | 11.6     |
-| Schema / Structured Data      | 10%      | 72    | 7.2      |
-| Performance (CWV — estimated) | 10%      | 75    | 7.5      |
-| AI Search Readiness           | 10%      | 88    | 8.8      |
-| Images                        | 5%       | 70    | 3.5      |
-| **TOTAL**                     | **100%** |       | **~72**  |
+| Category                      | Weight   | Yesterday | Today   | Δ     |
+| ----------------------------- | -------- | --------- | ------- | ----- |
+| Technical SEO                 | 22%      | 78        | **86**  | ▲ +8  |
+| Content Quality               | 23%      | 70        | **72**  | ▲ +2  |
+| On-Page SEO                   | 20%      | 58        | **80**  | ▲ +22 |
+| Schema / Structured Data      | 10%      | 72        | **88**  | ▲ +16 |
+| Performance (CWV - estimated) | 10%      | 75        | 75      | -     |
+| AI Search Readiness           | 10%      | 88        | **92**  | ▲ +4  |
+| Images                        | 5%       | 70        | **76**  | ▲ +6  |
+| **TOTAL**                     | **100%** | **72**    | **~81** | ▲ +9  |
 
-> The site has strong AI/GEO foundations (llms.txt, llms-full.txt, generous AI crawler allowlist, comprehensive structured data), strong security headers, and clean SSR. The score is dragged down by widespread on-page errors that are individually small but appear on most pages: a duplicated brand suffix in titles, a 404'd OG image, non-ISO blog dates, and a misconfigured JobPosting schema. None of these block indexing — they all leak ranking and CTR.
+> One commit (`3bf6fbb feat: Update metadata structure and improve job posting schema`) cleared 4 of yesterday's 5 Critical issues plus several High items. The big remaining drag is a single Vercel domain-config item (apex 307) and a regression where blog post titles now ship without the brand suffix in SERPs.
+
+---
+
+## Delta - What changed since yesterday
+
+### ✅ Fixed (confirmed via live HTML)
+
+| #   | Issue                                                         | Yesterday                                  | Today                                                                        | Evidence                                                                                           |
+| --- | ------------------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| 1   | Title double-suffix                                           | `About Bitropix … \| Bitropix \| Bitropix` | `About Bitropix … \| Bitropix`                                               | `curl /about`                                                                                      |
+| 2   | `og-image.jpg` 404                                            | 404                                        | 200, `image/jpeg`, 134 KB                                                    | `curl -I /images/og-image.jpg`                                                                     |
+| 3   | Home `og:image` absent                                        | missing                                    | `<meta property="og:image" content=".../og-image.jpg">` present              | `curl /`                                                                                           |
+| 4   | Blog `datePublished` non-ISO                                  | `"Mar 15, 2025"`                           | `"2025-03-15"`                                                               | `curl /blogs/<slug>`                                                                               |
+| 5   | JobPosting `addressRegion` hardcoded `'KA'`                   | hardcoded                                  | now read from `job.regionCode` in `lib/careers.ts`                           | code                                                                                               |
+| 6   | JobPosting missing `baseSalary`                               | absent                                     | `MonetaryAmount` with `QuantitativeValue` minValue/maxValue/unitText present | `curl /careers/full-stack-developer`                                                               |
+| 7   | JobPosting `datePosted` recomputed at render                  | unstable                                   | reads `job.postedAt` ISO field                                               | code                                                                                               |
+| 8   | Logo `icons` MIME type wrong (`image/webp` for PNG)           | wrong                                      | corrected to `image/png`                                                     | `app/layout.tsx:89-91`                                                                             |
+| 9   | `typescript.ignoreBuildErrors: true`                          | present                                    | removed                                                                      | `next.config.mjs`                                                                                  |
+| 10  | No `Content-Security-Policy`                                  | absent                                     | `Content-Security-Policy-Report-Only` present with sensible directives       | response header                                                                                    |
+| 11  | Sitemap `lastModified` static `2026-05-06`                    | static                                     | uses `VERCEL_GIT_COMMIT_DATE` or build time; blog uses real `dateModified`   | `app/sitemap.ts`                                                                                   |
+| 12  | `/sitemap-html` missing from XML sitemap                      | missing                                    | included                                                                     | `app/sitemap.ts:94`                                                                                |
+| 13  | FAQ JSON-LD duplicated on home + /services + /contact + /faq  | 4 sources                                  | centralized to `/faq` only (others removed)                                  | `curl` count: home 6 scripts (no FAQPage); /services 0 FAQPage; /contact 0 FAQPage; /faq 1 FAQPage |
+| 14  | Hreflang absent                                               | absent                                     | `alternates.languages` declares `en-IN` + `x-default`                        | `app/layout.tsx:55-61`                                                                             |
+| 15  | About BreadcrumbList used apex URLs                           | apex                                       | now www                                                                      | code                                                                                               |
+| 16  | Contact ContactPage `url` used apex                           | apex                                       | now www                                                                      | code                                                                                               |
+| 17  | `llms-full.txt` missing case studies                          | missing                                    | added section with all 4 case studies                                        | `public/llms-full.txt:75-80`                                                                       |
+| 18  | Portfolio metaTitle "… \| Bitropix Portfolio" → double-suffix | doubled                                    | cleaned (single brand at end via template)                                   | code                                                                                               |
+
+### ❌ Still outstanding (or new)
+
+| Severity   | Issue                                                                                                                                                                                                                                                                                                                        | Status                                                        |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------- |
+| **High**   | Apex `bitropix.com/` → www redirect is **307**, not 301                                                                                                                                                                                                                                                                      | unchanged - needs Vercel domain-config edit, not code         |
+| **High**   | **Blog detail titles ship with NO brand suffix.** Live: `<title>Complete Guide to Digital Transformation in 2025</title>`. The blogs layout sets `title: { absolute: '…' }` which **disables the layout template for all descendant routes**, so the [slug] page's `title: post.metaTitle` (string) is taken as-is with no ` | Bitropix` appended. SERP CTR for branded queries will suffer. | NEW regression introduced by yesterday's title-template fix |
+| **High**   | Portfolio `og:image` still SVG (`/images/portfolio/tourillo.svg` 200, but `.png` is 404). LinkedIn/Twitter/Facebook will not render these previews                                                                                                                                                                           | unchanged                                                     |
+| **Medium** | Organization `sameAs` still only LinkedIn + Instagram, but footer + `llms-full.txt` now publicly claim Twitter and Facebook profiles too - inconsistency in entity graph                                                                                                                                                     | unchanged                                                     |
+| **Medium** | Canonical on `/` is `https://www.bitropix.com` (no trailing slash); sitemap entry is `https://www.bitropix.com/` (with slash). Minor URL canonicalization inconsistency                                                                                                                                                      | unchanged                                                     |
+| **Medium** | Stats discrepancy (50+ projects vs 4 case studies, awards claims)                                                                                                                                                                                                                                                            | unchanged - E-E-A-T gap                                       |
+| **Medium** | No service-detail URLs; all 8 services share `/services`                                                                                                                                                                                                                                                                     | unchanged                                                     |
+| **Medium** | No author profile pages                                                                                                                                                                                                                                                                                                      | unchanged                                                     |
+| **Medium** | Hero animations (framer-motion, 8 infinite loops) untouched - INP risk                                                                                                                                                                                                                                                       | unchanged                                                     |
+| **Low**    | Logo PNG still 132 KB                                                                                                                                                                                                                                                                                                        | unchanged                                                     |
+| **Low**    | Blog cadence - still no posts after 2025-03-15 (~14 months stale)                                                                                                                                                                                                                                                            | unchanged                                                     |
 
 ---
 
 ## Executive Summary
 
-### Top 5 Critical Issues
+### Top 3 Critical/High to fix now
 
-1. **Double "| Bitropix" suffix on every non-home page title.** Layout title template `'%s | Bitropix'` is applied on top of route titles that already end in "| Bitropix". Confirmed on /about, /services, /portfolio, /portfolio/[slug], /careers/[role]. Causes brand dilution and shortens visible keywords in SERPs.
-2. **`/images/og-image.jpg` returns 404.** Both `app/layout.tsx` and `app/page.tsx` reference this URL for OpenGraph and Twitter cards. The file does not exist — every social/AI preview is broken.
-3. **Home page openGraph overrides the layout's openGraph entirely**, removing the `images` declaration. Next.js replaces (not merges) nested metadata objects. So even if og-image existed, the homepage would still emit no `og:image`. **Live HTML confirms `og:image` is absent on /**.
-4. **Apex → www redirect is 307 (temporary).** SEO best practice is 301 (permanent). Search engines deprioritize 307s for link equity consolidation.
-5. **Blog `datePublished` / `dateModified` are not ISO 8601.** They use the natural-language `"Mar 15, 2025"`. Google requires ISO format for BlogPosting structured data — current markup will throw Search Console rich results warnings.
+1. **Convert apex → www to 301 (Vercel Domains UI).** Last remaining redirect-quality issue. <5 min.
+2. **Re-attach brand to blog post titles.** The blogs layout's `absolute` title broke template inheritance. Fix: change `app/blogs/layout.tsx:4` from `title: { absolute: '…' }` to `title: { default: '…', template: '%s | Bitropix' }` - that lets the home template cascade and the [slug] route's string title get `| Bitropix` appended again.
+3. **Generate raster 1200×630 portfolio OG images** (PNG/JPG) and switch `lib/portfolio-data.ts` `image` references.
 
-### Top 5 Quick Wins
+### Top 3 Quick Wins
 
-1. Change layout title to `title: { default: 'Bitropix — ...', template: '%s | Bitropix' }` **and** strip the trailing `| Bitropix` from every route title (and from every `metaTitle` in `lib/blog-data.ts` and `lib/portfolio-data.ts`).
-2. Generate a real 1200×630 PNG/JPG `og-image` and place at `public/images/og-image.jpg`. Add `images: [...]` to the home page's `openGraph` (or remove the openGraph override and let layout's metadata apply).
-3. Normalize blog dates to ISO (`'2025-03-15'`) and format for display at render time. Add `dateModified` from a separate field.
-4. Convert the apex redirect to 301 in Vercel (set "permanent: true" or rely on Vercel's domain canonicalization).
-5. Add `baseSalary` to `JobPosting` and fix `addressRegion` to be derived from the role's location instead of hardcoded `'KA'`.
+1. Sync `Organization.sameAs` with footer & llms-full social claims (add Twitter and Facebook to `app/layout.tsx:133`, or remove from footer).
+2. Trim canonical trailing slash mismatch (decide on with-slash or without and apply to both `alternates.canonical` and `app/sitemap.ts`).
+3. Convert hero animations from framer-motion to CSS `@keyframes` - meaningful INP win, no functional change.
 
 ---
 
-## 1. Technical SEO — Score 78/100
+## 1. Technical SEO - Score 86/100 (▲ +8)
 
-### What's working
+### Now working (new today)
 
-- Vercel SSR with prerendered HTML (`X-Nextjs-Prerender: 1`) — full content delivered without JS execution.
-- HSTS preload, X-Content-Type-Options, X-Frame-Options SAMEORIGIN, Referrer-Policy, Permissions-Policy — all set in `next.config.mjs`.
-- `robots.txt` is well-structured, explicit allow for all major AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Applebot, CCBot, Google-Extended, etc.).
-- Long-cache immutable headers on static assets (`max-age=31536000`).
-- Sitemap declared in robots.txt, valid XML at `/sitemap.xml`, 32 URLs, no orphaned/disallowed entries.
-- 404 page returns a real 404 (not soft-404). Has clear CTA back to home.
-- Canonical tags present on every audited page.
+- **CSP shipped in Report-Only** mode with sensible directives: `default-src 'self'`; `script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com`; `img-src 'self' data: blob: https:`; etc. Includes the necessary Vercel Analytics/Speed-Insights endpoints. Note: switch to enforced (drop `-Report-Only`) once you've validated zero violations in your reporting endpoint.
+- **TypeScript build errors no longer ignored** - production builds will now fail on type errors rather than silently shipping broken metadata logic.
+- **Hreflang** declared (`en-IN` + `x-default` both pointing to `/`). Minimal but valid.
 
-### Issues
+### Outstanding
 
-| Severity     | Issue                                                      | Detail                                                                                                                                              |
-| ------------ | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Critical** | Apex → www redirect is **307**, not 301                    | `curl -I https://bitropix.com/` → `HTTP/1.1 307 Temporary Redirect`. Causes ambiguity for link equity consolidation.                                |
-| **High**     | No **Content-Security-Policy** header                      | All other security headers present, but CSP is missing. Recommend at least `default-src 'self'` baseline with explicit allows for Vercel Analytics. |
-| **High**     | `next.config.mjs` has `typescript.ignoreBuildErrors: true` | Production builds skip TS errors. SEO-relevant changes (canonical/meta logic) can ship broken without alerts.                                       |
-| **Medium**   | `<html lang="en">` but Organization `inLanguage: 'en-IN'`  | Inconsistent. Use `en-IN` on `<html>` for stronger regional signal.                                                                                 |
-| **Medium**   | 404 page lacks Navbar/Footer                               | Users hitting 404s have only "Go Home"/"Contact Us"/4 quick links. No site-wide nav to recover. Hurts engagement metrics.                           |
-| **Low**      | No `X-Robots-Tag` header strategy                          | Acceptable since `<meta name="robots">` is present and explicit, but header would be future-proof.                                                  |
-| **Low**      | `Bytespider`, `Amazonbot` explicitly allowed               | Editorial choice. Some operators block these. Not wrong, but worth a conscious decision.                                                            |
-
-### Core Web Vitals — estimated (no field data available)
-
-> No CrUX/PSI run was performed in this audit (no API credentials in repo). Predictions are based on code inspection.
-
-| Metric  | Estimate                     | Risk source                                                                                                                                                                                                                   |
-| ------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **LCP** | Likely 2.0–2.8s on 4G mobile | Hero section is text-only (no LCP image), good. But framer-motion mounts 6+ animated absolute-positioned `<motion.div>` immediately, increasing initial JS.                                                                   |
-| **INP** | At-risk on mid-range mobile  | Hero has continuous animations (`rotate: 360` infinite at 60s/45s/30s/20s/35s/15s) running constantly. Combined with `NextTopLoader`, scroll listeners in navbar, and React-Hot-Toast, total main-thread work is non-trivial. |
-| **CLS** | Should be ≤0.05              | Hero is full-viewport, fixed-height. Most sections use Tailwind defined sizes. Low risk.                                                                                                                                      |
-
-**Recommendation:** Run PSI on /, /services, /blogs/digital-transformation-2024-guide. Drop hero animations to CSS where possible (rotate doesn't need framer-motion).
+| Severity   | Issue                                                     | Detail                                                                                                                  |
+| ---------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **High**   | Apex → www is **307**, not 301                            | `curl -I https://bitropix.com/` → `HTTP/1.1 307 Temporary Redirect`. Fix in Vercel Domains UI.                          |
+| **Medium** | CSP is Report-Only - no policy violations are blocked yet | After 1 week of zero reports, promote to `Content-Security-Policy` (enforced).                                          |
+| **Medium** | 404 page (`app/not-found.tsx`) still lacks Navbar/Footer  | unchanged                                                                                                               |
+| **Low**    | No CSP report endpoint configured                         | `report-uri` / `report-to` directive missing - violations go unobserved. Add a Vercel function or third-party endpoint. |
+| **Low**    | `<html lang="en">` (not `en-IN`)                          | Note: hreflang declares `en-IN` so this is now a soft inconsistency. Easy fix in `app/layout.tsx:196`.                  |
 
 ---
 
-## 2. Content Quality & E-E-A-T — Score 70/100
+## 2. Content Quality & E-E-A-T - Score 72/100 (▲ +2)
 
-### What's working
+The two-point bump comes from `llms-full.txt` gaining a case-studies section. No new posts shipped; the substantive E-E-A-T gaps are unchanged:
 
-- Blog content is genuinely substantive: 800–1200 words per post, clear H2/H3 structure, internal links, original perspective. The Digital Transformation 2025 piece runs ~1100 words with 6 H2s.
-- Author identity attached to every post (`author`, `authorRole`).
-- Portfolio case studies have a Challenge → Solution → Results structure on each detail page.
-- llms-full.txt is a thorough, well-written reference document for AI agents.
+- Only 4 portfolio case studies vs claims of "50+ projects delivered".
+- Latest blog post is `2025-03-15` (now 14 months stale).
+- Authors are still name-only strings; no author profile pages.
+- No service-detail URLs to support topic depth.
 
-### Issues
-
-| Severity   | Issue                                                                                                                                                                                                                                                                                                                                      | Detail                                                                                                                                                                                                                            |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **High**   | **Stats discrepancy → E-E-A-T risk.** Homepage and About claim "50+ projects delivered", "50+ happy clients", "25+ team members", "98% client satisfaction", and awards from Clutch.co 2025, NASSCOM 2024, Startup India 2024 — but only **4 portfolio case studies** are published. AI raters and discerning customers will flag the gap. | Either publish more case studies or temper claims to match published evidence (e.g., "Featured case studies: 4 — full client list on request").                                                                                   |
-| **High**   | Author profiles are name + role strings only, no bio/photo/social.                                                                                                                                                                                                                                                                         | E-E-A-T 2024 QRG update emphasizes verifiable authors. Build `/authors/[slug]` pages with bio, expertise, links, photo. Reference via `BlogPosting.author.@id`.                                                                   |
-| **High**   | No service-detail URLs. All 8 services live on `/services#anchor`.                                                                                                                                                                                                                                                                         | Limits topical depth per service. "Web development services India" and "Cloud migration services India" need standalone pages with 800–1200 words each and dedicated `Service` JSON-LD. Currently aggregated into one `ItemList`. |
-| **Medium** | Only 15 blog posts; oldest 2024-12-10, newest 2025-03-15 — no posts in the last ~13 months relative to today (2026-05-11).                                                                                                                                                                                                                 | Cadence dropped. Resume publishing. Date in URL (`digital-transformation-2024-guide`) for a 2025-titled post creates URL/title mismatch — leave URL but update title freshness signal.                                            |
-| **Medium** | Generic "We" voice across blogs. No first-person expertise, no specific client outcomes tied to authors.                                                                                                                                                                                                                                   | E-E-A-T leans on "experience." Cite specific Bitropix project numbers in each post.                                                                                                                                               |
-| **Medium** | Blog content stored as inline HTML strings in `lib/blog-data.ts` (915 lines).                                                                                                                                                                                                                                                              | Workable for 15 posts; fragile beyond 30–40. Consider MDX or a headless CMS before scale.                                                                                                                                         |
-| **Medium** | Duplicate FAQ entries across pages. "Where is Bitropix located?", "How long does it take to build...?" appear on home, /services, /contact, /faq.                                                                                                                                                                                          | OK for users; risks duplicate `FAQPage` markup. Pick one canonical FAQ home (`/faq`) and remove `FAQPage` JSON-LD from other pages (keep visible UI).                                                                             |
-| **Low**    | `categories` array on blog includes `"AI & ML"` but no current post is in that category.                                                                                                                                                                                                                                                   | Either remove or publish.                                                                                                                                                                                                         |
-| **Low**    | `tagline` field across portfolio is marketing copy ("Power That Farmers Trust"); not SEO-loaded.                                                                                                                                                                                                                                           | Consider supplementing with descriptive H2s with target keywords.                                                                                                                                                                 |
+Recommendations from yesterday's audit (Action Plan items 9, 10, 11, 24, 25) all still stand.
 
 ---
 
-## 3. On-Page SEO — Score 58/100
+## 3. On-Page SEO - Score 80/100 (▲ +22)
 
-This is the audit's weakest category, almost entirely due to widespread title-template duplication.
+### Now working
 
-### Critical
+- Titles on `/`, `/about`, `/services`, `/portfolio`, `/portfolio/[slug]`, `/careers`, `/careers/[role]`, `/blogs` (listing), `/faq`, `/contact` all render with single-brand suffix (or absolute for home).
+- Home `openGraph.images` now includes `og-image.jpg` (1200×630, alt text set).
+- Apex URLs purged from JSON-LD on /about and /contact.
 
-**Double brand suffix on titles** — confirmed via live HTML:
+### Outstanding (one new regression)
 
-| URL                             | Live `<title>`                                                              | Issue                                                                 |
-| ------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `/`                             | `Bitropix - IT Services & Digital Marketing Agency in Noida, India`         | OK (no template applied — uses default slot via layout title.default) |
-| `/about`                        | `About Bitropix \| Leading IT Services Company in Noida, India \| Bitropix` | "Bitropix" 3 times                                                    |
-| `/services`                     | `IT Services & Digital Marketing Solutions \| Bitropix \| Bitropix`         | doubled                                                               |
-| `/portfolio`                    | `Portfolio - Our Work \| Bitropix \| Bitropix`                              | doubled                                                               |
-| `/portfolio/tourillo`           | `Tourillo - Travel Platform Case Study \| Bitropix Portfolio \| Bitropix`   | doubled brand                                                         |
-| `/careers/full-stack-developer` | `Full Stack Developer - Careers at Bitropix \| Bitropix`                    | doubled brand                                                         |
+| Severity   | Issue                                                                                                                                                                                                                                                                                                   | Detail                                                                                                                                                                                                                          |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **High**   | **Blog post titles ship without brand suffix.** `<title>Complete Guide to Digital Transformation in 2025</title>`, `<title>React 19 Features & Upgrade Guide \| What Is New in React 19</title>`, `<title>Top UX Design Trends 2025: AI, Spatial Computing & More</title>` - none end in "\| Bitropix". | `app/blogs/layout.tsx:4` uses `title: { absolute }` which disables the template for descendant `/blogs/[slug]` routes.                                                                                                          |
+| **Medium** | Home canonical is `https://www.bitropix.com` (no trailing slash); sitemap URL is `https://www.bitropix.com/` (with slash).                                                                                                                                                                              | Pick one. Update `alternates.canonical` in `app/layout.tsx:56` to `'/'` (already is) - issue is that `metadataBase` strips the trailing slash. If preferred, change to `canonical: '/'` and confirm Next.js renders with slash. |
+| **Medium** | Service section IDs on the homepage (`web-development`, `mobile-development`, …) still don't match `/services` page slugs (`web`, `mobile`, …)                                                                                                                                                          | unchanged                                                                                                                                                                                                                       |
+| **Medium** | Some footer `/services#seo`, `/services#consulting` anchors still don't resolve to a matching element id                                                                                                                                                                                                | unchanged                                                                                                                                                                                                                       |
 
-**Root cause:** `app/layout.tsx` declares `title: { default, template: '%s | Bitropix' }`. Route metadata that returns a plain string title is wrapped by that template. Every route title in this codebase already ends with `| Bitropix`, so the template appends another.
+### Fix for blog title regression
 
-**Fix:** Either (a) remove `| Bitropix` from every route's title string, or (b) on routes where the title already includes the brand, return `title: { absolute: 'Full title here' }` so the template is skipped.
+```ts
+// app/blogs/layout.tsx
+export const metadata: Metadata = {
+  title: {
+    default: 'Blog | Bitropix - Tech Insights & Digital Marketing Tips',
+    template: '%s | Bitropix', // re-enables template for /blogs/[slug]
+  },
+  // ...
+};
+```
 
-### Other issues
-
-| Severity   | Issue                                                                                                                                                                                                                                             | Detail                                                                                                      |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **High**   | Home page's `openGraph` override drops `images`. Next.js metadata replaces nested objects.                                                                                                                                                        | Either remove the homepage's `openGraph` block (let layout's apply) or add `images: [...]` back.            |
-| **High**   | `twitter:image` points to `/images/og-image.jpg` → 404 (confirmed `HTTP/1.1 404`).                                                                                                                                                                | Create the file.                                                                                            |
-| **High**   | Portfolio detail `og:image` uses an SVG (`/images/portfolio/tourillo.svg`). LinkedIn/Twitter/Facebook do not render SVG OG images.                                                                                                                | Export raster screenshots (PNG/JPG @1200×630) for each project.                                             |
-| **Medium** | Meta description length varies. Some are 145–160 chars (good), some over 170 (will be truncated in SERPs).                                                                                                                                        | Audit and trim to ≤155 chars.                                                                               |
-| **Medium** | Canonicals are consistent (`www.bitropix.com`), but two internal schema URLs use apex: `app/about/page.tsx:101` BreadcrumbList items use `https://bitropix.com`; `app/contact/page.tsx:96` ContactPage `url` uses `https://bitropix.com/contact`. | Replace with `https://www.bitropix.com` to match canonical hostname.                                        |
-| **Medium** | All service detail content lives on one anchor-segmented `/services#web` page. Internal link `/services#seo` (in footer) doesn't even resolve — no `id="seo"` element exists (only `id="marketing"`).                                             | Verify all anchored hashes resolve. Then consider extracting each service to its own URL for ranking depth. |
-| **Low**    | `<html lang="en">` should be `lang="en-IN"` to match Organization and to encourage regional SERP placement.                                                                                                                                       | One-line fix in `app/layout.tsx`.                                                                           |
-
----
-
-## 4. Schema / Structured Data — Score 72/100
-
-### What's working
-
-- 3 site-wide schemas in `app/layout.tsx`: Organization (+ProfessionalService), WebSite, LocalBusiness (+ProfessionalService) with proper `@id` cross-referencing, full PostalAddress, GeoCoordinates, OpeningHoursSpecification, areaServed GeoCircle (50km radius), ContactPoint with multiple `areaServed` countries.
-- BreadcrumbList on every section page.
-- BlogPosting on each blog detail with author, publisher, image, mainEntityOfPage.
-- ItemList of `Service` items on /services.
-- FAQPage on home, services, contact, and /faq.
-- JobPosting on careers/[role] with hiringOrganization, jobLocation, employmentType, applicantLocationRequirements.
-- ContactPage on /contact.
-
-### Issues
-
-| Severity     | Issue                                                                                                                                                                                                                   | Detail                                                                                                                                                                                                                                           |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Critical** | `BlogPosting.datePublished` and `dateModified` use natural-language `"Mar 15, 2025"` strings instead of ISO 8601 `2025-03-15`.                                                                                          | Google requires ISO. Search Console rich-results report will flag these and may suppress rich snippets. Fix in `lib/blog-data.ts` (store dates as ISO; format with `Intl.DateTimeFormat` at render time).                                        |
-| **High**     | `JobPosting.jobLocation.address.addressRegion` is hardcoded to `'KA'` in `app/careers/[role]/page.tsx:73`. Currently correct for all 3 listed Bangalore roles, but **breaks for any future role in Noida/Mumbai/Pune**. | Derive from `job.location` or add `regionCode` to the data model.                                                                                                                                                                                |
-| **High**     | `JobPosting` is missing `baseSalary`. Google strongly recommends; absence reduces rich-result eligibility.                                                                                                              | Add an optional `salaryRange` field to `JobOpening` and emit `baseSalary` JSON-LD when present.                                                                                                                                                  |
-| **High**     | `JobPosting.datePosted` is recomputed at render time as "first of current month".                                                                                                                                       | A reader visiting in June sees a different `datePosted` from a reader in May for the same job. Google's documentation expects a stable posting date. Store actual `postedAt` ISO date in `lib/careers.ts`.                                       |
-| **Medium**   | About page BreadcrumbList items use `https://bitropix.com` apex URLs (`app/about/page.tsx:101–102`). Contact page ContactPage schema uses `https://bitropix.com/contact` (`app/contact/page.tsx:96`).                   | Use canonical `www.` hostname to avoid mixed URLs in schema graph.                                                                                                                                                                               |
-| **Medium**   | FAQ schema appears on 4 pages (home, /services, /contact, /faq). Since Aug 2023 Google restricts FAQ rich results to government/healthcare sites — these will not earn rich snippets for an agency.                     | **Quality-gate rule:** Existing usage flagged **Info** (no removal needed — FAQPage still benefits AI/LLM citations like ChatGPT/Perplexity). However: pick one page as the canonical FAQ source to avoid 4× duplication of identical Q&A pairs. |
-| **Medium**   | Organization `sameAs` lists only LinkedIn + Instagram. Footer also displays Twitter and Facebook icons linking to `twitter.com/bitropix` and `facebook.com/bitropix`.                                                   | Either verify those profiles exist and add them to `sameAs`, or remove the icons from the footer. Consistency matters for entity graph.                                                                                                          |
-| **Low**      | `LocalBusiness.priceRange: '$$'` — vague.                                                                                                                                                                               | Replace with an actual statement (e.g., `$$ — projects from INR 25,000`) or remove if not desired.                                                                                                                                               |
-| **Low**      | `BlogPosting.wordCount` is computed inline as `post.content.replace(/<[^>]*>/g, '').split(/\s+/).length` — includes empty whitespace tokens.                                                                            | Trim and filter empties. Off by 5–15 words per post.                                                                                                                                                                                             |
+This restores `| Bitropix` to all blog detail titles while keeping the listing page's full title intact.
 
 ---
 
-## 5. Performance — Score 75/100 (estimated)
+## 4. Schema / Structured Data - Score 88/100 (▲ +16)
 
-No CrUX/Lighthouse data was pulled for this audit. Observations from code review:
+### Now working
 
-### Risk areas
+- **JobPosting** is now exemplary: `datePosted` from stable `postedAt` field, `validThrough` defaults to +90 days, `addressLocality` from `city`, `addressRegion` from `regionCode`, `baseSalary` with full `MonetaryAmount` + `QuantitativeValue`. Validates cleanly.
+- **BlogPosting** dates are ISO 8601.
+- **FAQPage** centralized to `/faq` (6 JSON-LD scripts on home; 0 FAQPage; 1 FAQPage on /faq). Resolves the previous 4× duplication.
 
-- **Hero section** mounts 8+ framer-motion `<motion.div>` elements with infinite rotation loops at mount. This is CPU-bound on every page (`HeroSection` is rendered only on `/`). Consider:
-  - Replace simple `rotate` animations with CSS `@keyframes` (no JS, no requestAnimationFrame).
-  - Or gate animations behind `prefers-reduced-motion: no-preference`.
-- **All "section" components use `'use client'`** even when no client state is needed (services-section, technologies-section). This bloats the JS bundle. Audit each section — only those with `useState`/`useEffect`/event handlers truly need client.
-- **`'use client'` on `/contact` and `/blogs` listing pages.** Acceptable (forms, filtering), but means the JSON-LD scripts and a chunk of content are rendered after hydration in some cases. Verify SSR'd HTML still contains the JSON-LD.
-- **`NextTopLoader`** mounts globally — adds ~7KB. Worth verifying it earns its keep.
-- **No image preloading / fetchpriority="high"** for any hero/LCP candidate.
+### Outstanding
 
-### What's working
-
-- Vercel CDN edge caching (`X-Vercel-Cache: HIT` observed).
-- Static immutable cache for images/fonts (`max-age=31536000`).
-- WebP and AVIF auto-format conversion enabled in `next.config.mjs.images.formats`.
-- Compress enabled.
-- Font display: `optional` on Geist/Geist_Mono → no FOIT/FOUT layout shift.
-
-### Recommendations
-
-- Run PageSpeed Insights on /, /services, /portfolio/tourillo, /blogs/digital-transformation-2024-guide.
-- Add `priority` only to the LCP image per page (currently `priority` is on the navbar logo, which is fine but small).
-- Reduce framer-motion footprint or replace with CSS where the animation is purely decorative.
+| Severity   | Issue                                                                                                                                                                       | Detail                                                                                                       |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **Medium** | `Organization.sameAs` lists only LinkedIn + Instagram. Footer (`components/footer.tsx`) and `llms-full.txt` line 16-17 both publicly link to Twitter and Facebook accounts. | Pick: either add the two to `sameAs` (and verify the profiles exist), or remove from footer + llms-full.txt. |
+| **Low**    | `LocalBusiness.priceRange: '$$'`                                                                                                                                            | Still vague. Optional clean-up.                                                                              |
+| **Low**    | `BlogPosting.wordCount` calc still includes empty whitespace tokens                                                                                                         | Minor.                                                                                                       |
 
 ---
 
-## 6. AI Search Readiness — Score 88/100
+## 5. Performance - Score 75/100 (unchanged)
 
-This is the site's strongest area.
-
-### Working well
-
-- `llms.txt` — concise, well-formatted, follows the proposed spec.
-- `llms-full.txt` — fuller reference with FAQs, identity, services, sitemap.
-- Robots.txt explicitly allows: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-Web, anthropic-ai, PerplexityBot, Perplexity-User, Google-Extended, Applebot, Applebot-Extended, CCBot, Bytespider, Amazonbot, DuckAssistBot, Meta-ExternalAgent, cohere-ai.
-- Organization + LocalBusiness schema in JSON-LD on every page provides clean entity grounding.
-- Geo meta tags (`geo.region`, `geo.placename`, `geo.position`, `ICBM`) — useful for AI assistants doing location-aware recommendation.
-- Service descriptions are passage-level citable: each /services entry is a self-contained 50–60 word block with what + how + technologies.
-
-### Improvements
-
-| Severity   | Issue                                                                                                                                                                                                                                      | Detail                                                                 |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
-| **Medium** | The "Featured Case Studies" section in `llms.txt` lists Tourillo, Advanced Beauty, Beverly Agrovet, Dishaa Vertex. Good. But `llms-full.txt` does **not** list them.                                                                       | Add a `## Case Studies` block to `llms-full.txt` mirroring `llms.txt`. |
-| **Low**    | No `<link rel="alternate" type="application/llms.txt" href="/llms.txt">` declared in `<head>`. Spec is still proposed, but some agents look for it.                                                                                        | Add it.                                                                |
-| **Low**    | `llms-full.txt` lists Embedded Systems & IoT in service summary but homepage and /services prominently market 8 services — IoT and Embedded are present but less prominent. Could expand each to a dedicated paragraph in `llms-full.txt`. | Minor copy expansion.                                                  |
-| **Low**    | No FAQ-style passage callouts within each service description (good for AI Overviews snippetability).                                                                                                                                      | Add 1–2 "Common questions" blocks within each service section.         |
+No code changes affecting LCP/INP/CLS. Hero section still mounts 8+ framer-motion infinite-rotation loops. Recommend running PageSpeed Insights on `/`, `/services`, `/blogs/digital-transformation-2024-guide` and applying Action Plan item 20 (CSS keyframes) if INP > 200ms on mid-range Android.
 
 ---
 
-## 7. Images — Score 70/100
+## 6. AI Search Readiness - Score 92/100 (▲ +4)
 
-### Working
+- `llms-full.txt` now has a Case Studies section mirroring `llms.txt`.
+- Twitter and Facebook now declared as part of Bitropix's public identity in `llms-full.txt` - improves entity disambiguation for AI assistants.
+- All Critical AI-friendly schemas (Organization, LocalBusiness, BlogPosting, JobPosting, FAQPage) emit clean JSON.
 
-- WebP service icons (`web.webp`, `app.webp`, etc.) at 16–188 KB — reasonable.
-- `next/image` used in navbar, footer, and detail pages.
-- `next.config.mjs` outputs AVIF + WebP from any source.
+Outstanding (from yesterday, unchanged):
 
-### Issues
+- No `<link rel="alternate" type="application/llms.txt" href="/llms.txt">` in `<head>`.
+- llms-full.txt now claims Twitter/Facebook, but the live Organization schema doesn't - AI assistants reconciling the two will see contradiction.
 
-| Severity     | Issue                                                                                                                                                                                                                                                                                                                                                                                                               | Detail                                                                                                                           |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| **Critical** | `/images/og-image.jpg` returns **404** — yet referenced in OpenGraph and Twitter card metadata. Every social share preview, AI search citation card, and rich-result image is missing.                                                                                                                                                                                                                              | Create a 1200×630 PNG/JPG with logo + tagline. Place at `public/images/og-image.jpg` (or rename references to `og-image.png`).   |
-| **High**     | Portfolio og:image is SVG (e.g., `/images/portfolio/tourillo.svg`).                                                                                                                                                                                                                                                                                                                                                 | LinkedIn/Twitter/Facebook reject SVG OG images. Generate raster screenshots of each live project (1200×630) and reference those. |
-| **High**     | `app/layout.tsx` `icons` declares `type: 'image/webp'` for a file that is actually a PNG (`/images/logo.png`).                                                                                                                                                                                                                                                                                                      | Mismatch — change `type: 'image/png'` or convert the logo to a real WebP. Browsers won't crash, but icon cache may misbehave.    |
-| **Medium**   | Several stub assets in `/public` left over from a v0/template scaffold: `placeholder.jpg` (1064 B), `placeholder.svg`, `placeholder-logo.png`, `placeholder-logo.svg`, `placeholder-user.jpg`, plus descriptively named JPEGs (`professional-team-meeting-in-modern-office-discuss.jpg`, etc.). Grepping confirms a few are still referenced from `app/about/page.tsx`, `careers/page.tsx`, and `lib/blog-data.ts`. | Audit `/public` and delete unreferenced files. Replace stock-looking JPGs with real photography to support E-E-A-T.              |
-| **Medium**   | Most image references lack explicit `width`/`height` props in some sections; relies on `next/image` to fill. Verify CLS impact on listings (`/blogs`, `/portfolio`).                                                                                                                                                                                                                                                | Spot-check Lighthouse CLS.                                                                                                       |
-| **Low**      | Logo PNG is 132 KB.                                                                                                                                                                                                                                                                                                                                                                                                 | Optimize to ~30 KB (TinyPNG, or convert to WebP at 0.85 quality).                                                                |
+---
+
+## 7. Images - Score 76/100 (▲ +6)
+
+### Now working
+
+- `/images/og-image.jpg` returns 200, content-type `image/jpeg`, 134 KB.
+- Logo `<link>` `type` metadata now correctly `image/png`.
+- Home page emits both `og:image` and `twitter:image` pointing to the new asset.
+
+### Outstanding
+
+| Severity   | Issue                                                                                                            | Detail                                                                                                                                                |
+| ---------- | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **High**   | Portfolio og/twitter images still SVG (`/images/portfolio/<slug>.svg`).                                          | `curl -I /images/portfolio/tourillo.png` → 404. LinkedIn, X/Twitter, Facebook, and most AI search citation cards reject SVG. Need raster screenshots. |
+| **Medium** | Stub assets in `/public` (`placeholder.jpg`, `placeholder-user.jpg`, descriptively-named JPEGs from v0 template) | unchanged                                                                                                                                             |
+| **Low**    | Logo PNG is 132 KB                                                                                               | Compress to ~30 KB.                                                                                                                                   |
 
 ---
 
 ## 8. Sitemap & Indexability
 
-### Sitemap (`/sitemap.xml`)
+### Now working
 
-- 32 URLs, well-structured.
-- All static pages, portfolio details, blog details, and 3 career roles included.
-- `lastModified: '2026-05-06'` is a **static constant** for everything except blog posts. Every push to prod returns the same date. Recommendation: pull `process.env.VERCEL_GIT_COMMIT_DATE` or per-page edit timestamps so search engines see real freshness.
-- Priority/changeFrequency declared — modern Google ignores both. Harmless but vestigial.
+- `BUILD_LAST_MOD` from `VERCEL_GIT_COMMIT_DATE` env (or build time fallback) → real freshness signals.
+- Blog entries use real per-post `dateModified` (falls back to `date`).
+- `/sitemap-html` URL included.
+- Total URL count: 33.
 
-### Indexability
+### Outstanding
 
-- `robots.txt` correctly disallows `/api/`, `/_next/`, `/admin/`. No issues.
-- No `noindex` on any audited page.
-- `sitemap-html` is linked in footer (manual HTML sitemap) — verify it exists (I saw the directory but did not open).
-
-### Missing sitemap URLs (consider adding)
-
-- `/sitemap-html` — the human sitemap page should be in the XML sitemap too.
-- `/services#<slug>` anchors — Google won't index fragment anchors separately; this is why per-service URLs would help.
+- Static `priority` and `changeFrequency` still declared (Google ignores both). Harmless. No fix required.
 
 ---
 
-## 9. Local SEO (Noida)
+## 9. Local SEO - Unchanged
 
-The site declares LocalBusiness markup correctly. To compete locally:
-
-- **Google Business Profile** is not verifiable from this audit (off-site). Confirm GBP is claimed at the Sector 62, Noida address, photos uploaded, hours match schema (Mon–Fri 9–6, Sat 10–2), and primary category = "Software Company" or "Internet Marketing Service" depending on lead source priority.
-- **NAP consistency check** — phone `+91-9318454571`, address "Sector 62, Noida, Uttar Pradesh 201301" — propagate identically to GBP, Justdial, Sulekha, Clutch, GoodFirms, IndiaMART, LinkedIn, Instagram bio.
-- **KML file** (`public/bitropix.kml`) — likely for GBP. Verify it's referenced (uploaded to GBP or linked in `<head>` `<link rel="alternate" type="application/vnd.google-earth.kml+xml">`).
-- **Service-area pages** — currently no `/noida-web-development`, `/noida-seo-services`, `/sector-62-it-company` city/area landing pages. Given the local schema and Noida HQ, even 1–2 dedicated location pages would unlock map-pack-adjacent traffic.
+GBP, NAP propagation, KML verification, and Noida service-area pages are still off-site/external concerns from yesterday's audit. No code changes affect this.
 
 ---
 
-## 10. Site Architecture Observations
-
-- 4 portfolio case studies, 15 blog posts, 8 services-on-one-page, 3 careers, 9 static pages → 32 total URLs. Reasonable for a 2-year-old agency, but thin.
-- Internal linking is mostly footer + breadcrumb-driven. Service descriptions on /services reference `relatedServices` arrays (`['mobile', 'design', 'marketing']`) but I did not verify these render as actual `<Link>` elements with descriptive anchor text — recommend confirming.
-- Two service slug conventions exist: `services-section.tsx` (homepage) uses `web-development`, `mobile-development`, etc., while `/services/page.tsx` uses `web`, `mobile`, `design`. Footer hrefs (`/services#web`) match the latter; the homepage's `id="web-development"` IDs do not. Consolidate.
-- `app/sitemap-html` directory exists — confirm rendered HTML sitemap matches XML.
-
----
-
-## Appendix A — Confirmed Live HTML Findings
+## Appendix - Re-verified live HTML signals
 
 ```
 $ curl -I https://bitropix.com/
-HTTP/1.1 307 Temporary Redirect            # should be 301
-Location: https://www.bitropix.com/
+HTTP/1.1 307 Temporary Redirect       ← still 307 (Action Plan item 3)
 
 $ curl -I https://www.bitropix.com/images/og-image.jpg
-HTTP/1.1 404 Not Found                     # critical
+HTTP/1.1 200 OK
+Content-Type: image/jpeg
+Content-Length: 134160                 ← FIXED
 
-$ curl https://www.bitropix.com/ | grep og:image
-(no match — og:image meta tag not emitted on homepage)
+$ curl -s https://www.bitropix.com/ | grep og:image
+<meta property="og:image" content="https://www.bitropix.com/images/og-image.jpg"/>   ← FIXED
 
-$ curl https://www.bitropix.com/ | grep twitter:image
-<meta name="twitter:image" content="https://www.bitropix.com/images/og-image.jpg"/>
-                                       # points to 404'd file
+$ curl -s https://www.bitropix.com/about | grep title
+<title>About Bitropix | Leading IT Services Company in Noida, India</title>   ← FIXED (single brand)
 
-$ curl https://www.bitropix.com/blogs/digital-transformation-2024-guide | grep date
-"datePublished":"Mar 15, 2025"            # NOT ISO 8601
-"dateModified":"Mar 15, 2025"             # NOT ISO 8601
+$ curl -s https://www.bitropix.com/blogs/digital-transformation-2024-guide | grep title
+<title>Complete Guide to Digital Transformation in 2025</title>                ← NEW: missing brand suffix
 
-$ curl https://www.bitropix.com/about | grep title
-<title>About Bitropix | Leading IT Services Company in Noida, India | Bitropix</title>
-                                       # "Bitropix" appears 3 times
+$ curl -s https://www.bitropix.com/blogs/digital-transformation-2024-guide | grep -E '"date(Published|Modified)"'
+"datePublished":"2025-03-15"           ← FIXED
+"dateModified":"2025-03-15"            ← FIXED
+
+$ curl -s https://www.bitropix.com/careers/full-stack-developer | grep baseSalary
+"baseSalary":{"@type":"MonetaryAmount","currency":"INR","value":{"@type":"QuantitativeValue","minValue":800000,"maxValue":1800000,"unitText":"YEAR"}}   ← FIXED
+
+$ curl -I https://www.bitropix.com/ | grep -i csp
+Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' ...   ← NEW
+
+$ curl -I https://www.bitropix.com/images/portfolio/tourillo.png
+HTTP/1.1 404 Not Found                 ← portfolio og:image still SVG-only
 ```
 
----
-
-## Appendix B — Code Locations
-
-| Finding                                    | File                          | Line(s)                                         |
-| ------------------------------------------ | ----------------------------- | ----------------------------------------------- |
-| Title template causing double-suffix       | `app/layout.tsx`              | 16–19                                           |
-| Home page openGraph override               | `app/page.tsx`                | 30–35                                           |
-| Missing og-image.jpg                       | (file doesn't exist)          | `public/images/`                                |
-| Apex 307 redirect                          | Vercel config (external)      | —                                               |
-| Hardcoded `addressRegion: 'KA'`            | `app/careers/[role]/page.tsx` | 73                                              |
-| JobPosting `datePosted` computed at render | `app/careers/[role]/page.tsx` | 46                                              |
-| `BlogPosting` dates non-ISO                | `app/blogs/[slug]/page.tsx`   | 134–135 (consumes); `lib/blog-data.ts` (source) |
-| Apex URL in BreadcrumbList                 | `app/about/page.tsx`          | 101–102                                         |
-| Apex URL in ContactPage                    | `app/contact/page.tsx`        | 96                                              |
-| Logo MIME mismatch                         | `app/layout.tsx`              | 84–88                                           |
-| Bare `<html lang="en">`                    | `app/layout.tsx`              | 196                                             |
-| `ignoreBuildErrors: true`                  | `next.config.mjs`             | 4                                               |
-| Static `STATIC_LAST_MOD`                   | `app/sitemap.ts`              | 8                                               |
-| Sitemap missing `/sitemap-html`            | `app/sitemap.ts`              | —                                               |
-
----
-
-See `ACTION-PLAN.md` for prioritized fix list with effort estimates.
+See `ACTION-PLAN.md` for the updated, prioritized fix list.

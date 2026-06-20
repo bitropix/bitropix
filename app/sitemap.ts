@@ -1,104 +1,77 @@
 import type { MetadataRoute } from 'next';
+import { absoluteUrl } from '@/lib/site-config';
 import { jobOpenings } from '@/lib/careers';
 import { blogPosts } from '@/lib/blog-data';
 import { portfolioProjects } from '@/lib/portfolio-data';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.bitropix.com';
+// Regenerate at most once an hour.
+export const revalidate = 3600;
 
 // Prefer the Vercel build commit date for accurate freshness signals; fall back to build time.
 const BUILD_LAST_MOD = process.env.VERCEL_GIT_COMMIT_DATE ? new Date(process.env.VERCEL_GIT_COMMIT_DATE) : new Date();
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const careerRoleUrls: MetadataRoute.Sitemap = jobOpenings.map((job) => ({
-    url: `${SITE_URL}/careers/${job.slug}`,
-    lastModified: BUILD_LAST_MOD,
-    changeFrequency: 'weekly',
-    priority: 0.65,
-  }));
+  const entries: MetadataRoute.Sitemap = [];
+  const seen = new Set<string>();
 
-  const blogUrls: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-    url: `${SITE_URL}/blogs/${post.slug}`,
-    lastModified: new Date(post.dateModified ?? post.date),
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  }));
+  const add = (entry: MetadataRoute.Sitemap[number]) => {
+    if (seen.has(entry.url)) return;
+    seen.add(entry.url);
+    entries.push(entry);
+  };
 
-  const portfolioDetailUrls: MetadataRoute.Sitemap = portfolioProjects.map((project) => ({
-    url: `${SITE_URL}/portfolio/${project.slug}`,
-    lastModified: BUILD_LAST_MOD,
-    changeFrequency: 'monthly',
-    priority: 0.75,
-  }));
+  // --- Static pages ---
+  add({ url: absoluteUrl('/'), lastModified: BUILD_LAST_MOD, changeFrequency: 'weekly', priority: 1 });
+  add({ url: absoluteUrl('/services'), lastModified: BUILD_LAST_MOD, changeFrequency: 'weekly', priority: 0.9 });
+  add({ url: absoluteUrl('/portfolio'), lastModified: BUILD_LAST_MOD, changeFrequency: 'weekly', priority: 0.85 });
+  add({ url: absoluteUrl('/blogs'), lastModified: BUILD_LAST_MOD, changeFrequency: 'weekly', priority: 0.75 });
+  add({ url: absoluteUrl('/about'), lastModified: BUILD_LAST_MOD, changeFrequency: 'monthly', priority: 0.8 });
+  add({ url: absoluteUrl('/careers'), lastModified: BUILD_LAST_MOD, changeFrequency: 'weekly', priority: 0.7 });
+  add({ url: absoluteUrl('/contact'), lastModified: BUILD_LAST_MOD, changeFrequency: 'monthly', priority: 0.8 });
+  add({ url: absoluteUrl('/faq'), lastModified: BUILD_LAST_MOD, changeFrequency: 'monthly', priority: 0.6 });
+  add({ url: absoluteUrl('/sitemap-html'), lastModified: BUILD_LAST_MOD, changeFrequency: 'monthly', priority: 0.4 });
+  add({ url: absoluteUrl('/privacy'), lastModified: BUILD_LAST_MOD, changeFrequency: 'yearly', priority: 0.3 });
+  add({ url: absoluteUrl('/terms'), lastModified: BUILD_LAST_MOD, changeFrequency: 'yearly', priority: 0.3 });
 
-  return [
-    {
-      url: `${SITE_URL}/`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: `${SITE_URL}/services`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/portfolio`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: `${SITE_URL}/blogs`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'weekly',
-      priority: 0.75,
-    },
-    {
-      url: `${SITE_URL}/about`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${SITE_URL}/careers`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/contact`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${SITE_URL}/faq`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${SITE_URL}/privacy`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${SITE_URL}/terms`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${SITE_URL}/sitemap-html`,
-      lastModified: BUILD_LAST_MOD,
-      changeFrequency: 'monthly',
-      priority: 0.4,
-    },
-    ...portfolioDetailUrls,
-    ...blogUrls,
-    ...careerRoleUrls,
-  ];
+  // --- Dynamic pages (wrapped so static routes still emit if a source fails) ---
+  try {
+    for (const project of portfolioProjects) {
+      add({
+        url: absoluteUrl(`/portfolio/${project.slug}`),
+        lastModified: BUILD_LAST_MOD,
+        changeFrequency: 'monthly',
+        priority: 0.75,
+      });
+    }
+  } catch (err) {
+    console.error('[sitemap] portfolio source failed:', err);
+  }
+
+  try {
+    for (const post of blogPosts) {
+      add({
+        url: absoluteUrl(`/blogs/${post.slug}`),
+        lastModified: new Date(post.dateModified ?? post.date),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+      });
+    }
+  } catch (err) {
+    console.error('[sitemap] blog source failed:', err);
+  }
+
+  try {
+    for (const job of jobOpenings) {
+      add({
+        url: absoluteUrl(`/careers/${job.slug}`),
+        lastModified: job.validThrough ? new Date(job.postedAt) : BUILD_LAST_MOD,
+        changeFrequency: 'weekly',
+        priority: 0.65,
+      });
+    }
+  } catch (err) {
+    console.error('[sitemap] careers source failed:', err);
+  }
+
+  return entries;
 }

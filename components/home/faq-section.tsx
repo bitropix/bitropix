@@ -37,7 +37,7 @@ const faqs = [
 ];
 
 export function FAQSection() {
-  // FAQPage JSON-LD intentionally removed here — canonical source is /faq.
+  // FAQPage JSON-LD intentionally removed here - canonical source is /faq.
   // Visible accordions stay for UX; structured data lives on /faq to avoid duplication.
   return (
     <section className="bg-[#0e0e18] py-20">

@@ -14,7 +14,7 @@ const SITE_URL = 'https://www.bitropix.com';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Bitropix — IT Services & Digital Marketing Agency in Noida, India',
+    default: 'Bitropix - IT Services & Digital Marketing Agency in Noida, India',
     template: '%s | Bitropix',
   },
   description:
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: SITE_URL,
     siteName: 'Bitropix',
-    title: 'Bitropix — IT Services & Digital Marketing Agency in Noida, India',
+    title: 'Bitropix - IT Services & Digital Marketing Agency in Noida, India',
     description:
       'Transform your business with Bitropix. Leading IT services & digital marketing agency offering web development, app development, SEO, cloud solutions, and more.',
     images: [
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bitropix — IT Services & Digital Marketing Agency in Noida, India',
+    title: 'Bitropix - IT Services & Digital Marketing Agency in Noida, India',
     description:
       'Transform your business with Bitropix. Leading IT services & digital marketing agency offering web development, app development, SEO, cloud solutions, and more.',
     images: [`${SITE_URL}/images/og-image.jpg`],
@@ -189,7 +189,7 @@ export default function RootLayout({
         closes: '14:00',
       },
     ],
-    priceRange: 'INR 25,000 — INR 10,00,000+',
+    priceRange: 'INR 25,000 - INR 10,00,000+',
     areaServed: {
       '@type': 'GeoCircle',
       geoMidpoint: {

@@ -108,7 +108,7 @@ const contactPageSchema = {
   },
 };
 
-// FAQPage JSON-LD intentionally removed here — canonical source is /faq.
+// FAQPage JSON-LD intentionally removed here - canonical source is /faq.
 
 export default function ContactPage() {
   const [formState, setFormState] = useState({

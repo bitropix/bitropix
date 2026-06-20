@@ -146,7 +146,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <FadeInRight>
                 <div className="relative aspect-[16/10] overflow-hidden rounded border border-white/10 shadow-2xl shadow-[#E03B37]/5">
                   <LivePreview
-                    url={project.url}
                     image={project.image}
                     title={project.title}
                     priority
@@ -351,7 +350,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <div className="h-full overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
                       <div className="relative aspect-video overflow-hidden">
                         <LivePreview
-                          url={other.url}
                           image={other.image}
                           title={other.title}
                           sizes="(max-width: 768px) 100vw, 33vw"

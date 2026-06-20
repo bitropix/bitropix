@@ -25,12 +25,12 @@ export function PortfolioSection() {
         </FadeIn>
 
         <StaggerContainer className="grid gap-8 md:grid-cols-2">
-          {portfolioProjects.map((project) => (
+          {portfolioProjects.slice(0, 4).map((project) => (
             <StaggerItem key={project.id}>
               <Link href={`/portfolio/${project.slug}`} className="group block">
                 <div className="h-full cursor-pointer overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-500 hover:-translate-y-1 hover:border-[#E03B37]/30 hover:shadow-xl hover:shadow-[#E03B37]/5">
                   <div className="relative aspect-video overflow-hidden">
-                    <LivePreview url={project.url} image={project.image} title={project.title} />
+                    <LivePreview image={project.image} title={project.title} />
                     <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#111119] via-transparent to-transparent opacity-60" />
                     <div className="absolute top-4 right-4">
                       <span className="rounded-full bg-[#E03B37] px-3 py-1 text-xs font-medium text-white">

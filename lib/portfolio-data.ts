@@ -21,6 +21,43 @@ export interface PortfolioProject {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
+    id: 6,
+    slug: 'bookurevents',
+    title: 'BookUrEvents',
+    tagline: 'We Craft Moments That Stay With You',
+    description:
+      'A premium portfolio and booking website for BookUrEvents, a luxury event planning and management company operating across India. The platform showcases their work across corporate events, luxury weddings, and private celebrations, and lets prospective clients explore services and request a consultation.',
+    url: 'https://bookurevents.in/',
+    image: '/images/portfolio/bookurevents.jpg',
+    category: 'Events & Booking Platform',
+    industry: 'Events & Entertainment',
+    services: ['Web Development', 'UI/UX Design', 'SEO', 'Digital Marketing'],
+    features: [
+      'Service categories for corporate events, weddings & private celebrations',
+      'Entertainment, catering, design & decor showcases',
+      'Film, photography & live-streaming offerings',
+      'Venue, logistics and production capabilities',
+      'Curated portfolio of selected work',
+      'Team profiles and brand storytelling',
+      'Integrated inquiry & consultation booking form',
+      'Elegant, image-led responsive design',
+    ],
+    techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Node.js'],
+    challenge:
+      'BookUrEvents needed a website that conveyed the luxury and craft of their events while making it effortless for high-intent clients to browse past work and start a conversation. The design had to feel premium and visual without sacrificing performance or clarity.',
+    solution:
+      'We built an elegant, image-led platform that organizes a wide range of event services into clear categories, highlights a curated portfolio of signature work, and guides visitors to a streamlined consultation booking form that turns interest into qualified leads.',
+    results: [
+      'Premium brand experience that matches the quality of their events',
+      'Wide service range organized into clear, browsable categories',
+      'Curated portfolio that builds trust with high-value clients',
+      'Streamlined consultation booking to capture qualified leads',
+    ],
+    metaTitle: 'BookUrEvents - Luxury Events Platform Case Study',
+    metaDescription:
+      'How Bitropix built BookUrEvents, a premium portfolio and booking platform for a luxury event planning company spanning corporate events, weddings, and celebrations.',
+  },
+  {
     id: 1,
     slug: 'tourillo',
     title: 'Tourillo',
@@ -28,7 +65,7 @@ export const portfolioProjects: PortfolioProject[] = [
     description:
       "A comprehensive travel platform offering curated tour packages across India - from the Himalayas to Kerala's backwaters. Tourillo connects travelers with unforgettable experiences through all-inclusive packages featuring hotels, transport, meals, and 24/7 expert consultation.",
     url: 'https://tourillo.com/',
-    image: '/images/portfolio/tourillo.svg',
+    image: '/images/portfolio/tourillo.jpg',
     category: 'Web Application',
     industry: 'Travel & Tourism',
     services: ['Web Development', 'UI/UX Design', 'SEO', 'Digital Marketing'],
@@ -65,7 +102,7 @@ export const portfolioProjects: PortfolioProject[] = [
     description:
       'A premium at-home salon service platform serving Noida, Greater Noida, and Delhi NCR. Advanced Beauty connects clients with 18+ professional beauty masters for bridal makeup, nail extensions, hair extensions, eyelash extensions, facials, and spa treatments - all delivered to your doorstep.',
     url: 'https://www.advancedbeauty.in/',
-    image: '/images/portfolio/advanced-beauty.svg',
+    image: '/images/portfolio/advanced-beauty.jpg',
     category: 'E-Commerce Platform',
     industry: 'Beauty & Wellness',
     services: ['Web Development', 'E-Commerce', 'UI/UX Design', 'Digital Marketing'],
@@ -102,7 +139,7 @@ export const portfolioProjects: PortfolioProject[] = [
     description:
       'A professional corporate website for Beverly Agrovet, an agrochemical company with 25+ years of experience providing scientifically formulated crop protection solutions. The platform showcases their herbicides, fungicides, fertilizers, insecticides, bio-stimulants, and growth regulators to farmers worldwide.',
     url: 'https://www.beverlyagrovet.in/',
-    image: '/images/portfolio/beverly-agrovet.svg',
+    image: '/images/portfolio/beverly-agrovet.jpg',
     category: 'Corporate Website',
     industry: 'Agriculture & Agrochemicals',
     services: ['Web Development', 'UI/UX Design', 'SEO', 'Brand Identity'],
@@ -139,7 +176,7 @@ export const portfolioProjects: PortfolioProject[] = [
     description:
       'A premium corporate website for Dishaa Vertex Infra Pvt Ltd, a leading infrastructure development company with 15+ years of excellence. The platform showcases their construction, engineering, industrial projects, project management, and manpower supply services with a portfolio of 120+ completed projects.',
     url: 'https://www.dishaavertex.com/',
-    image: '/images/portfolio/dishaa-vertex.svg',
+    image: '/images/portfolio/dishaa-vertex.jpg',
     category: 'Corporate Website',
     industry: 'Infrastructure & Construction',
     services: ['Web Development', 'UI/UX Design', 'SEO', 'Brand Identity'],
@@ -167,6 +204,43 @@ export const portfolioProjects: PortfolioProject[] = [
     metaTitle: 'Dishaa Vertex Infra - Corporate Website Case Study',
     metaDescription:
       "How Bitropix built Dishaa Vertex Infra's premium corporate website showcasing 120+ infrastructure projects with modern design and SEO optimization.",
+  },
+  {
+    id: 5,
+    slug: 'proteam',
+    title: 'PROTEAM Management Services',
+    tagline: 'Excellence in Workforce & Facility Management',
+    description:
+      'A professional corporate website for PROTEAM Management Services Pvt. Ltd., a workforce solutions and facility management company serving corporate and industrial clients across India. The platform presents their manpower outsourcing, staffing, security, payroll, housekeeping, and skill development offerings to enterprise decision-makers.',
+    url: 'https://www.proteamorg.com/',
+    image: '/images/portfolio/proteam.jpg',
+    category: 'Corporate Website',
+    industry: 'Staffing & Facility Management',
+    services: ['Web Development', 'UI/UX Design', 'SEO'],
+    features: [
+      'Service pages for contractual manpower & staffing solutions',
+      'Security and housekeeping services showcase',
+      'Payroll and compliance management offerings',
+      'Skill development & training programs (B.Voc / D.Voc)',
+      'Trust-building corporate profile and client section',
+      'Mobile-responsive, accessible B2B design',
+      'SEO-optimized for workforce and facility management searches',
+      'Inquiry and contact system for enterprise clients',
+    ],
+    techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Node.js'],
+    challenge:
+      'PROTEAM needed a credible, professional online presence that could communicate a broad portfolio of workforce and facility management services to corporate and industrial clients, while building trust in a relationship-driven B2B industry.',
+    solution:
+      "We designed and developed a clean corporate website that organizes PROTEAM's services into clear, scannable sections, foregrounds trust signals and compliance credentials, and routes enterprise prospects toward a simple inquiry flow.",
+    results: [
+      'Unified six core service lines into one cohesive digital presence',
+      'Strengthened brand credibility with corporate and industrial clients',
+      'Improved discoverability for staffing and facility management searches',
+      'Streamlined enterprise inquiries through a clear contact flow',
+    ],
+    metaTitle: 'PROTEAM Management Services - Corporate Website Case Study',
+    metaDescription:
+      'How Bitropix built the corporate website for PROTEAM Management Services, presenting manpower, staffing, security, payroll, and skill development services to enterprise clients.',
   },
 ];
 

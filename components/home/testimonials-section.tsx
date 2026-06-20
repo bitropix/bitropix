@@ -25,7 +25,7 @@ const testimonials = [
     name: 'Tom Jung',
     role: 'Director, Data Platform, Elevance Health, Inc.',
     content:
-      'Working with the Elevance Health data team was an excellent experience. They integrated ServiceNow and migrated services from Teradata On-Prem to Teradata Vantage, improving system performance by 5% and reducing costs by 25%. Their innovative hackathons generated automation and process improvements that saved hundreds of hours annually and increased revenue. Highly professional, strategic, and results-driven—the team consistently exceeded expectations.',
+      'Working with the Elevance Health data team was an excellent experience. They integrated ServiceNow and migrated services from Teradata On-Prem to Teradata Vantage, improving system performance by 5% and reducing costs by 25%. Their innovative hackathons generated automation and process improvements that saved hundreds of hours annually and increased revenue. Highly professional, strategic, and results-driven-the team consistently exceeded expectations.',
     rating: 5,
   },
 ];

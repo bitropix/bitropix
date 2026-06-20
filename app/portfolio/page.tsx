@@ -11,7 +11,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
 export const metadata: Metadata = {
   title: 'Portfolio - Our Work',
   description:
-    'Explore our portfolio of successful projects across travel, beauty, agriculture, and infrastructure industries. See how Bitropix delivers digital solutions that drive real results.',
+    'Explore our portfolio of successful projects across events, travel, beauty, agriculture, infrastructure, and staffing industries. See how Bitropix delivers digital solutions that drive real results.',
   keywords: [
     'web development portfolio',
     'Bitropix projects',
@@ -32,6 +32,9 @@ export const metadata: Metadata = {
 };
 
 export default function PortfolioPage() {
+  const projectCount = portfolioProjects.length;
+  const industryCount = new Set(portfolioProjects.map((p) => p.industry)).size;
+
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -77,8 +80,8 @@ export default function PortfolioPage() {
           <div className="border-y border-white/10 bg-[#111119]">
             <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-white/10 md:grid-cols-4">
               {[
-                { value: '4+', label: 'Projects Delivered' },
-                { value: '4', label: 'Industries Served' },
+                { value: `${projectCount}+`, label: 'Projects Delivered' },
+                { value: `${industryCount}+`, label: 'Industries Served' },
                 { value: '100%', label: 'Client Satisfaction' },
                 { value: '5/5', label: 'Average Rating' },
               ].map((stat) => (
@@ -104,7 +107,6 @@ export default function PortfolioPage() {
                     <Link href={`/portfolio/${project.slug}`} className="group">
                       <div className="relative aspect-[16/10] overflow-hidden rounded border border-white/10">
                         <LivePreview
-                          url={project.url}
                           image={project.image}
                           title={project.title}
                           sizes="(max-width: 1024px) 100vw, 50vw"
