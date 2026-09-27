@@ -1,122 +1,183 @@
 'use client';
 
 import Link from 'next/link';
-import { Globe, Smartphone, Palette, Cloud, TrendingUp, Cpu, Zap, Wifi, ArrowRight } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
+import { SmartImage } from '@/components/site/smart-image';
+import { useRef, useState } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
+import { Eyebrow, ButtonLink } from '@/components/site/ui';
+import { SplitText, Reveal } from '@/components/site/reveal';
 
 const services = [
   {
     id: 'web',
-    icon: Globe,
     title: 'Web Development',
-    description:
-      'High-performance websites and web applications built with Next.js, React, and modern frameworks. From landing pages to enterprise SaaS platforms - we deliver fast, scalable, and SEO-optimized solutions.',
+    tags: ['Next.js', 'SaaS', 'E-commerce'],
+    image: '/images/services/web.webp',
+    blurb: 'Fast, SEO-ready websites and web apps, from launch pages to enterprise platforms.',
   },
   {
     id: 'mobile',
-    icon: Smartphone,
-    title: 'Mobile Development',
-    description:
-      'Native and cross-platform mobile apps for iOS and Android using React Native and Flutter. We build apps that users love with seamless UX, push notifications, and offline-first architecture.',
+    title: 'Mobile Apps',
+    tags: ['iOS', 'Android', 'Flutter'],
+    image: '/images/services/mobile.webp',
+    blurb: 'Native and cross-platform apps with offline-first architecture and polished UX.',
   },
   {
     id: 'design',
-    icon: Palette,
     title: 'UI/UX Design',
-    description:
-      'Research-driven design that converts visitors into customers. We create intuitive interfaces, design systems, and prototypes that elevate your brand and maximize user engagement.',
+    tags: ['Research', 'Systems', 'Prototypes'],
+    image: '/images/services/design.webp',
+    blurb: 'Research-led interfaces and design systems that turn visitors into customers.',
   },
   {
     id: 'cloud',
-    icon: Cloud,
-    title: 'Cloud Migrations',
-    description:
-      'Seamless migration to AWS, Azure, or Google Cloud with zero downtime. We architect cloud-native infrastructure that reduces costs by up to 40% while boosting performance and reliability.',
+    title: 'Cloud & DevOps',
+    tags: ['AWS', 'Azure', 'GCP'],
+    image: '/images/services/cloud.webp',
+    blurb: 'Zero-downtime migrations and cloud-native infrastructure that costs less to run.',
   },
   {
     id: 'marketing',
-    icon: TrendingUp,
-    title: 'Digital Marketing',
-    description:
-      'Data-driven SEO, PPC, social media, and content marketing strategies that deliver measurable ROI. We help brands dominate search rankings and grow organic traffic consistently.',
-  },
-  {
-    id: 'embedded',
-    icon: Cpu,
-    title: 'Embedded Systems',
-    description:
-      'Custom firmware and embedded solutions for IoT devices, industrial automation, and smart hardware. From microcontroller programming to real-time operating systems.',
+    title: 'SEO & Growth',
+    tags: ['SEO', 'PPC', 'Content'],
+    image: '/images/services/growth.webp',
+    blurb: 'Data-driven search, paid and content programs with ROI you can track.',
   },
   {
     id: 'digital-transformation',
-    icon: Zap,
     title: 'Digital Transformation',
-    description:
-      'End-to-end digital transformation consulting that modernizes your legacy systems, automates workflows, and positions your business for the AI-first future with measurable outcomes.',
+    tags: ['Automation', 'ERP', 'AI'],
+    image: '/images/services/transformation.webp',
+    blurb: 'Modernise legacy systems, automate workflows and get ready for an AI-first future.',
+  },
+  {
+    id: 'embedded',
+    title: 'Embedded Systems',
+    tags: ['Firmware', 'RTOS', 'Hardware'],
+    image: '/images/services/embedded.webp',
+    blurb: 'Custom firmware and embedded solutions for smart hardware and automation.',
   },
   {
     id: 'iot',
-    icon: Wifi,
     title: 'IoT Solutions',
-    description:
-      'Connected device ecosystems that transform operations. We design, build, and deploy IoT platforms with real-time monitoring, predictive analytics, and edge computing capabilities.',
+    tags: ['Edge', 'Telemetry', 'Analytics'],
+    image: '/images/services/iot.webp',
+    blurb: 'Connected device platforms with real-time monitoring and predictive analytics.',
   },
 ];
 
+/**
+ * Interactive index: hovering a row reveals a floating preview that trails
+ * the pointer (desktop). Touch devices get the inline blurb instead.
+ */
 export function ServicesSection() {
+  const [active, setActive] = useState<number | null>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 180, damping: 22, mass: 0.6 });
+  const sy = useSpring(y, { stiffness: 180, damping: 22, mass: 0.6 });
+
+  const onMove = (e: React.PointerEvent) => {
+    if (e.pointerType !== 'mouse' || !listRef.current) return;
+    const r = listRef.current.getBoundingClientRect();
+    x.set(e.clientX - r.left);
+    y.set(e.clientY - r.top);
+  };
+
   return (
-    <section className="relative overflow-hidden bg-[#0a0a12] py-20">
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <FadeIn>
-          <div className="mb-16 text-center">
-            <p className="mb-2 font-semibold tracking-wide text-[#E03B37] uppercase">What We Do</p>
-            <h2 className="mb-4 text-3xl font-bold text-balance text-white sm:text-4xl">
-              Comprehensive IT Services &amp; Digital Marketing
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg text-gray-400">
-              From concept to deployment, we provide end-to-end solutions that drive digital transformation and
-              measurable business growth.
+    <section className="relative py-24 sm:py-36">
+      <div className="container-x">
+        <Eyebrow rule index="02" className="mb-12">
+          Capabilities
+        </Eyebrow>
+        <div className="mb-16 grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-8">
+            <SplitText
+              as="h2"
+              text="Everything you need to launch, scale and win."
+              className="font-display block text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] font-semibold text-paper"
+            />
+          </div>
+          <Reveal className="lg:col-span-4">
+            <p className="text-paper-dim">
+              Eight disciplines under one roof, so strategy, design, engineering and marketing move as one team.
             </p>
-          </div>
-        </FadeIn>
+          </Reveal>
+        </div>
 
-        <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, index) => (
-            <StaggerItem key={service.id}>
-              <Link href={`/services#${service.id}`}>
-                <Card
-                  className="group h-full cursor-pointer border-white/10 bg-[#111119] backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-[#E03B37]/50 hover:bg-[#E03B37]/10 hover:shadow-lg hover:shadow-[#E03B37]/5"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <CardHeader>
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all duration-500 group-hover:from-[#E03B37] group-hover:to-[#E03B37]/80">
-                      <service.icon className="h-6 w-6 text-[#E03B37] transition-colors duration-500 group-hover:text-white" />
-                    </div>
-                    <CardTitle className="text-lg text-white">{service.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="leading-relaxed text-gray-400">{service.description}</CardDescription>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-[#E03B37] opacity-0 transition-all duration-300 group-hover:opacity-100">
-                      Learn more <ArrowRight className="h-3.5 w-3.5" />
-                    </span>
-                  </CardContent>
-                </Card>
+        <ul
+          ref={listRef}
+          className="relative border-t border-line"
+          onPointerMove={onMove}
+          onPointerLeave={() => setActive(null)}
+        >
+          {services.map((s, i) => (
+            <li key={s.id} onPointerEnter={(e) => e.pointerType === 'mouse' && setActive(i)}>
+              <Link
+                href={`/services#${s.id}`}
+                className="group relative grid grid-cols-[3rem_1fr_auto] items-center gap-4 border-b border-line py-6 sm:grid-cols-[5rem_1fr_auto] sm:py-8"
+                data-cursor="Explore"
+              >
+                <span
+                  className="bg-ink-2 absolute inset-0 origin-bottom scale-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100"
+                  aria-hidden="true"
+                />
+                <span className="eyebrow relative">{String(i + 1).padStart(2, '0')}</span>
+                <span className="relative">
+                  <span className="font-display block text-[clamp(1.75rem,4.6vw,4rem)] leading-none font-semibold text-paper transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3 group-hover:text-brand">
+                    {s.title}
+                  </span>
+                  <span className="mt-3 block max-w-xl text-sm text-mute md:hidden">{s.blurb}</span>
+                </span>
+                <span className="relative flex items-center gap-2">
+                  <span className="hidden gap-2 xl:flex">
+                    {s.tags.map((t) => (
+                      <span key={t} className="tag">
+                        {t}
+                      </span>
+                    ))}
+                  </span>
+                  <span className="grid h-11 w-11 place-items-center border border-line-strong text-paper transition-all duration-500 group-hover:rotate-45 group-hover:border-brand group-hover:bg-brand group-hover:text-ink">
+                    <ArrowUpRight className="h-5 w-5" />
+                  </span>
+                </span>
               </Link>
-            </StaggerItem>
+            </li>
           ))}
-        </StaggerContainer>
 
-        <FadeIn delay={0.3}>
-          <div className="mt-12 text-center">
-            <Link
-              href="/services"
-              className="inline-flex items-center gap-2 text-lg font-semibold text-[#E03B37] transition-all duration-300 hover:gap-3"
-            >
-              View All Services <ArrowRight className="h-5 w-5" />
-            </Link>
-          </div>
-        </FadeIn>
+          {/* floating preview (desktop, mouse only) */}
+          <motion.div
+            className="pointer-events-none absolute top-0 left-0 z-10 hidden h-64 w-80 -translate-x-1/2 -translate-y-1/2 md:block"
+            style={{ x: sx, y: sy }}
+            aria-hidden="true"
+          >
+            <AnimatePresence>
+              {active !== null && (
+                <motion.div
+                  key={services[active].id}
+                  className="absolute inset-0 overflow-hidden border border-line-strong bg-ink-2"
+                  initial={{ opacity: 0, scale: 0.85, clipPath: 'inset(50% 0 50% 0)' }}
+                  animate={{ opacity: 1, scale: 1, clipPath: 'inset(0% 0 0% 0)' }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <SmartImage src={services[active].image} alt="" fill sizes="320px" className="object-cover" />
+                  <div className="absolute inset-x-0 bottom-0 bg-ink/85 p-4 text-sm leading-snug text-paper backdrop-blur">
+                    {services[active].blurb}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </ul>
+
+        <Reveal className="mt-12">
+          <ButtonLink href="/services" variant="ghost">
+            All services in detail
+          </ButtonLink>
+        </Reveal>
       </div>
     </section>
   );

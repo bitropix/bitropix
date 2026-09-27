@@ -1,12 +1,14 @@
 /**
  * Generators for /llms.txt and /llms-full.txt (see https://llmstxt.org).
  *
- * - buildLlmsTxt()      → concise, link-first markdown index of the site.
- * - buildLlmsFullTxt()  → same structure, but with full article/case-study
- *                         bodies inlined for retrieval-augmented AI agents.
+ * - buildLlmsTxt(): concise, link-first markdown index of the site.
+ * - buildLlmsFullTxt(): same structure, but with full article/case-study
+ *   bodies inlined for retrieval-augmented AI agents.
  *
  * All data is sourced from this project's real content modules (services, blog,
  * portfolio, careers, FAQ) and all URLs are absolute, built from siteConfig.
+ * Business facts (location, contact details) always come from siteConfig so
+ * they stay in sync with the rest of the site.
  */
 import { siteConfig, absoluteUrl } from '@/lib/site-config';
 import { services } from '@/lib/services-data';
@@ -15,14 +17,27 @@ import { portfolioProjects } from '@/lib/portfolio-data';
 import { jobOpenings, type JobOpening } from '@/lib/careers';
 import { groups as faqGroups } from '@/lib/faq-data';
 
-/** Strip a trailing " | Bitropix" / " - Bitropix" brand suffix off a meta title. */
+/** Strip a trailing " | Bitropix" brand suffix (or a hyphen / dash separated one) off a meta title. */
 function cleanTitle(title: string): string {
-  return title.replace(new RegExp(`\\s*[|\\-–]\\s*${siteConfig.siteName}\\s*$`, 'i'), '').trim();
+  return title.replace(new RegExp(`\\s*[|\\-\\u2013\\u2014]\\s*${siteConfig.siteName}\\s*$`, 'i'), '').trim();
 }
 
-/** Collapse whitespace and trim - for single-line fields (excerpts, descriptions). */
+/** Collapse whitespace and trim. Used for single-line fields (excerpts, descriptions). */
 function oneLine(text: string): string {
   return text.replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * House style: no em or en dashes (and no spaced double hyphens) in published copy.
+ * Numeric ranges become "a to b"; any other dash becomes a comma.
+ * Dashes are written as escapes so this source file stays dash-free.
+ * Only horizontal whitespace is consumed, so line breaks survive.
+ */
+function tidyDashes(text: string): string {
+  return text
+    .replace(/(\d)[ \t]*[\u2013\u2014][ \t]*(\d)/g, '$1 to $2')
+    .replace(/[ \t]*[\u2013\u2014][ \t]*/g, ', ')
+    .replace(/[ \t]+--[ \t]+/g, ', ');
 }
 
 /* ------------------------------------------------------------------ *
@@ -39,8 +54,8 @@ function decodeEntities(s: string): string {
     .replace(/&quot;/g, '"')
     .replace(/&#0?39;|&apos;|&rsquo;|&lsquo;/g, "'")
     .replace(/&ldquo;|&rdquo;/g, '"')
-    .replace(/&mdash;/g, '-')
-    .replace(/&ndash;/g, '–')
+    .replace(/&mdash;/g, '\u2014') // normalised later by tidyDashes()
+    .replace(/&ndash;/g, '\u2013')
     .replace(/&hellip;/g, '…')
     .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(parseInt(n, 10)))
     .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCodePoint(parseInt(n, 16)))
@@ -85,7 +100,7 @@ export function htmlToMarkdown(html: string, headingOffset = 0): string {
   // Inline marks first (so block extraction keeps the markdown).
   s = inlineToMd(s);
 
-  // Headings - demote by headingOffset, capped at h6.
+  // Headings: demote by headingOffset, capped at h6.
   s = s.replace(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi, (_, lvl, text) => {
     const level = Math.min(6, parseInt(lvl, 10) + headingOffset);
     return `\n\n${'#'.repeat(level)} ${stripInline(text)}\n\n`;
@@ -151,11 +166,11 @@ function formatSalary(job: JobOpening): string | null {
   if (!job.salary) return null;
   const { min, max, currency, unit } = job.salary;
   const fmt = (n: number) => new Intl.NumberFormat('en-IN').format(n);
-  return `${currency} ${fmt(min)}–${fmt(max)} / ${unit.toLowerCase()}`;
+  return `${currency} ${fmt(min)} to ${fmt(max)} per ${unit.toLowerCase()}`;
 }
 
 /* ------------------------------------------------------------------ *
- * buildLlmsTxt - concise index
+ * buildLlmsTxt: concise index
  * ------------------------------------------------------------------ */
 
 export async function buildLlmsTxt(): Promise<string> {
@@ -174,7 +189,7 @@ export async function buildLlmsTxt(): Promise<string> {
 
   lines.push('');
   lines.push('## Key Pages');
-  lines.push(`- [Home](${absoluteUrl('/')}): ${siteName} - ${siteConfig.tagline}.`);
+  lines.push(`- [Home](${absoluteUrl('/')}): ${siteName}, ${siteConfig.tagline}.`);
   lines.push(`- [About](${absoluteUrl('/about')}): Who we are, our team, and how we work.`);
   lines.push(`- [Services](${absoluteUrl('/services')}): Full catalogue of IT and digital marketing services.`);
   lines.push(`- [Portfolio](${absoluteUrl('/portfolio')}): Selected client work and case studies.`);
@@ -193,7 +208,7 @@ export async function buildLlmsTxt(): Promise<string> {
     lines.push('');
     lines.push('## Case Studies');
     for (const p of portfolioProjects) {
-      lines.push(`- [${p.title}](${portfolioUrl(p.slug)}): ${oneLine(p.tagline)} - ${oneLine(p.industry)}.`);
+      lines.push(`- [${p.title}](${portfolioUrl(p.slug)}): ${oneLine(p.tagline)} Industry: ${oneLine(p.industry)}.`);
     }
   }
 
@@ -220,18 +235,18 @@ export async function buildLlmsTxt(): Promise<string> {
   lines.push(`- [Terms of Service](${absoluteUrl('/terms')})`);
   lines.push('');
 
-  return lines.join('\n');
+  return tidyDashes(lines.join('\n'));
 }
 
 /* ------------------------------------------------------------------ *
- * buildLlmsFullTxt - full content inlined
+ * buildLlmsFullTxt: full content inlined
  * ------------------------------------------------------------------ */
 
 export async function buildLlmsFullTxt(): Promise<string> {
   const { siteName, description } = siteConfig;
   const lines: string[] = [];
 
-  lines.push(`# ${siteName} - Full Reference for AI Agents`);
+  lines.push(`# ${siteName}: Full Reference for AI Agents`);
   lines.push('');
   lines.push(`> ${oneLine(description)}`);
 
@@ -270,7 +285,7 @@ export async function buildLlmsFullTxt(): Promise<string> {
     lines.push('## Case Studies');
     for (const p of portfolioProjects) {
       lines.push('');
-      lines.push(`### ${p.title} - ${oneLine(p.tagline)}`);
+      lines.push(`### ${p.title}: ${oneLine(p.tagline)}`);
       lines.push('');
       lines.push(`- Industry: ${p.industry}`);
       lines.push(`- Category: ${p.category}`);
@@ -369,5 +384,5 @@ export async function buildLlmsFullTxt(): Promise<string> {
   lines.push(`- Terms of Service: ${absoluteUrl('/terms')}`);
   lines.push('');
 
-  return lines.join('\n');
+  return tidyDashes(lines.join('\n'));
 }

@@ -1,72 +1,98 @@
 'use client';
 
-import { Search, Pencil, Code, Rocket } from 'lucide-react';
-import { FadeIn } from '@/components/animate';
+import { useRef } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { Eyebrow } from '@/components/site/ui';
+import { SplitText, Reveal } from '@/components/site/reveal';
 
 const steps = [
   {
-    number: '01',
-    icon: Search,
-    title: 'Discovery',
-    description: 'We analyze your requirements, understand your business goals, and define the project scope.',
+    title: 'Discover',
+    duration: 'Week 1',
+    description:
+      'Workshops, audits and user research to understand your business, your customers and what success looks like in numbers.',
+    deliverables: ['Goals and KPIs', 'Technical audit', 'Scope and roadmap'],
   },
   {
-    number: '02',
-    icon: Pencil,
     title: 'Design',
-    description: 'Our designers create intuitive interfaces and user experiences that align with your brand.',
+    duration: 'Weeks 2 to 4',
+    description:
+      'Wireframes, interface design and clickable prototypes, tested with real users before a single line of production code.',
+    deliverables: ['UX flows', 'UI and design system', 'Interactive prototype'],
   },
   {
-    number: '03',
-    icon: Code,
-    title: 'Development',
-    description: 'Our engineers build your solution using agile methodology with regular updates and feedback.',
+    title: 'Build',
+    duration: 'Weeks 4 to 12',
+    description:
+      'Agile sprints with demos every two weeks. Clean, tested, documented code on a stack chosen for your scale.',
+    deliverables: ['Sprint demos', 'QA and security review', 'Performance budget'],
   },
   {
-    number: '04',
-    icon: Rocket,
-    title: 'Delivery',
-    description: 'We deploy, test thoroughly, and provide ongoing support to ensure successful implementation.',
+    title: 'Launch & grow',
+    duration: 'Ongoing',
+    description:
+      'Zero-downtime launch, analytics, SEO and continuous improvement. We stay on as your product and growth partner.',
+    deliverables: ['Go-live plan', 'Analytics and SEO', 'Support and iteration'],
   },
 ];
 
 export function ProcessSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 70%', 'end 60%'] });
+  const fill = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+
   return (
-    <section className="relative overflow-hidden bg-[#0e0e18] py-20">
-      <div className="absolute inset-0 bg-linear-to-r from-[#E03B37]/5 via-transparent to-[#E03B37]/5" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <FadeIn>
-          <div className="mb-16 text-center">
-            <p className="mb-2 font-semibold text-[#E03B37]">Our Process</p>
-            <h2 className="mb-4 text-3xl font-bold text-balance text-white sm:text-4xl">How We Work</h2>
-            <p className="mx-auto max-w-2xl text-gray-400">
-              A streamlined process designed to deliver exceptional results on time and within budget.
-            </p>
+    <section className="relative bg-ink-2 py-24 sm:py-36">
+      <div className="container-x">
+        <Eyebrow rule index="04" className="mb-12">
+          Process
+        </Eyebrow>
+      </div>
+      <div className="container-x grid gap-16 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-[calc(var(--nav-h)+3rem)]">
+            <SplitText
+              as="h2"
+              text="A clear path from idea to impact."
+              className="font-display block text-[clamp(2.5rem,5.5vw,5rem)] leading-[0.95] font-semibold text-paper"
+            />
+            <Reveal>
+              <p className="mt-8 max-w-md text-paper-dim">
+                No black boxes. You see progress every two weeks, own every line of code, and always know what comes
+                next.
+              </p>
+            </Reveal>
           </div>
-        </FadeIn>
+        </div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step, index) => (
-            <FadeIn key={step.number} delay={index * 0.15}>
-              <div className="group relative">
-                {/* Connecting line */}
-                {index < steps.length - 1 && (
-                  <div className="absolute top-12 left-full z-0 hidden h-0.5 w-full -translate-x-1/2 bg-linear-to-r from-white/10 to-transparent lg:block" />
-                )}
-                <div className="relative z-10 text-center">
-                  <div className="relative mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all duration-500 group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
-                    <step.icon className="h-10 w-10 text-[#E03B37]" />
-                    <span className="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37] to-[#E03B37]/80 text-sm font-bold text-white shadow-lg shadow-[#E03B37]/20">
-                      {step.number}
-                    </span>
-                  </div>
-                  <h3 className="mb-2 text-xl font-semibold text-white">{step.title}</h3>
-                  <p className="text-sm leading-relaxed text-gray-400">{step.description}</p>
-                </div>
-              </div>
-            </FadeIn>
-          ))}
+        <div ref={ref} className="relative lg:col-span-6 lg:col-start-7">
+          <div className="absolute top-0 bottom-0 left-[1.1rem] w-px bg-line-strong" aria-hidden="true">
+            <motion.div style={{ scaleY: fill }} className="bg-brand-gradient h-full w-full origin-top" />
+          </div>
+          <ol className="space-y-20">
+            {steps.map((step, i) => (
+              <li key={step.title} className="relative pl-16">
+                <span
+                  className="absolute top-1 left-0 grid h-9 w-9 place-items-center border border-line-strong bg-ink-2 font-mono text-xs text-paper"
+                  aria-hidden="true"
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <Reveal>
+                  <p className="eyebrow mb-3">{step.duration}</p>
+                  <h3 className="font-display text-4xl font-semibold text-paper sm:text-5xl">{step.title}</h3>
+                  <p className="mt-4 text-lg leading-relaxed text-paper-dim">{step.description}</p>
+                  <ul className="mt-6 flex flex-wrap gap-2">
+                    {step.deliverables.map((d) => (
+                      <li key={d} className="tag">
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

@@ -1,327 +1,192 @@
 import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import {
+  EMAIL_RE,
+  NAME_RE,
+  PHONE_RE,
+  clientIp,
+  isSameOrigin,
+  oneLine,
+  rateLimit,
+  readJsonBody,
+  readString,
+} from '@/lib/security';
+import { fromAddress, getTransporter, mailConfigured, renderEmail } from '@/lib/mailer';
+import { siteConfig } from '@/lib/site-config';
 
-// Function to send Telegram message
-async function sendTelegramMessage(formData: {
-  name: string;
-  email: string;
-  phone?: string;
-  company?: string;
-  service: string;
-  budget?: string;
-  message: string;
-}) {
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+export const runtime = 'nodejs';
 
-  if (!botToken || !chatId) {
-    console.error('Missing Telegram credentials');
-    return { success: false, error: 'Missing credentials' };
-  }
+const SLUG_RE = /^[a-z0-9-]{2,40}$/;
 
-  // Format service name
-  const serviceName = formData.service
+const BUDGETS: Record<string, string> = {
+  'under-5l': 'Under Rs 5 Lakhs',
+  '5l-15l': 'Rs 5 to 15 Lakhs',
+  '15l-30l': 'Rs 15 to 30 Lakhs',
+  'above-30l': 'Above Rs 30 Lakhs',
+  'not-sure': 'Not sure yet',
+};
+
+const pretty = (slug: string) =>
+  slug
     .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(' ');
 
-  // Format budget
-  let budgetDisplay = '';
-  if (formData.budget) {
-    const budgetMap: { [key: string]: string } = {
-      'under-5l': 'Under Rs 5 Lakhs',
-      '5l-15l': 'Rs 5 - 15 Lakhs',
-      '15l-30l': 'Rs 15 - 30 Lakhs',
-      'above-30l': 'Above Rs 30 Lakhs',
-      'not-sure': 'Not Sure Yet',
-    };
-    budgetDisplay = budgetMap[formData.budget] || formData.budget;
-  }
+const bad = (error: string, status = 400) => NextResponse.json({ error }, { status });
 
-  // Format message
-  const telegramMessage = `
-NEW CONTACT FORM SUBMISSION
-
-CUSTOMER DETAILS
-Name: ${formData.name}
-Email: ${formData.email}
-${formData.phone ? `Phone: ${formData.phone}` : ''}
-${formData.company ? `Company: ${formData.company}` : ''}
-
-PROJECT INFORMATION
-Service: ${serviceName}
-${formData.budget ? `Budget: ${budgetDisplay}` : ''}
-
-MESSAGE
-${formData.message}
-
-Received: ${new Date().toLocaleString('en-IN', {
-    timeZone: 'Asia/Kolkata',
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  })}
-  `.trim();
-
-  const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
+async function notifyTelegram(text: string) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return;
   try {
-    const response = await fetch(telegramUrl, {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: telegramMessage,
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      // Plain text (no parse_mode), so user input can't inject Telegram markup.
+      body: JSON.stringify({ chat_id: chatId, text: text.slice(0, 4000), disable_web_page_preview: true }),
+      signal: AbortSignal.timeout(5000),
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error('Telegram API error:', data);
-      return { success: false, error: data };
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error('Telegram sending failed:', error);
-    return { success: false, error };
+    if (!res.ok) console.error('Telegram notify failed with status', res.status);
+  } catch {
+    console.error('Telegram notify failed');
   }
-}
-
-// Email validation
-function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-// Phone validation
-function isValidPhoneNumber(phone: string): boolean {
-  if (!phone) return true;
-  const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
-  return phoneRegex.test(phone);
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const { name, email, phone, company, service, budget, message } = await request.json();
+  if (!isSameOrigin(request)) return bad('Forbidden', 403);
 
-    // Validate required fields
-    if (!name || !email || !service || !message) {
-      return NextResponse.json({ error: 'Please fill in all required fields' }, { status: 400 });
-    }
-
-    if (name.trim().length < 2) {
-      return NextResponse.json({ error: 'Name must be at least 2 characters long' }, { status: 400 });
-    }
-
-    if (!isValidEmail(email)) {
-      return NextResponse.json({ error: 'Please enter a valid email address' }, { status: 400 });
-    }
-
-    if (phone && !isValidPhoneNumber(phone)) {
-      return NextResponse.json({ error: 'Please enter a valid phone number' }, { status: 400 });
-    }
-
-    if (message.trim().length < 10) {
-      return NextResponse.json({ error: 'Message must be at least 10 characters long' }, { status: 400 });
-    }
-
-    const formData = { name, email, phone, company, service, budget, message };
-
-    // Send Telegram notification with error logging
-    const telegramResult = await sendTelegramMessage(formData);
-    if (!telegramResult.success) {
-      console.error('Telegram failed:', telegramResult.error);
-    }
-
-    // Verify email environment variables
-    if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-      console.error('Missing email configuration');
-      return NextResponse.json({ error: 'Email configuration error' }, { status: 500 });
-    }
-
-    // Create email transporter with better error handling
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
-      },
-      tls: {
-        rejectUnauthorized: false, // For Gmail
-      },
-    });
-
-    // Verify transporter configuration
-    try {
-      await transporter.verify();
-    } catch (verifyError) {
-      console.error('SMTP verification failed:', verifyError);
-      return NextResponse.json({ error: 'Email service configuration error' }, { status: 500 });
-    }
-
-    // Format service name
-    const serviceName = service
-      .split('-')
-      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-
-    // Format budget
-    let budgetDisplay = budget;
-    if (budget) {
-      const budgetMap: { [key: string]: string } = {
-        'under-5l': 'Under Rs 5 Lakhs',
-        '5l-15l': 'Rs 5 - 15 Lakhs',
-        '15l-30l': 'Rs 15 - 30 Lakhs',
-        'above-30l': 'Above Rs 30 Lakhs',
-        'not-sure': 'Not Sure Yet',
-      };
-      budgetDisplay = budgetMap[budget] || budget;
-    }
-
-    // Admin email
-    const adminMailOptions = {
-      from: `"Bitropix Contact Form" <${process.env.SMTP_FROM}>`,
-      to: process.env.SMTP_TO,
-      subject: `New Contact: ${serviceName} - ${name}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <style>
-              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background: #f4f4f4; margin: 0; padding: 0; }
-              .container { max-width: 600px; margin: 20px auto; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-              .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
-              .header h1 { margin: 0; font-size: 24px; }
-              .content { padding: 30px; }
-              .field { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
-              .field:last-child { border-bottom: none; }
-              .label { font-weight: bold; color: #555; font-size: 12px; text-transform: uppercase; margin-bottom: 5px; }
-              .value { color: #333; font-size: 16px; }
-              .value a { color: #667eea; text-decoration: none; }
-              .footer { background: #f8f9fa; padding: 20px; text-align: center; font-size: 12px; color: #666; }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <div class="header">
-                <h1>New Contact Form Submission</h1>
-              </div>
-              <div class="content">
-                <div class="field">
-                  <div class="label">Name</div>
-                  <div class="value">${name}</div>
-                </div>
-                <div class="field">
-                  <div class="label">Email</div>
-                  <div class="value"><a href="mailto:${email}">${email}</a></div>
-                </div>
-                ${
-                  phone
-                    ? `
-                <div class="field">
-                  <div class="label">Phone</div>
-                  <div class="value"><a href="tel:${phone}">${phone}</a></div>
-                </div>
-                `
-                    : ''
-                }
-                ${
-                  company
-                    ? `
-                <div class="field">
-                  <div class="label">Company</div>
-                  <div class="value">${company}</div>
-                </div>
-                `
-                    : ''
-                }
-                <div class="field">
-                  <div class="label">Service Interested In</div>
-                  <div class="value">${serviceName}</div>
-                </div>
-                ${
-                  budget
-                    ? `
-                <div class="field">
-                  <div class="label">Budget Range</div>
-                  <div class="value">${budgetDisplay}</div>
-                </div>
-                `
-                    : ''
-                }
-                <div class="field">
-                  <div class="label">Message</div>
-                  <div class="value">${message}</div>
-                </div>
-              </div>
-              <div class="footer">
-                <p>Received on ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
-                <p>Bitropix | Noida, Uttar Pradesh</p>
-              </div>
-            </div>
-          </body>
-        </html>
-      `,
-    };
-
-    // Customer auto-reply email
-    const customerMailOptions = {
-      from: `"Bitropix" <${process.env.SMTP_FROM}>`,
-      to: email,
-      subject: 'Thank you for contacting Bitropix',
-      html: `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <style>
-              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background: #f4f4f4; margin: 0; padding: 0; }
-              .container { max-width: 600px; margin: 20px auto; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-              .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
-              .header h1 { margin: 0; font-size: 28px; }
-              .content { padding: 40px; }
-              .content p { margin: 0 0 15px 0; }
-              .footer { background: #f8f9fa; padding: 25px; text-align: center; font-size: 14px; color: #666; }
-              .footer a { color: #667eea; text-decoration: none; }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <div class="header">
-                <h1>Thank You, ${name}!</h1>
-              </div>
-              <div class="content">
-                <p>We've received your message and appreciate you reaching out to Bitropix.</p>
-                <p>Our team will review your inquiry regarding <strong>${serviceName}</strong> and get back to you within 24 hours during business days.</p>
-                <p>In the meantime, feel free to explore our services or connect with us on social media.</p>
-                <p style="margin-top: 30px;">Best regards,<br/><strong>The Bitropix Team</strong></p>
-              </div>
-              <div class="footer">
-                <p><strong>Bitropix</strong> | Noida, Uttar Pradesh</p>
-                <p>Email: <a href="mailto:info@bitropix.com">info@bitropix.com</a></p>
-                <p>Phone: <a href="tel:+919318454571">+91 9318454571</a> | <a href="tel:+919318454571">+91 9318454571</a></p>
-              </div>
-            </div>
-          </body>
-        </html>
-      `,
-    };
-
-    // Send emails with error handling
-    try {
-      await Promise.all([transporter.sendMail(adminMailOptions), transporter.sendMail(customerMailOptions)]);
-    } catch (emailError) {
-      console.error('Email sending failed:', emailError);
-      return NextResponse.json({ error: 'Failed to send emails' }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, message: 'Message sent successfully!' }, { status: 200 });
-  } catch (error) {
-    console.error('Contact form error:', error);
-    return NextResponse.json({ error: 'Failed to send message. Please try again.' }, { status: 500 });
+  const ip = clientIp(request);
+  const limit = rateLimit(`contact:${ip}`, 5, 10 * 60 * 1000);
+  if (!limit.ok) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again in a few minutes.' },
+      { status: 429, headers: { 'Retry-After': String(limit.retryAfter) } }
+    );
   }
+
+  const body = await readJsonBody(request);
+  if (!body) return bad('Invalid request');
+
+  // Honeypot: real users never see or fill this field. Pretend success so bots move on.
+  if (typeof body.website === 'string' && body.website.trim() !== '') {
+    return NextResponse.json({ success: true }, { status: 200 });
+  }
+
+  const name = readString(body.name, 100);
+  const email = readString(body.email, 254);
+  const phone = readString(body.phone, 20);
+  const company = readString(body.company, 120);
+  const organizationType = readString(body.organizationType, 40);
+  const service = readString(body.service, 40);
+  const budget = readString(body.budget, 20);
+  const message = readString(body.message, 5000);
+
+  if (
+    name === null ||
+    email === null ||
+    phone === null ||
+    company === null ||
+    organizationType === null ||
+    service === null ||
+    budget === null ||
+    message === null
+  ) {
+    return bad('One or more fields are too long or invalid');
+  }
+  if (!name || !email || !service || !message) return bad('Please fill in all required fields');
+  if (!NAME_RE.test(name)) return bad('Please enter a valid name');
+  if (!EMAIL_RE.test(email)) return bad('Please enter a valid email address');
+  if (phone && !PHONE_RE.test(phone)) return bad('Please enter a valid phone number');
+  if (!SLUG_RE.test(service)) return bad('Please choose a service');
+  if (organizationType && !SLUG_RE.test(organizationType)) return bad('Invalid organization type');
+  if (budget && !(budget in BUDGETS)) return bad('Invalid budget');
+  if (message.length < 10) return bad('Message must be at least 10 characters long');
+
+  // Per-email limit too, so one address can't be used to trigger many auto-replies.
+  if (!rateLimit(`contact-email:${email.toLowerCase()}`, 3, 60 * 60 * 1000).ok) {
+    return bad('Too many requests. Please try again later.', 429);
+  }
+
+  const serviceName = pretty(service);
+  const budgetName = budget ? BUDGETS[budget] : undefined;
+  const orgName = organizationType ? pretty(organizationType) : undefined;
+  const received = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' });
+
+  await notifyTelegram(
+    [
+      'NEW CONTACT FORM SUBMISSION',
+      '',
+      `Name: ${name}`,
+      `Email: ${email}`,
+      phone && `Phone: ${phone}`,
+      company && `Company: ${company}`,
+      orgName && `Organization: ${orgName}`,
+      `Service: ${serviceName}`,
+      budgetName && `Budget: ${budgetName}`,
+      '',
+      'MESSAGE',
+      message,
+      '',
+      `Received: ${received}`,
+    ]
+      .filter((l): l is string => typeof l === 'string')
+      .join('\n')
+  );
+
+  if (!mailConfigured()) {
+    console.error('Contact form: SMTP is not configured');
+    return bad('Our mail service is unavailable right now. Please email us directly.', 503);
+  }
+
+  const transporter = getTransporter();
+
+  try {
+    await transporter.sendMail({
+      from: fromAddress('Bitropix Contact Form'),
+      to: process.env.SMTP_TO,
+      replyTo: email,
+      subject: oneLine(`New enquiry: ${serviceName} | ${name}`),
+      html: renderEmail(
+        'New contact form submission',
+        [
+          { label: 'Name', value: name },
+          { label: 'Email', value: email, href: `mailto:${email}` },
+          { label: 'Phone', value: phone, href: phone ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined },
+          { label: 'Company', value: company },
+          { label: 'Organization type', value: orgName },
+          { label: 'Service', value: serviceName },
+          { label: 'Budget', value: budgetName },
+          { label: 'Message', value: message, multiline: true },
+        ],
+        `Received ${received} IST`
+      ),
+    });
+  } catch {
+    console.error('Contact form: admin email failed');
+    return bad('Failed to send message. Please try again.', 502);
+  }
+
+  // Auto-reply: fixed wording, only the validated name and service are echoed back.
+  try {
+    await transporter.sendMail({
+      from: fromAddress('Bitropix'),
+      to: email,
+      subject: 'We received your message | Bitropix',
+      html: renderEmail(
+        `Thank you, ${name.split(' ')[0]}.`,
+        [
+          {
+            label: 'What happens next',
+            value: `Our team will review your enquiry about ${serviceName} and reply within one business day. For anything urgent, call ${siteConfig.phoneDisplay}.`,
+          },
+        ],
+        'You are receiving this because you contacted Bitropix through our website.'
+      ),
+    });
+  } catch {
+    // The enquiry reached us; a failed courtesy email shouldn't show the user an error.
+    console.error('Contact form: auto-reply failed');
+  }
+
+  return NextResponse.json({ success: true, message: 'Message sent successfully!' }, { status: 200 });
 }

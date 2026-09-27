@@ -25,12 +25,12 @@ export const groups: FAQGroup[] = [
       {
         question: 'Where is Bitropix located?',
         answer:
-          'Bitropix is headquartered in Noida, India. We serve clients globally and have successfully delivered projects for businesses across India, the US, UK, and the Middle East. We work seamlessly across time zones.',
+          'Bitropix is headquartered in New Delhi, India. We serve clients globally and have successfully delivered projects for businesses across India, the US, UK, and the Middle East. We work seamlessly across time zones.',
       },
       {
         question: 'Do you work with startups and small businesses?',
         answer:
-          'Absolutely. We work with businesses of all sizes - from early-stage startups to established enterprises. Our flexible engagement models and competitive pricing make professional IT services accessible to growing businesses.',
+          'Absolutely. We work with businesses of all sizes, from early-stage startups to established enterprises. Our flexible engagement models and competitive pricing make professional IT services accessible to growing businesses.',
       },
       {
         question: 'What technologies do you specialize in?',
@@ -47,12 +47,12 @@ export const groups: FAQGroup[] = [
       {
         question: 'How long does it take to build a website or app?',
         answer:
-          'Timelines vary based on complexity. A standard business website takes 3-6 weeks, while a custom web application or mobile app can take 8-16 weeks. We provide detailed timelines during our free consultation and keep you updated at every milestone.',
+          'Timelines vary based on complexity. A standard business website takes 3 to 6 weeks, while a custom web application or mobile app can take 8 to 16 weeks. We provide detailed timelines during our free consultation and keep you updated at every milestone.',
       },
       {
         question: 'How long does it take to build a mobile app?',
         answer:
-          'A simple mobile app typically takes 8-12 weeks, while feature-rich applications may take 4-6 months. The timeline depends on app complexity, platform (iOS, Android, or both), and specific feature requirements. We provide a detailed timeline during our free consultation.',
+          'A simple mobile app typically takes 8 to 12 weeks, while feature-rich applications may take 4 to 6 months. The timeline depends on app complexity, platform (iOS, Android, or both), and specific feature requirements. We provide a detailed timeline during our free consultation.',
       },
       {
         question: 'Do you offer ongoing maintenance and support?',
@@ -79,7 +79,7 @@ export const groups: FAQGroup[] = [
       {
         question: 'Can I customize a quote to fit my specific needs?',
         answer:
-          'Yes - every engagement is tailored. We work closely with each client to scope work that matches their exact requirements and budget, and we send a transparent, milestone-based proposal before any work begins.',
+          'Yes, every engagement is tailored. We work closely with each client to scope work that matches their exact requirements and budget, and we send a transparent, milestone-based proposal before any work begins.',
       },
       {
         question: 'Are there any hidden charges?',

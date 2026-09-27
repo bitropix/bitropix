@@ -1,79 +1,119 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, ExternalLink } from 'lucide-react';
-import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
-import { LivePreview } from '@/components/live-preview';
-import { portfolioProjects } from '@/lib/portfolio-data';
+import { SmartImage } from '@/components/site/smart-image';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
+import { portfolioProjects, type PortfolioProject } from '@/lib/portfolio-data';
+import { Eyebrow, ButtonLink } from '@/components/site/ui';
+import { SplitText, Reveal } from '@/components/site/reveal';
+
+const featured = portfolioProjects.slice(0, 4);
+
+function WorkCard({
+  project,
+  index,
+  total,
+  progress,
+}: {
+  project: PortfolioProject;
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+}) {
+  // Each card shrinks slightly as the ones after it slide over (stacking deck).
+  const start = index / total;
+  const scale = useTransform(progress, [start, 1], [1, 1 - (total - index - 1) * 0.04]);
+  const imgScale = useTransform(progress, [start, Math.min(start + 1 / total, 1)], [1.15, 1]);
+
+  return (
+    <div
+      className="sticky pb-6"
+      // each card pins a little lower than the previous one, so the stack reads as a neat deck
+      style={{ zIndex: index + 1, top: `calc(var(--nav-h) + 1rem + ${index * 1.25}rem)` }}
+    >
+      <motion.article style={{ scale }} className="origin-top border border-line bg-ink-2">
+        <Link
+          href={`/portfolio/${project.slug}`}
+          className="group grid lg:min-h-[70svh] lg:grid-cols-12"
+          data-cursor="View"
+        >
+          <div className="relative aspect-[16/10] overflow-hidden lg:col-span-7 lg:aspect-auto">
+            <motion.div style={{ scale: imgScale }} className="absolute inset-0">
+              <SmartImage
+                src={project.image}
+                alt={`${project.title} website`}
+                fill
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="object-cover object-top transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+              />
+            </motion.div>
+            <span className="eyebrow absolute top-4 left-4 bg-ink/80 px-2 py-1 text-paper backdrop-blur">
+              {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+            </span>
+          </div>
+          <div className="flex flex-col justify-between gap-10 p-6 sm:p-10 lg:col-span-5">
+            <div>
+              <div className="mb-6 flex flex-wrap gap-2">
+                <span className="tag tag-brand">{project.industry}</span>
+                <span className="tag">{project.category}</span>
+              </div>
+              <h3 className="font-display text-[clamp(2.25rem,4.5vw,4rem)] leading-[0.95] font-semibold text-paper">
+                {project.title}
+              </h3>
+              <p className="mt-4 text-lg text-paper-dim">{project.tagline}</p>
+            </div>
+            <div>
+              <ul className="space-y-3 border-t border-line pt-6">
+                {project.results.slice(0, 3).map((r) => (
+                  <li key={r} className="flex gap-3 text-sm text-paper-dim">
+                    <i className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-brand" aria-hidden="true" />
+                    {r}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-8 inline-flex items-center gap-3 text-sm font-medium text-paper">
+                <span className="link-line">View case study</span>
+                <span className="h-px w-10 bg-paper transition-all duration-500 group-hover:w-16 group-hover:bg-brand" />
+              </p>
+            </div>
+          </div>
+        </Link>
+      </motion.article>
+    </div>
+  );
+}
 
 export function PortfolioSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+
   return (
-    <section className="relative overflow-hidden bg-[#0e0e18] py-20">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-[#E03B37]/5 via-transparent to-transparent" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <FadeIn>
-          <div className="mb-16 text-center">
-            <p className="mb-2 font-semibold tracking-wide text-[#E03B37] uppercase">Our Work</p>
-            <h2 className="mb-4 text-3xl font-bold text-balance text-white sm:text-4xl">
-              Projects That Speak for Themselves
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg text-gray-400">
-              From travel platforms to enterprise solutions - we build digital products that drive real business results
-              across industries.
-            </p>
+    <section className="relative py-24 sm:py-36">
+      <div className="container-x">
+        <Eyebrow rule index="03" className="mb-12">
+          Selected work
+        </Eyebrow>
+        <div className="mb-16 grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-8">
+            <SplitText
+              as="h2"
+              text="Work that moves the needle."
+              className="font-display block text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] font-semibold text-paper"
+            />
           </div>
-        </FadeIn>
+          <Reveal className="flex lg:col-span-4 lg:justify-end">
+            <ButtonLink href="/portfolio" variant="ghost">
+              All projects
+            </ButtonLink>
+          </Reveal>
+        </div>
 
-        <StaggerContainer className="grid gap-8 md:grid-cols-2">
-          {portfolioProjects.slice(0, 4).map((project) => (
-            <StaggerItem key={project.id}>
-              <Link href={`/portfolio/${project.slug}`} className="group block">
-                <div className="h-full cursor-pointer overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-500 hover:-translate-y-1 hover:border-[#E03B37]/30 hover:shadow-xl hover:shadow-[#E03B37]/5">
-                  <div className="relative aspect-video overflow-hidden">
-                    <LivePreview image={project.image} title={project.title} />
-                    <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#111119] via-transparent to-transparent opacity-60" />
-                    <div className="absolute top-4 right-4">
-                      <span className="rounded-full bg-[#E03B37] px-3 py-1 text-xs font-medium text-white">
-                        {project.category}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="mb-2 flex items-center gap-2">
-                      <h3 className="text-xl font-bold text-white transition-colors group-hover:text-[#E03B37]">
-                        {project.title}
-                      </h3>
-                      <ExternalLink className="h-4 w-4 text-gray-500 opacity-0 transition-all group-hover:text-[#E03B37] group-hover:opacity-100" />
-                    </div>
-                    <p className="mb-1 text-sm font-medium text-[#E03B37]">{project.industry}</p>
-                    <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-gray-400">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.techStack.slice(0, 4).map((tech) => (
-                        <span
-                          key={tech}
-                          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-400"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </StaggerItem>
+        <div ref={ref} className="relative">
+          {featured.map((p, i) => (
+            <WorkCard key={p.id} project={p} index={i} total={featured.length} progress={scrollYProgress} />
           ))}
-        </StaggerContainer>
-
-        <FadeIn delay={0.3}>
-          <div className="mt-12 text-center">
-            <Link
-              href="/portfolio"
-              className="inline-flex items-center gap-2 text-lg font-semibold text-[#E03B37] transition-all duration-300 hover:gap-3"
-            >
-              View All Projects <ArrowRight className="h-5 w-5" />
-            </Link>
-          </div>
-        </FadeIn>
+        </div>
       </div>
     </section>
   );

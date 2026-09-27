@@ -1,15 +1,12 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
-import { ExternalLink, ArrowRight } from 'lucide-react';
-import { BreadcrumbNav } from '@/components/breadcrumb-nav';
-import { LivePreview } from '@/components/live-preview';
 import { portfolioProjects } from '@/lib/portfolio-data';
-import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
+import { PageHero } from '@/components/site/page-hero';
+import { ButtonLink, Eyebrow } from '@/components/site/ui';
+import { SplitText, Reveal, ScrollText } from '@/components/site/reveal';
+import { WorkIndex, type WorkItem } from '@/components/portfolio/work-index';
 
 export const metadata: Metadata = {
-  title: 'Portfolio - Our Work',
+  title: 'Portfolio | Our Work',
   description:
     'Explore our portfolio of successful projects across events, travel, beauty, agriculture, infrastructure, and staffing industries. See how Bitropix delivers digital solutions that drive real results.',
   keywords: [
@@ -21,9 +18,9 @@ export const metadata: Metadata = {
     'website design portfolio India',
   ],
   openGraph: {
-    title: 'Portfolio - Our Work',
+    title: 'Portfolio | Our Work',
     description:
-      'Explore our portfolio of successful projects. From travel platforms to corporate websites - see the digital solutions we build.',
+      'Explore our portfolio of successful projects. From travel platforms to corporate websites, see the digital solutions we build.',
     type: 'website',
   },
   alternates: {
@@ -31,9 +28,27 @@ export const metadata: Metadata = {
   },
 };
 
+const pad = (n: number) => String(n).padStart(2, '0');
+
 export default function PortfolioPage() {
-  const projectCount = portfolioProjects.length;
-  const industryCount = new Set(portfolioProjects.map((p) => p.industry)).size;
+  const industries = [...new Set(portfolioProjects.map((p) => p.industry))];
+  const disciplines = new Set(portfolioProjects.flatMap((p) => p.services));
+
+  const stats = [
+    { label: 'Projects', value: portfolioProjects.length },
+    { label: 'Industries', value: industries.length },
+    { label: 'Disciplines', value: disciplines.size },
+  ];
+
+  const items: WorkItem[] = portfolioProjects.map((p, i) => ({
+    slug: p.slug,
+    title: p.title,
+    tagline: p.tagline,
+    image: p.image,
+    category: p.category,
+    industry: p.industry,
+    n: i + 1,
+  }));
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -47,162 +62,89 @@ export default function PortfolioPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <Navbar />
-      <main className="pt-16">
-        <BreadcrumbNav items={[{ label: 'Portfolio' }]} />
-
-        {/* Hero */}
-        <section className="relative overflow-hidden py-16 sm:py-24">
-          <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
-          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
-          <FadeIn>
-            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
-                Our Portfolio
-              </span>
-              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-                Projects That Drive{' '}
-                <span className="bg-gradient-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">
-                  Real Results
-                </span>
-              </h1>
-              <p className="mx-auto max-w-2xl text-lg text-gray-400">
-                We don&apos;t just build websites - we craft digital experiences that transform businesses. Explore our
-                work across industries and see the impact we create.
-              </p>
-            </div>
-          </FadeIn>
-        </section>
-
-        {/* Stats Bar */}
-        <FadeIn>
-          <div className="border-y border-white/10 bg-[#111119]">
-            <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-white/10 md:grid-cols-4">
-              {[
-                { value: `${projectCount}+`, label: 'Projects Delivered' },
-                { value: `${industryCount}+`, label: 'Industries Served' },
-                { value: '100%', label: 'Client Satisfaction' },
-                { value: '5/5', label: 'Average Rating' },
-              ].map((stat) => (
-                <div key={stat.label} className="px-6 py-8 text-center">
-                  <p className="text-3xl font-bold text-[#E03B37]">{stat.value}</p>
-                  <p className="mt-1 text-sm text-gray-400">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </FadeIn>
-
-        {/* Projects Grid */}
-        <section className="bg-[#0a0a12] py-16 sm:py-24">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <StaggerContainer className="space-y-20">
-              {portfolioProjects.map((project, index) => (
-                <StaggerItem key={project.id}>
-                  <div
-                    className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-12 ${index % 2 === 1 ? 'lg:[direction:rtl] lg:[&>*]:[direction:ltr]' : ''}`}
-                  >
-                    {/* Image */}
-                    <Link href={`/portfolio/${project.slug}`} className="group">
-                      <div className="relative aspect-[16/10] overflow-hidden rounded border border-white/10">
-                        <LivePreview
-                          image={project.image}
-                          title={project.title}
-                          sizes="(max-width: 1024px) 100vw, 50vw"
-                        />
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                        <div className="pointer-events-none absolute right-4 bottom-4 flex items-center gap-2 rounded-full bg-[#E03B37] px-4 py-2 text-sm font-medium text-white opacity-0 transition-all duration-500 group-hover:opacity-100">
-                          View Project <ArrowRight className="h-4 w-4" />
-                        </div>
-                      </div>
-                    </Link>
-
-                    {/* Content */}
-                    <div>
-                      <div className="mb-3 flex flex-wrap gap-2">
-                        <span className="rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-3 py-1 text-xs font-medium text-[#E03B37]">
-                          {project.category}
-                        </span>
-                        <span className="rounded-full border border-white/10 px-3 py-1 text-xs font-medium text-gray-400">
-                          {project.industry}
-                        </span>
-                      </div>
-                      <h2 className="mb-2 text-3xl font-bold text-white">{project.title}</h2>
-                      <p className="mb-2 text-lg font-medium text-[#E03B37]">&ldquo;{project.tagline}&rdquo;</p>
-                      <p className="mb-6 leading-relaxed text-gray-400">{project.description}</p>
-
-                      {/* Key Results */}
-                      <div className="mb-6 space-y-2">
-                        {project.results.slice(0, 3).map((result) => (
-                          <div key={result} className="flex items-start gap-2 text-sm text-gray-300">
-                            <div className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#E03B37]" />
-                            {result}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Tech Stack */}
-                      <div className="mb-6 flex flex-wrap gap-2">
-                        {project.techStack.map((tech) => (
-                          <span
-                            key={tech}
-                            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-400"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="flex flex-wrap gap-3">
-                        <Link
-                          href={`/portfolio/${project.slug}`}
-                          className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
-                        >
-                          View Case Study <ArrowRight className="h-4 w-4" />
-                        </Link>
-                        <a
-                          href={project.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
-                        >
-                          Visit Website <ExternalLink className="h-4 w-4" />
-                        </a>
-                      </div>
-                    </div>
+      <main>
+        <PageHero
+          title="Projects that drive real results."
+          crumbs={[{ label: 'Portfolio' }]}
+          description="We don't just build websites. We craft digital experiences that transform businesses. Explore the work across industries and see the impact it creates."
+          aside={
+            <div>
+              <dl className="border-line grid grid-cols-3 border-t border-l">
+                {stats.map((s) => (
+                  <div key={s.label} className="border-line flex flex-col-reverse border-r border-b p-5 sm:p-6">
+                    <dt className="eyebrow mt-3">{s.label}</dt>
+                    <dd className="font-display text-paper text-[clamp(2.25rem,4vw,3.5rem)] leading-none font-semibold">
+                      {pad(s.value)}
+                    </dd>
                   </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+                ))}
+              </dl>
+              <ul className="mt-6 flex flex-wrap gap-2" aria-label="Industries">
+                {industries.map((ind) => (
+                  <li key={ind} className="tag">
+                    {ind}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          }
+        >
+          <ButtonLink href="/contact">Start a project</ButtonLink>
+          <ButtonLink href="/services" variant="ghost">
+            What we do
+          </ButtonLink>
+        </PageHero>
+
+        {/* Work index */}
+        <section id="work" className="py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule index="02" className="mb-12">
+              Index
+            </Eyebrow>
+            <div className="mb-16 grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-8">
+                <SplitText
+                  as="h2"
+                  text="Every project, built to perform."
+                  className="font-display text-paper block text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] font-semibold"
+                />
+              </div>
+              <Reveal className="lg:col-span-4">
+                <p className="text-paper-dim">
+                  Websites, platforms and storefronts for teams in {industries.length} industries. Filter by the kind of
+                  build, or switch to the list to scan everything at once.
+                </p>
+              </Reveal>
+            </div>
+
+            <WorkIndex items={items} />
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="border-t border-white/10 bg-[#0e0e18] py-16 sm:py-24">
-          <FadeIn>
-            <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-              <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">
-                Ready to Build Something{' '}
-                <span className="bg-gradient-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">
-                  Amazing
-                </span>
-                ?
-              </h2>
-              <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-400">
-                Let&apos;s discuss your project and create a digital solution that drives real business results.
-              </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
-              >
-                Start Your Project <ArrowRight className="h-5 w-5" />
-              </Link>
+        {/* Approach statement */}
+        <section className="border-line bg-ink-2 border-t py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule className="mb-12" index="03">Approach</Eyebrow>
+          </div>
+          <div className="container-x grid gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-3">
             </div>
-          </FadeIn>
+            <div className="lg:col-span-9">
+              <h2 className="sr-only">How we approach every project</h2>
+              <ScrollText
+                className="font-display text-paper text-[clamp(1.875rem,4.4vw,4rem)] leading-[1.08] font-medium"
+                text="Every project here started with a conversation. We learn the business first, then design, engineer and ship a product that is fast, findable and built to convert."
+              />
+              <Reveal className="mt-12 flex flex-wrap gap-3">
+                <ButtonLink href="/contact">Discuss your project</ButtonLink>
+                <ButtonLink href="/about" variant="ghost">
+                  Meet the studio
+                </ButtonLink>
+              </Reveal>
+            </div>
+          </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

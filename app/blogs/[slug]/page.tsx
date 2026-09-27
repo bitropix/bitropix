@@ -1,13 +1,16 @@
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
 import Link from 'next/link';
-import Image from 'next/image';
+import { SmartImage } from '@/components/site/smart-image';
 import { notFound } from 'next/navigation';
-import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Tag, ChevronRight } from 'lucide-react';
-import { BreadcrumbNav } from '@/components/breadcrumb-nav';
-import { blogPosts, getBlogBySlug, getRelatedPosts, categories, formatBlogDate } from '@/lib/blog-data';
 import type { Metadata } from 'next';
-import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { blogPosts, getBlogBySlug, getRelatedPosts, formatBlogDate } from '@/lib/blog-data';
+import { Eyebrow, ButtonLink } from '@/components/site/ui';
+import { SplitText, Reveal, RevealGroup, RevealItem } from '@/components/site/reveal';
+import { BlogCard } from '@/components/blog/blog-card';
+import { toCardPost } from '@/components/blog/card-post';
+import { ShareLinks } from '@/components/blog/share-links';
+import { ReadingProgress } from '@/components/blog/reading-progress';
+import { ProjectCta } from '@/components/blog/project-cta';
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -25,7 +28,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   if (!post) {
     return {
-      title: 'Post Not Found | Bitropix Blog',
+      title: 'Post not found',
       description: 'The blog post you are looking for does not exist.',
     };
   }
@@ -65,53 +68,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   };
 }
 
-function ShareButtons({ title, slug }: { title: string; slug: string }) {
-  const url = `https://www.bitropix.com/blogs/${slug}`;
-  const encodedUrl = encodeURIComponent(url);
-  const encodedTitle = encodeURIComponent(title);
-
-  return (
-    <div className="flex items-center gap-3">
-      <span className="flex items-center gap-1 text-sm text-gray-400">
-        <Share2 className="h-4 w-4" /> Share:
-      </span>
-      <a
-        href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#111119] text-white transition-colors hover:border-[#E03B37]/30 hover:bg-[#E03B37]/10"
-        aria-label="Share on X (Twitter)"
-      >
-        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-      </a>
-      <a
-        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#111119] text-white transition-colors hover:border-[#E03B37]/30 hover:bg-[#E03B37]/10"
-        aria-label="Share on LinkedIn"
-      >
-        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-        </svg>
-      </a>
-      <a
-        href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#111119] text-white transition-colors hover:border-[#E03B37]/30 hover:bg-[#E03B37]/10"
-        aria-label="Share on Facebook"
-      >
-        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-        </svg>
-      </a>
-    </div>
-  );
-}
-
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = getBlogBySlug(slug);
@@ -120,7 +76,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const relatedPosts = getRelatedPosts(post.slug, post.category);
+  const url = `https://www.bitropix.com/blogs/${post.slug}`;
+  const displayDate = formatBlogDate(post.date);
+
+  // Related by category/tag first, then topped up with other recent posts.
+  const related = getRelatedPosts(post.slug, post.category);
+  const keepReading = [
+    ...related,
+    ...blogPosts.filter((p) => p.slug !== post.slug && !related.some((r) => r.slug === p.slug)),
+  ].slice(0, 3);
 
   const currentIndex = blogPosts.findIndex((p) => p.slug === post.slug);
   const prevPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
@@ -144,7 +108,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       name: 'Bitropix',
       logo: { '@type': 'ImageObject', url: 'https://www.bitropix.com/images/logo.png' },
     },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.bitropix.com/blogs/${post.slug}` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     keywords: post.tags.join(', '),
     wordCount: post.content
       .replace(/<[^>]*>/g, ' ')
@@ -153,276 +117,239 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     articleSection: post.category,
   };
 
-  const displayDate = formatBlogDate(post.date);
-
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.bitropix.com' },
       { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.bitropix.com/blogs' },
-      { '@type': 'ListItem', position: 3, name: post.title, item: `https://www.bitropix.com/blogs/${post.slug}` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: url },
     ],
   };
+
+  const meta = [
+    { label: 'Written by', value: post.author, sub: post.authorRole },
+    { label: 'Published', value: <time dateTime={post.date}>{displayDate}</time> },
+    { label: 'Reading time', value: post.readTime },
+    { label: 'Topic', value: post.category },
+  ];
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <Navbar />
-      <main className="pt-16">
-        <BreadcrumbNav items={[{ label: 'Blog', href: '/blogs' }, { label: post.title }]} />
+      <main>
+        {/* Article header */}
+        <header className="relative overflow-hidden pt-[calc(var(--nav-h)+3rem)]">
+          <div
+            className="bg-pixel-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_60%)]"
+            aria-hidden="true"
+          />
+          <div className="container-x relative flex min-h-[calc(100svh-var(--nav-h)-3rem)] flex-col pb-10">
+            <nav aria-label="Breadcrumb">
+              <ol className="eyebrow flex flex-wrap items-center gap-2">
+                <li>
+                  <Link href="/" className="link-line hover:text-paper">
+                    Home
+                  </Link>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span aria-hidden="true">/</span>
+                  <Link href="/blogs" className="link-line hover:text-paper">
+                    Blog
+                  </Link>
+                </li>
+                <li className="flex min-w-0 items-center gap-2">
+                  <span aria-hidden="true">/</span>
+                  <span className="text-paper max-w-[28ch] truncate sm:max-w-[48ch]" aria-current="page">
+                    {post.title}
+                  </span>
+                </li>
+              </ol>
+            </nav>
 
-        {/* Article Header */}
-        <section className="relative overflow-hidden py-16 sm:py-24">
-          <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
-          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
-          <FadeIn>
-            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
-                {post.category}
-              </span>
-              <h1 className="mb-6 text-3xl leading-tight font-bold text-white sm:text-4xl lg:text-5xl">{post.title}</h1>
-              <p className="mx-auto mb-6 max-w-2xl text-lg text-gray-400">{post.excerpt}</p>
-              <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400">
-                <span className="flex items-center gap-2">
-                  <User className="h-4 w-4" /> {post.author}
-                </span>
-                <time className="flex items-center gap-2" dateTime={post.date}>
-                  <Calendar className="h-4 w-4" /> {displayDate}
-                </time>
-                <span className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" /> {post.readTime}
-                </span>
-              </div>
+            <div className="my-auto py-12">
+            <div className="enter-fade mb-8 flex flex-wrap items-center gap-3">
+              <span className="tag tag-brand">{post.category}</span>
+              <span className="eyebrow">{post.readTime}</span>
             </div>
-          </FadeIn>
-        </section>
 
-        {/* Featured Image */}
-        <div className="bg-[#0a0a12]">
-          <FadeIn>
-            <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-              <div className="relative aspect-video overflow-hidden rounded">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  priority
-                  className="object-cover"
-                  sizes="(max-width: 1280px) 100vw, 1280px"
-                />
-              </div>
+            <SplitText
+              as="h1"
+              immediate
+              stagger={0.035}
+              text={post.title}
+              className="font-display text-paper block max-w-[22ch] text-[clamp(2.5rem,5.6vw,5.25rem)] leading-[0.98] font-semibold"
+            />
+
+            <div className="enter-fade mt-10 max-w-3xl" style={{ ['--delay' as string]: '250ms' }}>
+              <p className="text-paper-dim text-lg leading-relaxed sm:text-xl">{post.excerpt}</p>
             </div>
-          </FadeIn>
-        </div>
+            </div>
 
-        {/* Article Content + Sidebar */}
-        <section className="bg-[#0a0a12] py-12 sm:py-16">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-12 lg:grid-cols-3">
-              {/* Main Content */}
-              <article className="lg:col-span-2">
-                <div
-                  className="prose prose-lg prose-invert max-w-none [&_code]:rounded [&_code]:bg-[#E03B37]/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-sm [&_code]:text-[#E03B37] [&_strong]:font-semibold [&_strong]:text-white [&>h2]:mt-10 [&>h2]:mb-4 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-white [&>h3]:mt-8 [&>h3]:mb-3 [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-white [&>p]:mb-4 [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-gray-400 [&>ul]:mb-4 [&>ul]:list-disc [&>ul]:space-y-2 [&>ul]:pl-6 [&>ul]:text-gray-400 [&>ul>li]:leading-relaxed [&>ul>li]:text-gray-400"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                />
-
-                {/* Tags */}
-                <div className="mt-12 border-t border-white/10 pt-8">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <Tag className="h-5 w-5 text-gray-400" />
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-white/10 px-3 py-1 text-xs text-gray-400 transition-colors hover:border-[#E03B37]/30 hover:bg-[#E03B37]/10"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+            <div className="enter-fade" style={{ ['--delay' as string]: '350ms' }}>
+              <dl className="border-line grid grid-cols-2 border-t border-l lg:grid-cols-4">
+                {meta.map((m) => (
+                  <div key={m.label} className="border-line border-r border-b p-5 sm:p-6">
+                    <dt className="eyebrow">{m.label}</dt>
+                    <dd className="text-paper mt-2">
+                      {m.value}
+                      {m.sub && <span className="text-mute block text-sm">{m.sub}</span>}
+                    </dd>
                   </div>
-                </div>
+                ))}
+              </dl>
+            </div>
+          </div>
 
-                {/* Share */}
-                <div className="mt-8 border-t border-white/10 pt-8">
-                  <ShareButtons title={post.title} slug={post.slug} />
-                </div>
+          <div className="container-x relative mt-4 lg:mt-10">
+            <div className="border-line bg-ink-3 relative aspect-[16/10] overflow-hidden border sm:aspect-[21/9]">
+              <SmartImage
+                src={post.image}
+                alt={post.title}
+                fill
+                priority
+                sizes="(max-width: 1408px) 100vw, 1408px"
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </header>
 
-                {/* Author Info */}
-                <div className="mt-8 rounded border border-white/10 bg-[#111119] p-6 sm:p-8">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#E03B37]/10 text-xl font-bold text-[#E03B37]">
-                      {post.author.charAt(0)}
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-white">{post.author}</h3>
-                      <p className="mb-2 text-sm font-medium text-[#E03B37]">{post.authorRole}</p>
-                      <p className="text-sm leading-relaxed text-gray-400">
-                        {post.author} is a member of the Bitropix team, contributing insights on{' '}
-                        {post.category.toLowerCase()} and related topics. With deep industry experience, they help
-                        businesses navigate technology challenges and drive innovation.
-                      </p>
-                    </div>
-                  </div>
+        {/* Body */}
+        <section className="py-16 sm:py-24">
+          <div className="container-x grid gap-12 lg:grid-cols-12">
+            <aside className="lg:col-span-3" aria-label="Article tools">
+              <div className="space-y-10 lg:sticky lg:top-[calc(var(--nav-h)+2rem)]">
+                <ReadingProgress targetId="article-body" />
+                <div>
+                  <p className="eyebrow mb-4">Share</p>
+                  <ShareLinks title={post.title} url={url} />
                 </div>
+                <Link
+                  href="/blogs"
+                  className="eyebrow group text-paper-dim hover:text-paper hidden items-center gap-2 transition-colors lg:inline-flex"
+                >
+                  <ArrowLeft
+                    className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1"
+                    aria-hidden="true"
+                  />
+                  All articles
+                </Link>
+              </div>
+            </aside>
 
-                {/* Post Navigation */}
-                <div className="mt-8 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-2">
+            <article id="article-body" className="min-w-0 lg:col-span-8 lg:col-start-5">
+              {/* post.content is trusted, author-controlled static HTML from lib/blog-data.ts */}
+              <div className="prose-bx max-w-[68ch]" dangerouslySetInnerHTML={{ __html: post.content }} />
+
+              <div className="border-line mt-16 max-w-[68ch] border-t pt-8">
+                <p className="eyebrow mb-4">Tagged</p>
+                <ul className="flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <li key={tag} className="tag">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="border-line bg-ink-2 mt-10 flex max-w-[68ch] gap-5 border p-6 sm:p-8">
+                <span
+                  className="font-display bg-brand grid h-14 w-14 shrink-0 place-items-center text-2xl font-semibold text-ink"
+                  aria-hidden="true"
+                >
+                  {post.author.charAt(0)}
+                </span>
+                <div>
+                  <p className="eyebrow">About the author</p>
+                  <p className="text-paper mt-2 text-lg font-medium">{post.author}</p>
+                  <p className="text-brand text-sm">{post.authorRole}</p>
+                  <p className="text-paper-dim mt-3 text-sm leading-relaxed">
+                    {post.author} is part of the Bitropix team and writes about {post.category.toLowerCase()} and
+                    related topics, drawing on hands-on work with clients.
+                  </p>
+                </div>
+              </div>
+
+              {(prevPost || nextPost) && (
+                <nav
+                  aria-label="More articles"
+                  className="border-line mt-10 grid max-w-[68ch] border-t border-l sm:grid-cols-2"
+                >
                   {prevPost ? (
-                    <Link
-                      href={`/blogs/${prevPost.slug}`}
-                      className="group rounded border border-white/10 bg-[#111119] p-5 transition-all duration-300 hover:border-[#E03B37]/30"
-                    >
-                      <span className="mb-2 flex items-center gap-1 text-xs text-gray-400">
-                        <ArrowLeft className="h-3 w-3" /> Previous Article
+                    <Link href={`/blogs/${prevPost.slug}`} className="group border-line relative border-r border-b p-6">
+                      <span
+                        className="bg-ink-2 absolute inset-0 origin-bottom scale-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100"
+                        aria-hidden="true"
+                      />
+                      <span className="eyebrow relative flex items-center gap-2">
+                        <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" /> Previous
                       </span>
-                      <p className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-[#E03B37]">
+                      <span className="text-paper group-hover:text-brand relative mt-3 line-clamp-2 block font-medium transition-colors">
                         {prevPost.title}
-                      </p>
+                      </span>
                     </Link>
                   ) : (
-                    <div />
+                    <span className="border-line hidden border-r border-b sm:block" aria-hidden="true" />
                   )}
-                  {nextPost && (
+                  {nextPost ? (
                     <Link
                       href={`/blogs/${nextPost.slug}`}
-                      className="group rounded border border-white/10 bg-[#111119] p-5 text-right transition-all duration-300 hover:border-[#E03B37]/30"
+                      className="group border-line relative border-r border-b p-6 sm:text-right"
                     >
-                      <span className="mb-2 flex items-center justify-end gap-1 text-xs text-gray-400">
-                        Next Article <ArrowRight className="h-3 w-3" />
+                      <span
+                        className="bg-ink-2 absolute inset-0 origin-bottom scale-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100"
+                        aria-hidden="true"
+                      />
+                      <span className="eyebrow relative flex items-center gap-2 sm:justify-end">
+                        Next <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                       </span>
-                      <p className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-[#E03B37]">
+                      <span className="text-paper group-hover:text-brand relative mt-3 line-clamp-2 block font-medium transition-colors">
                         {nextPost.title}
-                      </p>
+                      </span>
                     </Link>
+                  ) : (
+                    <span className="border-line hidden border-r border-b sm:block" aria-hidden="true" />
                   )}
-                </div>
-              </article>
+                </nav>
+              )}
+            </article>
+          </div>
+        </section>
 
-              {/* Sidebar */}
-              <aside className="lg:col-span-1">
-                <FadeIn delay={0.2}>
-                  <div className="sticky top-24 space-y-8">
-                    {/* Categories */}
-                    <div className="rounded border border-white/10 bg-[#111119] p-6">
-                      <h3 className="mb-4 text-lg font-semibold text-white">Categories</h3>
-                      <ul className="space-y-2">
-                        {categories
-                          .filter((c) => c !== 'All')
-                          .map((category) => (
-                            <li key={category}>
-                              <Link
-                                href="/blogs"
-                                className="flex items-center justify-between py-1.5 text-sm text-gray-400 transition-colors hover:text-[#E03B37]"
-                              >
-                                <span>{category}</span>
-                                <ChevronRight className="h-4 w-4" />
-                              </Link>
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-
-                    {/* Related Posts */}
-                    {relatedPosts.length > 0 && (
-                      <div className="rounded border border-white/10 bg-[#111119] p-6">
-                        <h3 className="mb-4 text-lg font-semibold text-white">Related Articles</h3>
-                        <ul className="space-y-4">
-                          {relatedPosts.map((related) => (
-                            <li key={related.id}>
-                              <Link href={`/blogs/${related.slug}`} className="group flex gap-3">
-                                <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded">
-                                  <Image
-                                    src={related.image}
-                                    alt={related.title}
-                                    fill
-                                    className="object-cover opacity-70 transition-opacity group-hover:opacity-90"
-                                    sizes="80px"
-                                  />
-                                </div>
-                                <div className="min-w-0">
-                                  <p className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-[#E03B37]">
-                                    {related.title}
-                                  </p>
-                                  <p className="mt-1 text-xs text-gray-400">{formatBlogDate(related.date)}</p>
-                                </div>
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Newsletter CTA */}
-                    <div className="rounded border border-[#E03B37]/20 bg-[#E03B37]/5 p-6">
-                      <h3 className="mb-2 font-bold text-white">Stay Updated</h3>
-                      <p className="mb-4 text-sm text-gray-400">
-                        Get the latest insights delivered to your inbox. No spam, just quality content.
-                      </p>
-                      <Link
-                        href="/blogs"
-                        className="inline-flex w-full items-center justify-center rounded bg-[#E03B37] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#E03B37]/90"
-                      >
-                        Subscribe to Newsletter
-                      </Link>
-                    </div>
-                  </div>
-                </FadeIn>
-              </aside>
+        {/* Keep reading */}
+        <section className="border-line border-t py-24 sm:py-32">
+          <div className="container-x relative">
+            <Eyebrow rule index="01" className="mb-12">
+              Keep reading
+            </Eyebrow>
+            <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div>
+                <SplitText
+                  as="h2"
+                  text="More from the journal."
+                  className="font-display text-paper block text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] font-semibold"
+                />
+              </div>
+              <Reveal>
+                <ButtonLink href="/blogs" variant="ghost">
+                  All articles
+                </ButtonLink>
+              </Reveal>
             </div>
+            <RevealGroup as="ul" className="border-line grid border-t border-l md:grid-cols-2 lg:grid-cols-3">
+              {keepReading.map((p) => (
+                <RevealItem key={p.id} as="li" className="h-full">
+                  <BlogCard post={toCardPost(p)} />
+                </RevealItem>
+              ))}
+            </RevealGroup>
           </div>
         </section>
 
-        {/* Read Next Section */}
-        <section className="border-t border-white/10 bg-[#0e0e18] py-16">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-8 text-2xl font-bold text-white">Read Next</h2>
-            <StaggerContainer className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {blogPosts
-                .filter((p) => p.slug !== post.slug)
-                .slice(0, 3)
-                .map((readNext) => (
-                  <StaggerItem key={readNext.id}>
-                    <Link href={`/blogs/${readNext.slug}`} className="group block">
-                      <div className="h-full overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
-                        <div className="relative aspect-video overflow-hidden">
-                          <Image
-                            src={readNext.image}
-                            alt={readNext.title}
-                            fill
-                            className="object-cover opacity-70 transition-all duration-500 group-hover:scale-105 group-hover:opacity-80"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
-                        </div>
-                        <div className="p-6">
-                          <div className="mb-3 flex items-center gap-2">
-                            <span className="rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-2 py-1 text-xs font-medium text-[#E03B37]">
-                              {readNext.category}
-                            </span>
-                          </div>
-                          <h3 className="mb-2 line-clamp-2 font-bold text-white transition-colors group-hover:text-[#E03B37]">
-                            {readNext.title}
-                          </h3>
-                          <p className="mb-4 line-clamp-2 text-sm text-gray-400">{readNext.excerpt}</p>
-                          <div className="flex items-center justify-between text-xs text-gray-400">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" /> {formatBlogDate(readNext.date)}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" /> {readNext.readTime}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </StaggerItem>
-                ))}
-            </StaggerContainer>
-          </div>
-        </section>
+        <ProjectCta />
       </main>
-      <Footer />
     </>
   );
 }

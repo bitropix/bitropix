@@ -2,14 +2,14 @@
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
     <name>Bitropix</name>
-    <description>Bitropix - IT Services &amp; Digital Marketing Agency in Noida, India</description>
+    <description>Bitropix - IT Services &amp; Digital Marketing Agency in Delhi</description>
     <Placemark>
       <name>Bitropix Office</name>
-      <description>Bitropix IT Services &amp; Digital Marketing Agency - Noida, Uttar Pradesh</description>
+      <description>Bitropix IT Services &amp; Digital Marketing Agency, New Delhi</description>
       <Point>
-        <coordinates>77.3764,28.6273928,0</coordinates>
+        <coordinates>77.209,28.6139,0</coordinates>
       </Point>
-      <address>Sector 62, Noida, Uttar Pradesh 201301, India</address>
+      <address>New Delhi, Delhi, India</address>
       <phoneNumber>+91-9318454571</phoneNumber>
     </Placemark>
   </Document>

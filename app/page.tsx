@@ -1,43 +1,40 @@
 import type { Metadata } from 'next';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
 import { HeroSection } from '@/components/home/hero-section';
+import { CapabilitiesMarquee } from '@/components/home/capabilities-marquee';
+import { StudioSection } from '@/components/home/studio-section';
 import { ServicesSection } from '@/components/home/services-section';
-import { ClientsSection } from '@/components/home/clients-section';
-import { WhyUsSection } from '@/components/home/why-us-section';
-import { TechnologiesSection } from '@/components/home/technologies-section';
-import { ProcessSection } from '@/components/home/process-section';
-import { TestimonialsSection } from '@/components/home/testimonials-section';
-import { StatsSection } from '@/components/home/stats-section';
-import { FAQSection } from '@/components/home/faq-section';
-import { CTASection } from '@/components/home/cta-section';
 import { PortfolioSection } from '@/components/home/portfolio-section';
+import { ProcessSection } from '@/components/home/process-section';
+import { TechnologiesSection } from '@/components/home/technologies-section';
+import { TestimonialsSection } from '@/components/home/testimonials-section';
+import { FAQSection } from '@/components/home/faq-section';
 
 export const metadata: Metadata = {
-  title: { absolute: 'Bitropix - IT Services & Digital Marketing Agency in Noida, India' },
+  title: { absolute: 'Bitropix | IT Services & Digital Marketing Agency in Delhi' },
   description:
-    "India's fastest-growing IT services and digital marketing agency. Web development, mobile apps, cloud migrations, SEO, and digital transformation for businesses worldwide.",
+    'Bitropix is a Delhi-based product studio for web development, mobile apps, UI/UX, cloud and SEO-led growth. We design, engineer and scale digital products for businesses worldwide.',
   keywords: [
-    'IT services Noida',
-    'digital marketing agency India',
-    'web development company',
+    'IT services Delhi',
+    'digital marketing agency Delhi',
+    'web development company Delhi',
     'mobile app development',
     'cloud migration services',
-    'SEO agency Noida',
+    'SEO agency Delhi',
     'digital transformation consulting',
     'software development India',
   ],
+  alternates: { canonical: '/' },
   openGraph: {
-    title: 'Bitropix - IT Services & Digital Marketing Agency',
+    title: 'Bitropix | Product Studio for Web, Mobile & Growth',
     description:
-      "India's fastest-growing IT services and digital marketing agency helping businesses scale with cutting-edge technology.",
+      'We design, engineer and scale high-performance websites, mobile apps and growth engines for ambitious teams worldwide.',
     type: 'website',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Bitropix - IT Services & Digital Marketing Agency',
+        alt: 'Bitropix | IT Services & Digital Marketing Agency',
       },
     ],
   },
@@ -45,22 +42,16 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <HeroSection />
-        <ServicesSection />
-        <PortfolioSection />
-        <ClientsSection />
-        <StatsSection />
-        <WhyUsSection />
-        <TechnologiesSection />
-        <ProcessSection />
-        <TestimonialsSection />
-        <FAQSection />
-        <CTASection />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <HeroSection />
+      <CapabilitiesMarquee />
+      <StudioSection />
+      <ServicesSection />
+      <PortfolioSection />
+      <ProcessSection />
+      <TechnologiesSection />
+      <TestimonialsSection />
+      <FAQSection />
+    </main>
   );
 }
