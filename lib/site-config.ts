@@ -10,12 +10,22 @@ export const siteConfig = {
   siteName: 'Bitropix',
   /** Canonical origin, never with a trailing slash. */
   siteUrl: RAW_SITE_URL.replace(/\/+$/, ''),
-  tagline: 'IT Services & Digital Marketing Agency in Noida, India',
+  tagline: 'IT Services & Digital Marketing Agency in Delhi',
   description:
-    'Bitropix is an IT services and digital marketing agency headquartered in Noida, India. We design, build, and grow digital products for startups and enterprises across India, the US, UK, UAE, and Australia. Core capabilities: web development, mobile app development, UI/UX design, SEO and digital marketing, cloud migrations, embedded systems, IoT, and digital transformation consulting.',
+    'Bitropix is an IT services and digital marketing agency headquartered in New Delhi. We design, build, and grow digital products for startups and enterprises across India, the US, UK, UAE, and Australia. Core capabilities: web development, mobile app development, UI/UX design, SEO and digital marketing, cloud migrations, embedded systems, IoT, and digital transformation consulting.',
   email: 'info@bitropix.com',
   phone: '+91-9318454571',
-  location: 'Noida, Uttar Pradesh, India',
+  phoneDisplay: '+91 93184 54571',
+  phoneHref: 'tel:+919318454571',
+  location: 'New Delhi, India',
+  address: {
+    locality: 'New Delhi',
+    region: 'Delhi',
+    regionCode: 'IN-DL',
+    country: 'IN',
+  },
+  /** Approximate city-centre coordinates for New Delhi. */
+  geo: { latitude: 28.6139, longitude: 77.209 },
   founded: '2023',
   serviceArea: ['India', 'United States', 'United Kingdom', 'United Arab Emirates', 'Australia'],
   social: {

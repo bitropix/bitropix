@@ -1,257 +1,155 @@
-'use client';
-
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Calendar, Clock, User, ArrowRight, Tag, Search } from 'lucide-react';
-import { useState, useMemo } from 'react';
+import { SmartImage } from '@/components/site/smart-image';
 import { blogPosts, categories, getFeaturedPost, formatBlogDate } from '@/lib/blog-data';
-import { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '@/components/animate';
-import { BreadcrumbNav } from '@/components/breadcrumb-nav';
+import { PageHero } from '@/components/site/page-hero';
+import { Eyebrow } from '@/components/site/ui';
+import { SplitText, Reveal } from '@/components/site/reveal';
+import { BlogIndex } from '@/components/blog/blog-index';
+import { toCardPost } from '@/components/blog/card-post';
+import { ProjectCta } from '@/components/blog/project-cta';
 
-const featuredPost = getFeaturedPost();
+// Metadata for /blogs lives in ./layout.tsx.
+
+const featured = getFeaturedPost();
+
+const categoryCounts = categories
+  .filter((c) => c !== 'All')
+  .map((name) => ({ name, count: blogPosts.filter((p) => p.category === name).length }))
+  .filter((c) => c.count > 0);
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.bitropix.com' },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.bitropix.com/blogs' },
+  ],
+};
+
+const blogListingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Bitropix Blog',
+  description:
+    'Stay updated with the latest insights on technology, digital transformation, software development, and industry trends from Bitropix experts.',
+  url: 'https://www.bitropix.com/blogs',
+  publisher: {
+    '@type': 'Organization',
+    name: 'Bitropix',
+    logo: { '@type': 'ImageObject', url: 'https://www.bitropix.com/images/logo.png' },
+  },
+};
 
 export default function BlogsPage() {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [visibleCount, setVisibleCount] = useState(6);
-
-  const filteredPosts = useMemo(() => {
-    const posts =
-      activeCategory === 'All'
-        ? blogPosts.filter((p) => p.id !== featuredPost.id)
-        : blogPosts.filter((p) => p.category === activeCategory && p.id !== featuredPost.id);
-    return posts;
-  }, [activeCategory]);
-
-  const visiblePosts = filteredPosts.slice(0, visibleCount);
-  const hasMore = visibleCount < filteredPosts.length;
-
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.bitropix.com' },
-      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.bitropix.com/blogs' },
-    ],
-  };
-
-  const blogListingSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Blog',
-    name: 'Bitropix Blog',
-    description:
-      'Stay updated with the latest insights on technology, digital transformation, software development, and industry trends from Bitropix experts.',
-    url: 'https://www.bitropix.com/blogs',
-    publisher: {
-      '@type': 'Organization',
-      name: 'Bitropix',
-      logo: { '@type': 'ImageObject', url: 'https://www.bitropix.com/images/logo.png' },
-    },
-  };
-
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListingSchema) }} />
-      <Navbar />
-      <main className="pt-16">
-        <BreadcrumbNav items={[{ label: 'Blog' }]} />
-
-        {/* Hero Section */}
-        <section className="relative overflow-hidden py-16 sm:py-24">
-          <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
-          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
-          <FadeIn>
-            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
-                Our Blog
-              </span>
-              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-                Insights &{' '}
-                <span className="bg-linear-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">
-                  Tech Stories
-                </span>
-              </h1>
-              <p className="mx-auto max-w-2xl text-lg text-gray-400">
-                Stay updated with the latest in technology, digital marketing, cloud computing, and best practices from
-                our team of experts.
-              </p>
-            </div>
-          </FadeIn>
-        </section>
-
-        {/* Category Filter */}
-        <section className="border-b border-white/10 bg-[#0a0a12] py-8">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-wrap justify-center gap-3">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => {
-                    setActiveCategory(category);
-                    setVisibleCount(6);
-                  }}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                    activeCategory === category
-                      ? 'bg-[#E03B37] text-white shadow-lg shadow-[#E03B37]/25'
-                      : 'border border-white/10 bg-[#111119] text-gray-300 hover:border-[#E03B37]/30 hover:bg-[#E03B37]/10'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Article */}
-        {activeCategory === 'All' && (
-          <section className="bg-[#0a0a12] py-16">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <h2 className="mb-8 text-2xl font-bold text-white">Featured Article</h2>
-              <ScaleIn>
-                <Link href={`/blogs/${featuredPost.slug}`} className="group block">
-                  <div className="overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
-                    <div className="grid md:grid-cols-2">
-                      <div className="relative aspect-video overflow-hidden md:aspect-auto md:min-h-87.5">
-                        <Image
-                          src={featuredPost.image}
-                          alt={featuredPost.title}
-                          fill
-                          className="object-cover opacity-70 transition-all duration-500 group-hover:scale-105 group-hover:opacity-80"
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                      </div>
-                      <div className="flex flex-col justify-center p-8">
-                        <div className="mb-4 flex items-center gap-2">
-                          <Tag className="h-4 w-4 text-[#E03B37]" />
-                          <span className="text-sm font-medium text-[#E03B37]">{featuredPost.category}</span>
-                        </div>
-                        <h3 className="mb-4 text-2xl font-bold text-white transition-colors group-hover:text-[#E03B37]">
-                          {featuredPost.title}
-                        </h3>
-                        <p className="mb-6 leading-relaxed text-gray-400">{featuredPost.excerpt}</p>
-                        <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400">
-                          <span className="flex items-center gap-1">
-                            <User className="h-4 w-4" /> {featuredPost.author}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" /> {formatBlogDate(featuredPost.date)}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" /> {featuredPost.readTime}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </ScaleIn>
-            </div>
-          </section>
-        )}
-
-        {/* Blog Posts Grid */}
-        <section className="relative overflow-hidden py-16">
-          <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-8 text-2xl font-bold text-white">
-              {activeCategory === 'All' ? 'Latest Articles' : `${activeCategory} Articles`}
-            </h2>
-
-            {visiblePosts.length === 0 ? (
-              <div className="py-20 text-center">
-                <Search className="mx-auto mb-4 h-12 w-12 text-gray-400" />
-                <p className="text-lg text-gray-400">No articles found in this category yet.</p>
-                <button
-                  onClick={() => setActiveCategory('All')}
-                  className="mt-4 rounded border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
-                >
-                  View All Articles
-                </button>
+      <main>
+        <PageHero
+          title="Notes from the studio."
+          crumbs={[{ label: 'Blog' }]}
+          description="Field notes on engineering, design, cloud and growth. Written by the people who ship the work, for teams deciding what to build next."
+          aside={
+            <dl className="border-line grid grid-cols-2 border-t border-l">
+              <div className="border-line border-r border-b p-5 sm:p-6">
+                <dt className="eyebrow">Articles</dt>
+                <dd className="font-display text-paper mt-3 text-5xl leading-none font-semibold">
+                  {String(blogPosts.length).padStart(2, '0')}
+                </dd>
               </div>
-            ) : (
-              <StaggerContainer className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {visiblePosts.map((post) => (
-                  <StaggerItem key={post.id}>
-                    <Link href={`/blogs/${post.slug}`} className="group block">
-                      <div className="h-full overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
-                        <div className="relative aspect-video overflow-hidden">
-                          <Image
-                            src={post.image}
-                            alt={post.title}
-                            fill
-                            className="object-cover opacity-70 transition-all duration-500 group-hover:scale-105 group-hover:opacity-80"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
-                        </div>
-                        <div className="p-6">
-                          <div className="mb-3 flex items-center gap-2">
-                            <span className="rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-2 py-1 text-xs font-medium text-[#E03B37]">
-                              {post.category}
-                            </span>
-                          </div>
-                          <h3 className="mb-2 line-clamp-2 font-bold text-white transition-colors group-hover:text-[#E03B37]">
-                            {post.title}
-                          </h3>
-                          <p className="mb-4 line-clamp-2 text-sm text-gray-400">{post.excerpt}</p>
-                          <div className="flex items-center justify-between text-xs text-gray-400">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" /> {formatBlogDate(post.date)}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" /> {post.readTime}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-            )}
-
-            {hasMore && (
-              <div className="mt-12 text-center">
-                <button
-                  onClick={() => setVisibleCount((prev) => prev + 6)}
-                  className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-[#E03B37]/50 hover:bg-[#E03B37]/5"
-                >
-                  Load More Articles <ArrowRight className="h-4 w-4" />
-                </button>
+              <div className="border-line border-r border-b p-5 sm:p-6">
+                <dt className="eyebrow">Topics</dt>
+                <dd className="font-display text-paper mt-3 text-5xl leading-none font-semibold">
+                  {String(categoryCounts.length).padStart(2, '0')}
+                </dd>
               </div>
-            )}
-          </div>
-        </section>
+            </dl>
+          }
+        />
 
-        {/* Newsletter Section */}
-        <section className="relative overflow-hidden py-20">
-          <div className="absolute inset-0 bg-linear-to-r from-[#E03B37] via-[#E03B37]/90 to-[#c62828]" />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
-          <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Subscribe to Our Newsletter</h2>
-            <p className="mx-auto mb-8 max-w-2xl text-white/80">
-              Get the latest insights, tutorials, and industry updates delivered directly to your inbox.
-            </p>
-            <form className="mx-auto flex max-w-md flex-col gap-4 sm:flex-row" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 rounded border border-white/20 bg-[#0a0a12] px-4 py-3 text-white placeholder-gray-500 focus:border-white/40 focus:ring-2 focus:ring-[#0a0a12] focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="rounded bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all hover:bg-white/90"
+        {/* Featured story */}
+        <section className="py-16 sm:py-24" aria-labelledby="featured-title">
+          <div className="container-x relative">
+            <Eyebrow rule index="01" className="mb-12">
+              Featured story
+            </Eyebrow>
+            <Reveal>
+              <Link
+                href={`/blogs/${featured.slug}`}
+                className="group border-line bg-ink-2 grid border lg:grid-cols-12"
+                data-cursor="Read"
               >
-                Subscribe
-              </button>
-            </form>
+                <div className="bg-ink-3 relative aspect-[16/10] overflow-hidden lg:col-span-7 lg:aspect-auto lg:min-h-[34rem]">
+                  <SmartImage
+                    src={featured.image}
+                    alt={featured.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                    className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                  />
+                  <span className="eyebrow bg-ink/80 text-paper absolute top-4 left-4 px-2 py-1 backdrop-blur">
+                    Start here
+                  </span>
+                </div>
+                <div className="flex flex-col justify-between gap-10 p-6 sm:p-10 lg:col-span-5">
+                  <div>
+                    <div className="mb-8 flex flex-wrap gap-2">
+                      <span className="tag tag-brand">{featured.category}</span>
+                      <span className="tag">{featured.readTime}</span>
+                    </div>
+                    <h2
+                      id="featured-title"
+                      className="font-display text-paper group-hover:text-brand text-[clamp(2rem,3.6vw,3.5rem)] leading-[0.98] font-semibold transition-colors duration-300"
+                    >
+                      {featured.title}
+                    </h2>
+                    <p className="text-paper-dim mt-6 text-lg leading-relaxed">{featured.excerpt}</p>
+                  </div>
+                  <div className="border-line border-t pt-6">
+                    <p className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <span className="text-paper-dim">By {featured.author}</span>
+                      <span className="bg-mute inline-block h-1 w-1" aria-hidden="true" />
+                      <time dateTime={featured.date}>{formatBlogDate(featured.date)}</time>
+                    </p>
+                    <p className="text-paper mt-6 inline-flex items-center gap-3 text-sm font-medium">
+                      <span className="link-line">Read the article</span>
+                      <span className="bg-paper group-hover:bg-brand h-px w-10 transition-all duration-500 group-hover:w-16" />
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            </Reveal>
           </div>
         </section>
+
+        {/* All articles */}
+        <section className="border-line border-t py-24 sm:py-32">
+          <div className="container-x relative">
+            <Eyebrow rule index="02" className="mb-12">
+              The archive
+            </Eyebrow>
+            <div className="mb-14 grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-8">
+                <SplitText
+                  as="h2"
+                  text="Every article, by topic."
+                  className="font-display text-paper block text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] font-semibold"
+                />
+              </div>
+              <Reveal className="lg:col-span-4">
+                <p className="text-paper-dim">
+                  Practical guides and opinions from real projects. Pick a topic to narrow the list.
+                </p>
+              </Reveal>
+            </div>
+
+            <BlogIndex posts={blogPosts.map(toCardPost)} featuredId={featured.id} categories={categoryCounts} />
+          </div>
+        </section>
+
+        <ProjectCta />
       </main>
-      <Footer />
     </>
   );
 }

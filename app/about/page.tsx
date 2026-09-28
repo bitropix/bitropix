@@ -1,18 +1,17 @@
 import type { Metadata } from 'next';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
-import { BreadcrumbNav } from '@/components/breadcrumb-nav';
-import { FadeIn, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from '@/components/animate';
-import Link from 'next/link';
-import { Target, Eye, Heart, Users, Globe, Award, ArrowRight } from 'lucide-react';
-import { MilestonesSection } from '@/components/home/milestones-section';
-import Image from 'next/image';
+import { PageHero } from '@/components/site/page-hero';
+import { ButtonLink, Eyebrow, PixelMark } from '@/components/site/ui';
+import { Reveal, RevealGroup, RevealItem, ScrollText, SplitText } from '@/components/site/reveal';
+import { Counter } from '@/components/about/counter';
+import { ParallaxImage } from '@/components/about/parallax-image';
+import { Timeline } from '@/components/about/timeline';
+import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
-  title: { absolute: 'About Bitropix | Leading IT Services Company in Noida, India' },
+  title: { absolute: 'About Bitropix | Leading IT Services Company in New Delhi, India' },
   description:
-    'Learn about Bitropix, a leading IT services company in Noida, India. Founded in 2023, we serve 50+ clients with expert website development, app development, SEO, and digital marketing solutions.',
-  keywords: 'IT company Noida, about Bitropix, IT services India, digital transformation company, tech company Noida',
+    'Learn about Bitropix, a leading IT services company in New Delhi, India. Founded in 2023, we serve 50+ clients with expert website development, app development, SEO, and digital marketing solutions.',
+  keywords: 'IT company Delhi, about Bitropix, IT services India, digital transformation company, tech company New Delhi',
   alternates: {
     canonical: 'https://www.bitropix.com/about',
   },
@@ -20,22 +19,18 @@ export const metadata: Metadata = {
 
 const values = [
   {
-    icon: Target,
     title: 'Excellence',
     description: 'We strive for excellence in every project, delivering solutions that exceed expectations.',
   },
   {
-    icon: Heart,
     title: 'Integrity',
     description: 'We operate with complete transparency and honesty in all our business dealings.',
   },
   {
-    icon: Users,
     title: 'Collaboration',
     description: 'We believe in the power of teamwork, both internally and with our clients.',
   },
   {
-    icon: Globe,
     title: 'Innovation',
     description: 'We continuously explore new technologies to deliver cutting-edge solutions.',
   },
@@ -49,31 +44,31 @@ const milestones = [
   },
   {
     year: '2023',
-    title: 'First Major Client',
+    title: 'First major client',
     description: 'Secured our first enterprise client and delivered a successful ERP implementation.',
   },
   {
     year: '2024',
-    title: 'Team Expansion',
+    title: 'Team expansion',
     description: 'Grew to 15+ team members and expanded our service offerings.',
   },
   {
     year: '2024',
-    title: 'Product Launch',
+    title: 'Product launch',
     description: 'Launched our flagship HRMS and E-commerce products.',
   },
   {
     year: '2025',
-    title: '50+ Clients',
+    title: '50+ clients',
     description: 'Reached the milestone of serving 50+ happy clients across industries.',
   },
 ];
 
 const stats = [
-  { value: '50+', label: 'Projects Delivered' },
-  { value: '50+', label: 'Happy Clients' },
-  { value: '25+', label: 'Team Members' },
-  { value: '98%', label: 'Client Satisfaction' },
+  { value: 50, suffix: '+', label: 'Projects delivered' },
+  { value: 50, suffix: '+', label: 'Happy clients' },
+  { value: 25, suffix: '+', label: 'Team members' },
+  { value: 98, suffix: '%', label: 'Client satisfaction' },
 ];
 
 const awards = [
@@ -83,7 +78,7 @@ const awards = [
     year: '2025',
   },
   {
-    title: 'Best Startup - Technology',
+    title: 'Best Startup: Technology',
     organization: 'Startup India',
     year: '2024',
   },
@@ -93,6 +88,8 @@ const awards = [
     year: '2024',
   },
 ];
+
+const H2 = 'font-display block text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] font-semibold text-paper';
 
 export default function AboutPage() {
   const breadcrumbSchema = {
@@ -107,226 +104,268 @@ export default function AboutPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <Navbar />
-      <main className="pt-16">
-        <BreadcrumbNav items={[{ label: 'About Us' }]} />
-
-        {/* Hero Section */}
-        <section className="relative overflow-hidden py-16 sm:py-24">
-          <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
-          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
-          <FadeIn>
-            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
-                About Us
-              </span>
-              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-                Who{' '}
-                <span className="bg-linear-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">We Are</span>
-              </h1>
-              <p className="mx-auto max-w-2xl text-lg text-gray-400">
-                Founded in 2023, Bitropix is a leading IT services company based in Noida, India. We have grown from a
-                small team with a big vision to a powerhouse of 25+ professionals serving 50+ clients across industries.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
-                >
-                  Work With Us <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/services"
-                  className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
-                >
-                  Our Services
-                </Link>
-              </div>
-            </div>
-          </FadeIn>
-        </section>
-
-        {/* About Detail Section */}
-        <section className="bg-[#0a0a12] py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <FadeInLeft>
-                <div>
-                  <p className="mb-6 text-lg leading-relaxed text-gray-400">
-                    Founded in 2023, Bitropix is a leading IT services company based in Noida, India. In just two years,
-                    we have grown from a small team with a big vision to a powerhouse of 25+ professionals serving{' '}
-                    <strong className="text-white">50+ clients</strong> across industries including healthcare,
-                    e-commerce, fintech, and education.
-                  </p>
-                  <p className="leading-relaxed text-gray-400">
-                    We combine technical expertise with deep business understanding to deliver solutions that drive
-                    real, measurable results. Our team of passionate developers, designers, and strategists works
-                    tirelessly to turn your vision into reality.
-                  </p>
-                </div>
-              </FadeInLeft>
-              <FadeInRight>
-                <div className="relative">
-                  <div className="aspect-4/3 overflow-hidden rounded">
-                    <Image
-                      src="/diverse-team-of-professionals-collaborating-in-mod.jpg"
-                      width={800}
-                      height={600}
-                      alt="Bitropix team collaborating in modern office"
-                      className="h-full w-full object-cover opacity-100"
-                    />
-                  </div>
-                  <div className="absolute -bottom-6 -left-6 rounded bg-linear-to-br from-[#E03B37] to-[#c62828] p-6 text-white shadow-lg shadow-[#E03B37]/20">
-                    <p className="text-3xl font-bold">2+</p>
-                    <p className="text-sm opacity-90">Years of Excellence</p>
-                  </div>
-                </div>
-              </FadeInRight>
-            </div>
-          </div>
-        </section>
-
-        {/* Stats Section */}
-        <section className="relative overflow-hidden py-12">
-          <div className="absolute inset-0 bg-linear-to-r from-[#E03B37]/90 via-[#E03B37]/80 to-[#E03B37]/90" />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-              {stats.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <p className="mb-1 text-3xl font-bold text-white sm:text-4xl">{stat.value}</p>
-                  <p className="text-sm text-white/70">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Mission & Vision */}
-        <section className="bg-[#0a0a12] py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <FadeIn>
-              <div className="grid gap-12 md:grid-cols-2">
-                <div className="group relative overflow-hidden rounded border border-white/10 bg-[#111119] p-8 transition-colors hover:border-[#E03B37]/40">
-                  <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-[#E03B37]/5 blur-3xl transition-colors group-hover:bg-[#E03B37]/10" />
-                  <div className="relative">
-                    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
-                      <Target className="h-7 w-7 text-[#E03B37]" />
-                    </div>
-                    <h2 className="mb-4 text-2xl font-bold text-white">Our Mission</h2>
-                    <p className="leading-relaxed text-gray-400">
-                      To empower businesses with innovative technology solutions that drive growth, efficiency, and
-                      competitive advantage. We aim to be the catalyst for digital transformation, helping organizations
-                      of all sizes harness the power of technology.
-                    </p>
-                  </div>
-                </div>
-                <div className="group relative overflow-hidden rounded border border-white/10 bg-[#111119] p-8 transition-colors hover:border-[#E03B37]/30">
-                  <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-[#c62828]/5 blur-3xl transition-colors group-hover:bg-[#c62828]/10" />
-                  <div className="relative">
-                    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
-                      <Eye className="h-7 w-7 text-[#E03B37]" />
-                    </div>
-                    <h2 className="mb-4 text-2xl font-bold text-white">Our Vision</h2>
-                    <p className="leading-relaxed text-gray-400">
-                      To be recognized globally as a trusted technology partner known for excellence, innovation, and
-                      transformative solutions. We envision a future where every business, regardless of size, has
-                      access to world-class IT solutions.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </FadeIn>
-          </div>
-        </section>
-
-        {/* Values Section */}
-        <section className="bg-[#0e0e18] py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-16 text-center">
-              <p className="mb-2 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">Our Values</p>
-              <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">What Drives Us</h2>
-              <p className="mx-auto max-w-2xl text-gray-400">
-                Our core values guide everything we do, from how we work with clients to how we grow as a company.
-              </p>
-            </div>
-            <StaggerContainer className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {values.map((value) => (
-                <StaggerItem key={value.title}>
-                  <div className="group text-center">
-                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
-                      <value.icon className="h-8 w-8 text-[#E03B37]" />
-                    </div>
-                    <h3 className="mb-2 text-xl font-semibold text-white">{value.title}</h3>
-                    <p className="text-sm leading-relaxed text-gray-400">{value.description}</p>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
-        {/* Our Journey / Milestones */}
-        <MilestonesSection milestones={milestones} />
-
-        {/* Awards & Recognition */}
-        <section className="bg-[#0e0e18] py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-16 text-center">
-              <p className="mb-2 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">Recognition</p>
-              <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Awards & Recognition</h2>
-              <p className="mx-auto max-w-2xl text-gray-400">
-                Our commitment to excellence has been recognized by leading industry bodies.
-              </p>
-            </div>
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {awards.map((award) => (
-                <div
-                  key={award.title}
-                  className="group flex items-start gap-4 rounded border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30"
-                >
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
-                    <Award className="h-7 w-7 text-[#E03B37]" />
-                  </div>
-                  <div>
-                    <h3 className="mb-1 font-semibold text-white">{award.title}</h3>
-                    <p className="text-sm font-medium text-[#E03B37]">{award.organization}</p>
-                    <p className="text-xs text-gray-400">{award.year}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="relative overflow-hidden py-20">
-          <div className="absolute inset-0 bg-linear-to-r from-[#E03B37] via-[#E03B37]/90 to-[#c62828]" />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
-          <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Want to Be Part of Our Story?</h2>
-            <p className="mx-auto mb-8 max-w-2xl text-lg text-white/80">
-              Whether you are looking for a technology partner or a career opportunity, we would love to hear from you.
+      <main>
+        <PageHero
+          title="A studio built by makers."
+          crumbs={[{ label: 'About Us' }]}
+          description={
+            <p>
+              Founded in 2023, Bitropix has grown from a small team with a big vision into 25+ designers, engineers and
+              strategists serving 50+ clients across industries.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded border border-white bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all duration-300 hover:bg-white/90"
-              >
-                Start a Project <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/careers"
-                className="inline-flex items-center gap-2 rounded border border-white/30 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
-              >
-                View Careers
-              </Link>
+          }
+          aside={
+            <dl className="border-t border-line">
+              {[
+                { k: 'Founded', v: siteConfig.founded },
+                { k: 'Studio', v: siteConfig.location },
+                { k: 'Team', v: '25+ makers' },
+                { k: 'Serving', v: 'India, US, UK, UAE, Australia' },
+              ].map((row) => (
+                <div key={row.k} className="flex items-baseline justify-between gap-6 border-b border-line py-4">
+                  <dt className="eyebrow">{row.k}</dt>
+                  <dd className="text-right text-paper">{row.v}</dd>
+                </div>
+              ))}
+            </dl>
+          }
+        >
+          <ButtonLink href="/contact">Work with us</ButtonLink>
+          <ButtonLink href="/services" variant="ghost">
+            Our services
+          </ButtonLink>
+        </PageHero>
+
+        {/* Manifesto */}
+        <section className="relative py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule className="mb-12" index="01">Manifesto</Eyebrow>
+            <div className="grid gap-12 lg:grid-cols-12">
+              <div className="lg:col-span-3">
+              </div>
+              <div className="lg:col-span-9">
+                <h2 className="sr-only">Our manifesto</h2>
+                <ScrollText
+                  className="font-display text-[clamp(1.875rem,4.4vw,4rem)] leading-[1.08] font-medium text-paper"
+                  text="We combine technical expertise with deep business understanding to build products that drive real, measurable results. Developers, designers and strategists, working as one team to turn your vision into reality."
+                />
+                <Reveal className="mt-14 grid gap-8 text-paper-dim sm:grid-cols-2">
+                  <p className="leading-relaxed">
+                    Bitropix is an IT services company based in {siteConfig.location}. In just two years we have grown
+                    into a team of 25+ professionals serving <strong className="font-medium text-paper">50+ clients</strong>{' '}
+                    across healthcare, e-commerce, fintech and education.
+                  </p>
+                  <p className="leading-relaxed">
+                    You talk to the people who build your product. No hand-offs, no black boxes: one senior team from
+                    discovery to launch, and still there after it.
+                  </p>
+                </Reveal>
+              </div>
             </div>
+
+            <Reveal className="mt-24">
+              <ParallaxImage
+                src="/images/studio/about.webp"
+                alt="Bitropix team collaborating in a modern office"
+                className="aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]"
+              >
+                <div className="absolute bottom-0 left-0 flex items-end gap-5 bg-brand p-6 text-ink sm:p-8">
+                  <p className="font-display text-5xl leading-none font-semibold sm:text-6xl">2+</p>
+                  <p className="pb-1 font-mono text-xs tracking-[0.14em] uppercase">
+                    Years of
+                    <br />
+                    excellence
+                  </p>
+                </div>
+                <PixelMark className="absolute top-6 right-6 h-6 w-6" />
+              </ParallaxImage>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Stats */}
+        <section className="relative py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule index="02" className="mb-12">
+              In numbers
+            </Eyebrow>
+            <div className="mb-16 grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-8">
+                <SplitText as="h2" text="Small studio. Serious output." className={H2} />
+              </div>
+            </div>
+            <RevealGroup className="grid grid-cols-2 border-t border-l border-line lg:grid-cols-4">
+              {stats.map((s) => (
+                <RevealItem key={s.label} className="group relative border-r border-b border-line p-6 sm:p-10">
+                  <i
+                    className="bg-brand-gradient absolute inset-x-0 top-0 h-px origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+                    aria-hidden="true"
+                  />
+                  <p className="font-display text-[clamp(2.75rem,6vw,5.5rem)] leading-none font-semibold text-paper">
+                    <Counter value={s.value} suffix={s.suffix} />
+                  </p>
+                  <p className="eyebrow mt-4">{s.label}</p>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </div>
+        </section>
+
+        {/* Mission & vision */}
+        <section className="relative bg-ink-2 py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule index="03" className="mb-12">
+              Purpose
+            </Eyebrow>
+            <SplitText as="h2" text="Why we exist." className={H2} />
+
+            <div className="mt-20 grid border-t border-line lg:grid-cols-2">
+              {[
+                {
+                  label: 'Mission',
+                  lead: 'Empower businesses with technology that drives growth, efficiency and competitive advantage.',
+                  body: 'We aim to be the catalyst for digital transformation, helping organizations of all sizes harness the power of technology.',
+                },
+                {
+                  label: 'Vision',
+                  lead: 'Be recognized globally as a trusted technology partner known for excellence and innovation.',
+                  body: 'We envision a future where every business, regardless of size, has access to world-class IT solutions.',
+                },
+              ].map((col, i) => (
+                <Reveal
+                  key={col.label}
+                  delay={i * 0.12}
+                  className={`pt-10 lg:pt-14 ${i === 0 ? 'pb-14 lg:pr-14 lg:pb-0' : 'border-t border-line lg:border-t-0 lg:border-l lg:pl-14'}`}
+                >
+                  <p className="eyebrow flex items-center gap-3">
+                    <span className="text-paper-dim">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="h-px w-10 bg-line-strong" aria-hidden="true" />
+                  </p>
+                  <h3 className="font-display mt-6 text-[clamp(2.25rem,4vw,3.5rem)] leading-none font-semibold text-brand">
+                    Our {col.label.toLowerCase()}
+                  </h3>
+                  <p className="font-display mt-8 text-[clamp(1.5rem,2.4vw,2.25rem)] leading-[1.15] font-medium text-paper">
+                    {col.lead}
+                  </p>
+                  <p className="mt-6 max-w-lg text-lg leading-relaxed text-paper-dim">{col.body}</p>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Values */}
+        <section className="relative py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule index="04" className="mb-12">
+              Values
+            </Eyebrow>
+            <div className="mb-16 grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-8">
+                <SplitText as="h2" text="What drives us." className={H2} />
+              </div>
+              <Reveal className="lg:col-span-4">
+                <p className="text-paper-dim">
+                  Our core values guide everything we do, from how we work with clients to how we grow as a company.
+                </p>
+              </Reveal>
+            </div>
+
+            <RevealGroup className="grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-4">
+              {values.map((v, i) => (
+                <RevealItem key={v.title} className="group relative border-r border-b border-line">
+                  <span
+                    className="absolute inset-0 origin-bottom scale-y-0 bg-ink-2 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100"
+                    aria-hidden="true"
+                  />
+                  <div className="relative flex h-full min-h-80 flex-col p-8 sm:p-10">
+                    <div className="flex items-start justify-between">
+                      <span className="eyebrow">{String(i + 1).padStart(2, '0')}</span>
+                      <span
+                        className="h-2 w-2 bg-line-strong transition-colors duration-300 group-hover:bg-brand"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <h3 className="font-display mt-auto pt-16 text-4xl font-semibold text-paper transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-1">
+                      {v.title}
+                    </h3>
+                    <p className="mt-4 leading-relaxed text-paper-dim">{v.description}</p>
+                  </div>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </div>
+        </section>
+
+        {/* Journey */}
+        <Timeline milestones={milestones} index="05" />
+
+        {/* Awards & recognition */}
+        <section className="relative py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule index="06" className="mb-12">
+              Recognition
+            </Eyebrow>
+            <div className="mb-16 grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-8">
+                <SplitText as="h2" text="Awards and recognition." className={H2} />
+              </div>
+              <Reveal className="lg:col-span-4">
+                <p className="text-paper-dim">
+                  Our commitment to excellence has been recognized by leading industry bodies.
+                </p>
+              </Reveal>
+            </div>
+
+            <div
+              className="eyebrow hidden grid-cols-[6rem_1fr_14rem] gap-6 border-b border-line pb-4 md:grid"
+              aria-hidden="true"
+            >
+              <span>Year</span>
+              <span>Award</span>
+              <span className="text-right">Awarded by</span>
+            </div>
+            <RevealGroup as="ul" className="border-t border-line md:border-t-0">
+              {awards.map((a) => (
+                <RevealItem as="li" key={a.title} className="group relative border-b border-line">
+                  <span
+                    className="absolute inset-0 origin-bottom scale-y-0 bg-ink-2 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100"
+                    aria-hidden="true"
+                  />
+                  <div className="relative grid gap-2 py-7 sm:py-9 md:grid-cols-[6rem_1fr_14rem] md:items-center md:gap-6">
+                    <p className="font-mono text-sm text-mute transition-colors duration-300 group-hover:text-brand">
+                      {a.year}
+                    </p>
+                    <h3 className="font-display text-[clamp(1.5rem,3vw,2.5rem)] leading-tight font-semibold text-paper transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3">
+                      {a.title}
+                    </h3>
+                    <p className="flex items-center gap-3 text-paper-dim md:justify-end">
+                      <span
+                        className="h-1.5 w-1.5 bg-line-strong transition-colors duration-300 group-hover:bg-brand"
+                        aria-hidden="true"
+                      />
+                      {a.organization}
+                    </p>
+                  </div>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+
+            {/* Small inline CTA (the global footer carries the big one) */}
+            <Reveal className="mt-24 flex flex-col gap-8 border-t border-line pt-10 md:flex-row md:items-center md:justify-between">
+              <p className="font-display max-w-xl text-2xl leading-snug font-medium text-paper sm:text-3xl">
+                Want to be part of our story? Partner with us, or join the team.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <ButtonLink href="/contact">Start a project</ButtonLink>
+                <ButtonLink href="/careers" variant="ghost">
+                  View careers
+                </ButtonLink>
+              </div>
+            </Reveal>
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

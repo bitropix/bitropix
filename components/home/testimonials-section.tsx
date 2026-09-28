@@ -1,210 +1,142 @@
 'use client';
 
+import { useCallback, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Eyebrow } from '@/components/site/ui';
 
 const testimonials = [
   {
     name: 'Satendra Raghav',
     role: 'CEO, Tourillo Pvt. Ltd.',
-    content:
-      "We had an excellent experience working with this developer. They captured Tourillo vision beautifully and delivered a website that reflects our brand's elegance, purpose, and passion for travel. The design is engaging, user-friendly, and perfectly aligned with our focus on personalized journeys and responsible tourism. Their attention to detail, creativity, and professionalism truly stood out. We are extremely happy with the outcome.",
-    rating: 5,
+    quote:
+      "They captured Tourillo's vision beautifully and delivered a website that reflects our brand's elegance, purpose and passion for travel. Their attention to detail, creativity and professionalism truly stood out.",
   },
   {
     name: 'Arnab Gupta',
     role: 'Founder, Fincafe',
-    content:
-      "Working with them was a great experience. They perfectly understood Fincafe's vision and translated it into a clean, professional, and impactful website. The design, content flow, and overall user experience truly reflect our brand and mission. Highly reliable, creative, and responsive throughout the project - we are extremely satisfied with the final result.",
-    rating: 5,
+    quote:
+      "They perfectly understood Fincafe's vision and translated it into a clean, professional and impactful website. Highly reliable, creative and responsive throughout the project. We are extremely satisfied with the result.",
   },
   {
     name: 'Tom Jung',
     role: 'Director, Data Platform, Elevance Health, Inc.',
-    content:
-      'Working with the Elevance Health data team was an excellent experience. They integrated ServiceNow and migrated services from Teradata On-Prem to Teradata Vantage, improving system performance by 5% and reducing costs by 25%. Their innovative hackathons generated automation and process improvements that saved hundreds of hours annually and increased revenue. Highly professional, strategic, and results-driven-the team consistently exceeded expectations.',
-    rating: 5,
+    quote:
+      'They migrated services from Teradata On-Prem to Teradata Vantage, improving system performance by 5% and reducing costs by 25%. Highly professional, strategic and results-driven. The team consistently exceeded expectations.',
   },
 ];
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 export function TestimonialsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+  const [[index, dir], setState] = useState<[number, number]>([0, 1]);
+  const [paused, setPaused] = useState(false);
 
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-  };
+  const go = useCallback((d: number) => {
+    setState(([i]) => [(i + d + testimonials.length) % testimonials.length, d]);
+  }, []);
 
-  const swipeConfidenceThreshold = 10000;
-  const swipePower = (offset: number, velocity: number) => {
-    return Math.abs(offset) * velocity;
-  };
-
-  const paginate = (newDirection: number) => {
-    setDirection(newDirection);
-    setCurrentIndex((prevIndex) => {
-      if (newDirection === 1) {
-        return prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1;
-      } else {
-        return prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1;
-      }
-    });
-  };
-
-  const goToSlide = (index: number) => {
-    setDirection(index > currentIndex ? 1 : -1);
-    setCurrentIndex(index);
-  };
-
-  // Auto-scroll functionality
   useEffect(() => {
-    if (!isPaused) {
-      autoPlayRef.current = setInterval(() => {
-        paginate(1);
-      }, 5000); // Auto-advance every 5 seconds
-    }
+    if (paused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = window.setInterval(() => go(1), 7000);
+    return () => window.clearInterval(id);
+  }, [paused, go, index]);
 
-    return () => {
-      if (autoPlayRef.current) {
-        clearInterval(autoPlayRef.current);
-      }
-    };
-  }, [currentIndex, isPaused]);
-
-  const handleMouseEnter = () => {
-    setIsPaused(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsPaused(false);
-  };
+  const t = testimonials[index];
 
   return (
-    <section className="relative overflow-hidden py-20">
-      <div className="absolute inset-0 bg-linear-to-b from-[#0e0e18] via-[#0a0a12] to-[#0a0a12]" />
-      <div className="absolute top-0 right-1/4 h-75 w-75 rounded-full bg-[#E03B37]/5 blur-[100px]" />
+    <section
+      className="relative overflow-hidden py-24 sm:py-36"
+      onPointerEnter={() => setPaused(true)}
+      onPointerLeave={() => setPaused(false)}
+      aria-roledescription="carousel"
+      aria-label="Client testimonials"
+    >
+      <div className="container-x">
+        <Eyebrow rule index="06" className="mb-14">
+          Client voices
+        </Eyebrow>
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center">
-          <p className="mb-2 font-semibold text-[#E03B37]">Testimonials</p>
-          <h2 className="mb-4 text-3xl font-bold text-balance text-white sm:text-4xl">What Our Clients Say</h2>
-          <p className="mx-auto max-w-2xl text-gray-400">
-            Don't just take our word for it. Here's what our clients have to say about working with us.
-          </p>
+        <div className="relative min-h-[22rem] pt-12 sm:min-h-[20rem] sm:pt-16">
+          <span
+            className="font-display pointer-events-none absolute -top-10 -left-2 text-[10rem] leading-none text-brand select-none sm:-top-16 sm:text-[14rem]"
+            aria-hidden="true"
+          >
+            &ldquo;
+          </span>
+          <AnimatePresence mode="wait" custom={dir}>
+            <motion.figure
+              key={index}
+              custom={dir}
+              initial={{ opacity: 0, x: dir * 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: dir * -60 }}
+              transition={{ duration: 0.7, ease: EASE }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.25}
+              onDragEnd={(_, info) => {
+                if (info.offset.x < -80) go(1);
+                else if (info.offset.x > 80) go(-1);
+              }}
+              className="relative cursor-grab active:cursor-grabbing"
+              data-cursor="Drag"
+            >
+              <blockquote className="font-display max-w-5xl text-[clamp(1.625rem,3.6vw,3.25rem)] leading-[1.15] font-medium text-paper">
+                {t.quote}
+              </blockquote>
+              <figcaption className="mt-10 flex items-center gap-4">
+                <span className="bg-brand-gradient grid h-12 w-12 place-items-center font-mono text-sm font-medium text-ink">
+                  {t.name
+                    .split(' ')
+                    .map((n) => n[0])
+                    .join('')}
+                </span>
+                <span>
+                  <span className="block font-medium text-paper">{t.name}</span>
+                  <span className="block text-sm text-mute">{t.role}</span>
+                </span>
+              </figcaption>
+            </motion.figure>
+          </AnimatePresence>
         </div>
 
-        <div className="relative mx-auto max-w-4xl" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-          {/* Slider Container */}
-          <div className="relative h-100 overflow-hidden">
-            <AnimatePresence initial={false} custom={direction}>
-              <motion.div
-                key={currentIndex}
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: 'spring', stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.2 },
-                }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={1}
-                onDragEnd={(e, { offset, velocity }) => {
-                  const swipe = swipePower(offset.x, velocity.x);
-
-                  if (swipe < -swipeConfidenceThreshold) {
-                    paginate(1);
-                  } else if (swipe > swipeConfidenceThreshold) {
-                    paginate(-1);
-                  }
-                }}
-                className="absolute w-full"
+        <div className="mt-12 flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            aria-label="Previous testimonial"
+            className="grid h-12 w-12 place-items-center border border-line-strong text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => go(1)}
+            aria-label="Next testimonial"
+            className="grid h-12 w-12 place-items-center border border-line-strong text-paper transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+          >
+            <ArrowRight className="h-5 w-5" />
+          </button>
+          <div className="ml-4 flex flex-1 gap-2">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setState([i, i > index ? 1 : -1])}
+                aria-label={`Show testimonial ${i + 1}`}
+                aria-current={i === index}
+                className="relative h-1 flex-1 max-w-24 overflow-hidden bg-line-strong"
               >
-                <Card className="group relative border-white/10 bg-[#111119] backdrop-blur-sm transition-all duration-300 hover:border-[#E03B37]/30">
-                  <CardContent className="flex flex-col pt-8 pb-6">
-                    <Quote className="absolute top-6 right-6 h-8 w-8 text-[#E03B37]/20 transition-colors group-hover:text-[#E03B37]/30" />
-                    <div className="mb-4 flex gap-1">
-                      {Array.from({ length: testimonials[currentIndex].rating }).map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-[#E03B37] text-[#E03B37]" />
-                      ))}
-                    </div>
-                    <p className="mb-6 leading-relaxed text-gray-400">"{testimonials[currentIndex].content}"</p>
-                    <div className="mt-auto flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/20">
-                        <span className="font-semibold text-[#E03B37]">
-                          {testimonials[currentIndex].name
-                            .split(' ')
-                            .map((n) => n[0])
-                            .join('')}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-white">{testimonials[currentIndex].name}</p>
-                        <p className="text-sm text-gray-400">{testimonials[currentIndex].role}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Navigation Buttons */}
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => paginate(-1)}
-              className="border-white/10 transition-all hover:border-[#E03B37]/50 hover:bg-[#E03B37]/10"
-              aria-label="Previous testimonial"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-
-            {/* Dot Indicators */}
-            <div className="flex gap-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    index === currentIndex ? 'w-8 bg-[#E03B37]' : 'w-2 bg-gray-500/30'
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
+                <span
+                  className={`bg-brand absolute inset-0 origin-left transition-transform duration-500 ${i === index ? 'scale-x-100' : 'scale-x-0'}`}
                 />
-              ))}
-            </div>
-
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => paginate(1)}
-              className="border-white/10 transition-all hover:border-[#E03B37]/50 hover:bg-[#E03B37]/10"
-              aria-label="Next testimonial"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+              </button>
+            ))}
           </div>
+          <p className="font-mono text-sm text-paper-dim tabular-nums" aria-live="polite">
+            {String(index + 1).padStart(2, '0')} / {String(testimonials.length).padStart(2, '0')}
+          </p>
         </div>
       </div>
     </section>

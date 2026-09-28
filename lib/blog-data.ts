@@ -7,9 +7,9 @@ export interface BlogPost {
   image: string;
   author: string;
   authorRole: string;
-  /** ISO 8601 date string (YYYY-MM-DD) - publication date */
+  /** ISO 8601 date string (YYYY-MM-DD): publication date */
   date: string;
-  /** ISO 8601 date string (YYYY-MM-DD) - last modified date; defaults to `date` */
+  /** ISO 8601 date string (YYYY-MM-DD): last modified date; defaults to `date` */
   dateModified?: string;
   readTime: string;
   category: string;
@@ -90,7 +90,7 @@ export const blogPosts: BlogPost[] = [
       <h2>How Bitropix Can Help</h2>
       <p>At Bitropix, we have guided dozens of organizations through their digital transformation journeys. From strategy consulting and technology selection to implementation and ongoing optimization, our team brings deep expertise across industries. We take a business-first approach, ensuring that every technology decision is aligned with your strategic objectives and delivers measurable ROI.</p>
     `,
-    image: '/images/trans.webp',
+    image: '/images/blog/digital-transformation-2024-guide.webp',
     author: 'Rahul Verma',
     authorRole: 'CEO & Co-Founder',
     date: '2025-03-15',
@@ -150,7 +150,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Conclusion</h2>
       <p>React 19 marks a pivotal moment in the evolution of the library. The stable release of Server Components, combined with Actions and new hooks, provides a more cohesive and powerful development experience. At Bitropix, our development team has already adopted React 19 for new projects and is actively migrating existing applications. If you need help upgrading your React applications or building new ones with the latest features, reach out to our team.</p>
     `,
-    image: '/react-programming-code.jpg',
+    image: '/images/blog/react-19-features.webp',
     author: 'Vikram Patel',
     authorRole: 'Senior Frontend Developer',
     date: '2025-03-10',
@@ -209,7 +209,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Building a Cloud Cost Optimization Culture</h2>
       <p>Sustainable cost optimization requires more than technical fixes. Build a FinOps culture where engineering teams understand the cost implications of their decisions. Share cost dashboards, include cloud costs in sprint retrospectives, and reward teams that find creative ways to reduce spending. At Bitropix, we help organizations implement comprehensive cloud cost optimization strategies that deliver lasting results.</p>
     `,
-    image: '/cloud-computing-infrastructure.jpg',
+    image: '/images/blog/cloud-cost-optimization.webp',
     author: 'Ananya Singh',
     authorRole: 'Cloud Solutions Architect',
     date: '2025-03-05',
@@ -261,7 +261,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Getting Started with Bitropix</h2>
       <p>At Bitropix, we help enterprises navigate their AI journey from strategy to implementation. Our team combines deep technical expertise in machine learning with practical business experience across industries. Whether you are building your first AI proof of concept or scaling existing models to production, we can help you avoid common pitfalls and achieve measurable results.</p>
     `,
-    image: '/artificial-intelligence-neural-network.jpg',
+    image: '/images/blog/ai-in-enterprise.webp',
     author: 'Priya Sharma',
     authorRole: 'AI/ML Lead',
     date: '2025-02-28',
@@ -315,7 +315,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Conclusion</h2>
       <p>Microservices are a powerful architectural pattern, but they require significant investment in tooling, processes, and team skills. Start small, invest in automation, and always let business requirements drive your architectural decisions. At Bitropix, we help organizations navigate the microservices journey, from initial architecture design through implementation and ongoing operations.</p>
     `,
-    image: '/microservices-architecture.png',
+    image: '/images/blog/microservices-best-practices.webp',
     author: 'Vikram Patel',
     authorRole: 'Senior Frontend Developer',
     date: '2025-02-20',
@@ -366,7 +366,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Conclusion</h2>
       <p>The UX landscape in 2025 demands designers who can think in systems, design for AI, consider spatial dimensions, and prioritize accessibility. At Bitropix, our design team stays at the forefront of these trends, creating digital experiences that are beautiful, functional, and inclusive. Contact us to learn how we can elevate your product's user experience.</p>
     `,
-    image: '/modern-ux-design-interface.jpg',
+    image: '/images/blog/ux-design-trends-2025.webp',
     author: 'Ananya Singh',
     authorRole: 'Cloud Solutions Architect',
     date: '2025-02-15',
@@ -423,7 +423,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Getting Started</h2>
       <p>Start by automating your most painful manual process. If deployments are error-prone, automate deployment first. If bugs reach production frequently, invest in test automation. Build incrementally, measuring improvement at each step. At Bitropix, we help teams design and implement DevOps pipelines tailored to their technology stack and business needs.</p>
     `,
-    image: '/devops-automation-pipeline.jpg',
+    image: '/images/blog/devops-automation.webp',
     author: 'Rahul Verma',
     authorRole: 'CEO & Co-Founder',
     date: '2025-02-08',
@@ -478,7 +478,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Partner with Bitropix for SEO Success</h2>
       <p>At Bitropix, our SEO team combines technical expertise with creative content strategy to drive sustainable organic growth. We take a data-driven approach, setting clear KPIs and reporting transparent results. Whether you need a full SEO overhaul or targeted improvements, our team can help you achieve your organic search goals.</p>
     `,
-    image: '/images/marketing.webp',
+    image: '/images/blog/seo-strategies-for-business-growth.webp',
     author: 'Priya Sharma',
     authorRole: 'AI/ML Lead',
     date: '2025-01-25',
@@ -536,7 +536,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Conclusion</h2>
       <p>The Next.js App Router is a powerful foundation for modern web applications. Its server-first approach, combined with flexible rendering strategies and built-in optimizations, enables developers to build fast, SEO-friendly applications with excellent developer experience. At Bitropix, we build all our web applications on Next.js and can help you leverage its full potential.</p>
     `,
-    image: '/images/web.webp',
+    image: '/images/blog/nextjs-app-router-guide.webp',
     author: 'Vikram Patel',
     authorRole: 'Senior Frontend Developer',
     date: '2025-01-18',
@@ -590,7 +590,7 @@ export const blogPosts: BlogPost[] = [
       <h2>How Bitropix Can Help</h2>
       <p>At Bitropix, we have experienced teams for both React Native and Flutter. We help you evaluate your specific requirements, build proof-of-concept prototypes, and develop production-quality mobile applications. Our framework-agnostic approach ensures we recommend the best tool for your project, not just the one we prefer.</p>
     `,
-    image: '/images/app.webp',
+    image: '/images/blog/mobile-app-development-react-native-vs-flutter.webp',
     author: 'Rahul Verma',
     authorRole: 'CEO & Co-Founder',
     date: '2025-01-10',
@@ -652,7 +652,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Measuring CRO Success</h2>
       <p>Track macro conversions (purchases) and micro conversions (add-to-cart, wishlist additions, account creation). Use funnel analysis to identify where customers drop off. Run controlled A/B tests before implementing changes site-wide. At Bitropix, we help e-commerce businesses implement data-driven CRO strategies that deliver measurable revenue growth.</p>
     `,
-    image: '/images/marketing.webp',
+    image: '/images/blog/ecommerce-conversion-optimization.webp',
     author: 'Ananya Singh',
     authorRole: 'Cloud Solutions Architect',
     date: '2025-01-05',
@@ -710,7 +710,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Get Started with Bitropix</h2>
       <p>At Bitropix, our digital marketing team develops and executes social media strategies that drive real business results. From content creation and community management to paid advertising and analytics, we provide end-to-end social media marketing services tailored to your industry and objectives.</p>
     `,
-    image: '/images/marketing.webp',
+    image: '/images/blog/social-media-marketing-strategy.webp',
     author: 'Priya Sharma',
     authorRole: 'AI/ML Lead',
     date: '2024-12-28',
@@ -766,7 +766,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Work with Bitropix</h2>
       <p>At Bitropix, our PPC team manages Google Ads campaigns that consistently deliver above-industry-average returns. We combine data-driven optimization with creative ad development to maximize your advertising investment. Contact us for a free account audit and discover opportunities to improve your PPC performance.</p>
     `,
-    image: '/images/marketing.webp',
+    image: '/images/blog/ppc-google-ads-optimization.webp',
     author: 'Rahul Verma',
     authorRole: 'CEO & Co-Founder',
     date: '2024-12-20',
@@ -823,7 +823,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Let Bitropix Help</h2>
       <p>At Bitropix, our platform engineering team designs, deploys, and manages production Kubernetes environments for organizations of all sizes. Whether you are migrating existing workloads to Kubernetes or building cloud-native applications from scratch, we bring the expertise needed to do it right. Contact us to discuss your Kubernetes journey.</p>
     `,
-    image: '/cloud-computing-infrastructure.jpg',
+    image: '/images/blog/kubernetes-production-best-practices.webp',
     author: 'Vikram Patel',
     authorRole: 'Senior Frontend Developer',
     date: '2024-12-15',
@@ -879,7 +879,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Work with Bitropix Design Team</h2>
       <p>At Bitropix, we offer flexible design engagements for startups. From one-time design sprints to ongoing design partnerships, we adapt our process to your stage and budget. Our team brings experience across industries and platforms, helping startups build products that users love from day one.</p>
     `,
-    image: '/images/design.webp',
+    image: '/images/blog/ui-ux-design-process-for-startups.webp',
     author: 'Ananya Singh',
     authorRole: 'Cloud Solutions Architect',
     date: '2024-12-10',

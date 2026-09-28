@@ -1,139 +1,129 @@
 'use client';
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { HeroVisual } from '@/components/site/hero-visual';
+import { ButtonLink } from '@/components/site/ui';
+import { Magnetic } from '@/components/site/magnetic';
+
+const WORDS = ['websites', 'mobile apps', 'brands', 'platforms', 'growth'];
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+function RotatingWord() {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = window.setInterval(() => setI((v) => (v + 1) % WORDS.length), 2200);
+    return () => window.clearInterval(id);
+  }, []);
+  return (
+    <span className="relative inline-grid overflow-hidden align-bottom">
+      {/* invisible longest word reserves width so the line never jumps */}
+      <span className="invisible col-start-1 row-start-1">mobile apps</span>
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={WORDS[i]}
+          className="text-brand-gradient col-start-1 row-start-1"
+          initial={{ y: '100%' }}
+          animate={{ y: '0%' }}
+          exit={{ y: '-100%' }}
+          transition={{ duration: 0.8, ease: EASE }}
+        >
+          {WORDS[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
+
+const lines = [
+  { key: 'a', content: 'We build' },
+  { key: 'b', content: <RotatingWord /> },
+  { key: 'c', content: 'that stand out.' },
+];
 
 export function HeroSection() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  // Text + meta bar move up together (never down into each other) and fade late.
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '-10%']);
+  const opacity = useTransform(scrollYProgress, [0.35, 0.9], [1, 0]);
+
   return (
-    <section className="relative flex h-screen items-center justify-center overflow-hidden bg-[#0a0a0f]">
-      {/* Spinning ring 1 - large, slow */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 h-175 w-175 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/3"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+    <section ref={ref} className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[var(--nav-h)]">
+      <div
+        className="bg-pixel-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_70%_60%_at_75%_45%,black,transparent)]"
+        aria-hidden="true"
       />
 
-      {/* Spinning ring 2 - medium, opposite */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 h-125 w-125 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/4"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
-      />
+      {/* 3D logo: its own band above the text on phones, right half from md up */}
+      <HeroVisual className="absolute top-[var(--nav-h)] right-[-6%] h-[26svh] w-[78%] md:right-0 md:bottom-[5.5rem] md:h-auto md:w-[46%] lg:w-[48%]" />
 
-      {/* Spinning ring 3 - small */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 h-75 w-75 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#E03B37]/10"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-      />
+      <motion.div style={{ y, opacity }} className="pointer-events-none relative z-10 flex flex-1 flex-col">
+        <div className="container-x flex flex-1 flex-col justify-end pt-[26svh] pb-8 md:justify-center md:py-10">
+          {/* Entrances are CSS (.enter-*) so they run on first paint, not after hydration. */}
 
-      {/* Orbiting dot 1 */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 h-125 w-125 -translate-x-1/2 -translate-y-1/2"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-      >
-        <div className="absolute top-0 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-[#E03B37]/60 shadow-[0_0_15px_rgba(224,59,55,0.4)]" />
-      </motion.div>
+          {/* Sized by width AND height so three lines always fit on short laptop screens */}
+          <h1 className="font-display max-w-[12ch] text-[clamp(3rem,min(8.2vw,12.5svh),8.5rem)] leading-[0.9] font-semibold text-paper">
+            <span className="sr-only">We build websites, mobile apps, brands, platforms and growth that stand out.</span>
+            <span aria-hidden="true">
+              {lines.map((line, i) => (
+                <span key={line.key} className="block overflow-hidden pb-[0.06em]">
+                  <span className="enter-rise block!" style={{ ['--delay' as string]: `${150 + i * 90}ms` }}>
+                    {line.content}
+                  </span>
+                </span>
+              ))}
+            </span>
+          </h1>
 
-      {/* Orbiting dot 2 */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 h-175 w-175 -translate-x-1/2 -translate-y-1/2"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
-      >
-        <div className="absolute top-0 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-white/30" />
-      </motion.div>
-
-      {/* Orbiting dot 3 */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 h-87.5 w-87.5 -translate-x-1/2 -translate-y-1/2"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-      >
-        <div className="absolute bottom-0 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#E03B37]/40" />
-      </motion.div>
-
-      {/* Floating gradient orbs */}
-      <motion.div
-        className="absolute top-[-15%] left-[-5%] h-150 w-150 rounded-full bg-[#E03B37]/12 blur-[120px]"
-        animate={{
-          x: [0, 100, -50, 0],
-          y: [0, -80, 60, 0],
-          scale: [1, 1.3, 0.8, 1],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="absolute right-[-10%] bottom-[-10%] h-125 w-125 rounded-full bg-[#E03B37]/8 blur-[120px]"
-        animate={{
-          x: [0, -80, 60, 0],
-          y: [0, 60, -40, 0],
-          scale: [1, 0.8, 1.2, 1],
-        }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      {/* Floating particles */}
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute h-1 w-1 rounded-full bg-white/20"
-          style={{
-            top: `${20 + i * 12}%`,
-            left: `${10 + i * 15}%`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.2, 0.6, 0.2],
-          }}
-          transition={{
-            duration: 4 + i,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: i * 0.8,
-          }}
-        />
-      ))}
-
-      {/* Subtle grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-size-[60px_60px]" />
-
-      {/* Content */}
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-5 text-center">
-        <p className="mb-3 text-sm font-semibold tracking-[0.2em] text-[#E03B37] uppercase">
-          Innovate · Transform · Deliver
-        </p>
-        <h1 className="text-[clamp(2.25rem,7vw,4.25rem)] leading-[1.15] font-bold tracking-tight text-balance text-white">
-          Web Development &amp; Digital Marketing <span className="text-[#E03B37]">Agency in Noida, India</span>
-        </h1>
-
-        <p className="mt-4 max-w-2xl text-[clamp(1.125rem,2.2vw,1.4rem)] leading-relaxed text-gray-400">
-          Bitropix builds high-performance websites, mobile apps, and SEO-driven growth engines for startups and
-          enterprises across India, the US, UK, UAE, and Australia.
-        </p>
-
-        <div className="mt-8 flex flex-wrap-reverse justify-center gap-3">
-          <Button
-            size="lg"
-            asChild
-            className="h-11 bg-[#E03B37] px-6 text-sm font-medium text-white hover:bg-[#E03B37]/90"
-          >
-            <Link href="/contact" className="flex items-center justify-center">
-              <span>Get Free Consultation</span> <ArrowRight className="mt-0.5 h-5 w-5" />
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            asChild
-            className="h-11 border border-[#E03B37] bg-transparent px-6 text-sm font-medium text-white hover:bg-[#E03B37]"
-          >
-            <Link href="/services">Our Services</Link>
-          </Button>
+          <div className="enter-fade pointer-events-auto mt-8 grid max-w-xl gap-7" style={{ ['--delay' as string]: '380ms' }}>
+            <p className="text-base leading-relaxed text-paper-dim sm:text-lg">
+              Bitropix designs and engineers high-performance websites, mobile apps and SEO-led growth engines for
+              startups and enterprises across India, the US, UK, UAE and Australia.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Magnetic strength={0.2}>
+                <ButtonLink href="/contact" className="px-5 sm:px-6">
+                  Start a project
+                </ButtonLink>
+              </Magnetic>
+              <ButtonLink href="/portfolio" variant="ghost" className="bg-ink/60 px-5 backdrop-blur-sm sm:px-6">
+                See our work
+              </ButtonLink>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <div className="enter-fade container-x" style={{ ['--delay' as string]: '600ms' }}>
+          <div className="grid grid-cols-2 gap-6 border-t border-line py-5 sm:grid-cols-4">
+            <div>
+              <p className="eyebrow mb-1">Services</p>
+              <p className="text-sm text-paper">Web, Mobile, Cloud, Growth</p>
+            </div>
+            <div>
+              <p className="eyebrow mb-1">Shipped</p>
+              <p className="text-sm text-paper">50+ products</p>
+            </div>
+            <div className="hidden sm:block">
+              <p className="eyebrow mb-1">Working with</p>
+              <p className="text-sm text-paper">5 countries</p>
+            </div>
+            <div className="hidden items-end justify-end sm:flex">
+              <span className="eyebrow flex items-center gap-3">
+                Scroll
+                <span className="relative block h-8 w-px overflow-hidden bg-line-strong" aria-hidden="true">
+                  <motion.i
+                    className="absolute inset-x-0 top-0 block h-1/2 bg-brand"
+                    animate={{ y: ['-100%', '200%'] }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                  />
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </motion.div>
     </section>
   );
 }

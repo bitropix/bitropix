@@ -1,201 +1,159 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { Mail, Phone, MapPin, Linkedin, Instagram, Twitter, Facebook, Heart, Globe, ArrowUpRight } from 'lucide-react';
+import { siteConfig } from '@/lib/site-config';
+import { ButtonLink, PixelMark } from '@/components/site/ui';
+import { LocalTime } from '@/components/site/local-time';
+import { Magnetic } from '@/components/site/magnetic';
 
-const footerLinks = {
-  services: [
-    { label: 'Web Development', href: '/services#web' },
-    { label: 'Mobile Development', href: '/services#mobile' },
-    { label: 'UI/UX Design', href: '/services#design' },
-    { label: 'Cloud Solutions', href: '/services#cloud' },
-    { label: 'Digital Marketing & SEO', href: '/services#marketing' },
-    { label: 'Digital Transformation', href: '/services#digital-transformation' },
-    { label: 'Embedded Systems', href: '/services#embedded' },
-    { label: 'IoT Solutions', href: '/services#iot' },
-  ],
-  company: [
-    { label: 'About Us', href: '/about' },
-    { label: 'Portfolio', href: '/portfolio' },
-    { label: 'Careers', href: '/careers' },
-    { label: 'Blog', href: '/blogs' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'Privacy Policy', href: '/privacy' },
-  ],
-  resources: [
-    { label: 'HTML Sitemap', href: '/sitemap-html' },
-    { label: 'Case Studies', href: '/portfolio' },
-    { label: 'FAQs', href: '/faq' },
-    { label: 'Terms of Service', href: '/terms' },
-  ],
-};
-
-const socialLinks = [
+const columns = [
   {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/bitropix/about/',
-    icon: Linkedin,
+    title: 'Services',
+    links: [
+      { label: 'Web Development', href: '/services#web' },
+      { label: 'Mobile Apps', href: '/services#mobile' },
+      { label: 'UI/UX Design', href: '/services#design' },
+      { label: 'Cloud Solutions', href: '/services#cloud' },
+      { label: 'Digital Marketing & SEO', href: '/services#marketing' },
+      { label: 'Digital Transformation', href: '/services#digital-transformation' },
+      { label: 'Embedded Systems', href: '/services#embedded' },
+      { label: 'IoT Solutions', href: '/services#iot' },
+    ],
   },
   {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/bitropix/',
-    icon: Instagram,
+    title: 'Company',
+    links: [
+      { label: 'About', href: '/about' },
+      { label: 'Work', href: '/portfolio' },
+      { label: 'Careers', href: '/careers' },
+      { label: 'Insights', href: '/blogs' },
+      { label: 'Contact', href: '/contact' },
+    ],
   },
   {
-    label: 'Twitter',
-    href: 'https://twitter.com/bitropix',
-    icon: Twitter,
-  },
-  {
-    label: 'Facebook',
-    href: 'https://www.facebook.com/bitropix',
-    icon: Facebook,
+    title: 'Resources',
+    links: [
+      { label: 'FAQs', href: '/faq' },
+      { label: 'Case Studies', href: '/portfolio' },
+      { label: 'Sitemap', href: '/sitemap-html' },
+      { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Terms of Service', href: '/terms' },
+    ],
   },
 ];
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/10 bg-[#0a0a12]">
-      {/* Subtle gradient glow */}
-      <div className="absolute top-0 left-1/2 h-75 w-150 -translate-x-1/2 rounded-full bg-[#E03B37]/5 blur-3xl" />
+    <footer className="relative overflow-hidden border-t border-line bg-ink">
+      {/* Big CTA band */}
+      <div className="container-x grid gap-10 py-20 sm:py-28 lg:grid-cols-12 lg:items-end">
+        <div className="lg:col-span-8">
+          <p className="eyebrow mb-6">Have an idea?</p>
+          <Link
+            href="/contact"
+            className="group font-display block text-[clamp(3rem,9vw,8.5rem)] leading-[0.92] font-semibold text-paper"
+            data-cursor="Let's talk"
+          >
+            Let&apos;s build it
+            <span className="block text-mute transition-colors duration-500 group-hover:text-brand">together.</span>
+          </Link>
+        </div>
+        <div className="flex flex-col gap-6 lg:col-span-4 lg:items-end">
+          <Magnetic>
+            <ButtonLink href="/contact">Start a project</ButtonLink>
+          </Magnetic>
+          <a href={`mailto:${siteConfig.email}`} className="link-line text-lg text-paper-dim hover:text-paper">
+            {siteConfig.email}
+          </a>
+        </div>
+      </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
-          {/* Brand Column */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="group mb-6 flex items-center gap-3">
-              <div className="relative">
-                <div className="absolute inset-0 rounded bg-[#E03B37]/20 blur-md" />
-                <Image src="/images/logo.png" alt="Bitropix Logo" width={40} height={40} className="relative" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-bold text-white">Bitropix</span>
-                <span className="text-[10px] font-medium tracking-wider text-[#E03B37]">
-                  Innovate. Transform. Deliver.
-                </span>
-              </div>
-            </Link>
-            <p className="mb-6 max-w-sm text-gray-400">
-              Transforming businesses through innovative IT solutions. Your trusted partner for digital transformation
-              and growth.
-            </p>
-
-            {/* Social Links */}
-            <div className="mb-6 flex gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                  className="flex h-10 w-10 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 text-[#E03B37] transition-all duration-300 hover:from-[#E03B37] hover:to-[#c62828] hover:text-white"
-                  aria-label={social.label}
-                >
-                  <social.icon className="h-5 w-5" />
-                </a>
-              ))}
+      <div className="container-x grid grid-cols-2 gap-x-6 gap-y-12 border-t border-line py-16 md:grid-cols-4 lg:grid-cols-12">
+        <div className="col-span-2 md:col-span-4 lg:col-span-4">
+          <Link href="/" className="mb-6 flex items-center gap-3" aria-label="Bitropix home">
+            <PixelMark className="h-6 w-6" />
+            <span className="font-display text-lg font-bold tracking-[0.18em] text-paper">BITROPIX</span>
+          </Link>
+          <p className="max-w-xs leading-relaxed text-paper-dim">
+            A product studio for web, mobile, cloud and growth. We design, engineer and scale digital products for
+            ambitious teams worldwide.
+          </p>
+          <dl className="mt-8 space-y-4 text-sm">
+            <div>
+              <dt className="eyebrow mb-1">Studio</dt>
+              <dd className="text-paper">{siteConfig.location}</dd>
             </div>
-
-            {/* Contact Info */}
-            <ul className="space-y-3">
-              <li className="group flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-[#E03B37]/10 transition-colors group-hover:bg-[#E03B37]/20">
-                  <Mail className="h-4 w-4 text-[#E03B37]" />
-                </div>
-                <a
-                  href="mailto:info@bitropix.com"
-                  className="text-sm text-gray-400 transition-colors hover:text-[#E03B37]"
-                >
-                  info@bitropix.com
+            <div>
+              <dt className="eyebrow mb-1">Local time</dt>
+              <dd className="font-mono text-paper tabular-nums">
+                <LocalTime />
+              </dd>
+            </div>
+            <div>
+              <dt className="eyebrow mb-1">Call</dt>
+              <dd>
+                <a href={siteConfig.phoneHref} className="link-line text-paper">
+                  {siteConfig.phoneDisplay}
                 </a>
-              </li>
-              <li className="group flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-[#E03B37]/10 transition-colors group-hover:bg-[#E03B37]/20">
-                  <Phone className="h-4 w-4 text-[#E03B37]" />
-                </div>
-                <a href="tel:+919318454571" className="text-sm text-gray-400 transition-colors hover:text-[#E03B37]">
-                  +91 9318454571
-                </a>
-              </li>
-              <li className="group flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-[#E03B37]/10 transition-colors group-hover:bg-[#E03B37]/20">
-                  <MapPin className="h-4 w-4 text-[#E03B37]" />
-                </div>
-                <span className="text-sm text-gray-400">Noida, India</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Services Column */}
-          <div>
-            <h3 className="mb-4 font-semibold text-white">Services</h3>
-            <ul className="space-y-3">
-              {footerLinks.services.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-400 transition-colors duration-300 hover:text-[#E03B37]"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company Column */}
-          <div>
-            <h3 className="mb-4 font-semibold text-white">Company</h3>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-400 transition-colors duration-300 hover:text-[#E03B37]"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources Column */}
-          <div>
-            <h3 className="mb-4 font-semibold text-white">Resources</h3>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-400 transition-colors duration-300 hover:text-[#E03B37]"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+              </dd>
+            </div>
+          </dl>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 border-t border-white/10 pt-8">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} Bitropix. All rights reserved.</p>
-            <div className="flex items-center gap-1 text-sm text-gray-400">
-              Made with <Heart className="mx-1 h-4 w-4 fill-red-500 text-red-500" /> in India
-            </div>
-            <div className="flex gap-6">
-              <Link
-                href="/privacy"
-                className="text-sm text-gray-400 transition-colors duration-300 hover:text-[#E03B37]"
-              >
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-sm text-gray-400 transition-colors duration-300 hover:text-[#E03B37]">
-                Terms of Service
-              </Link>
-            </div>
+        {columns.map((col) => (
+          <div key={col.title} className="lg:col-span-2">
+            <h3 className="eyebrow mb-5">{col.title}</h3>
+            <ul className="space-y-3">
+              {col.links.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="link-line text-sm text-paper-dim hover:text-paper">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
+        ))}
+
+        <div className="lg:col-span-2">
+          <h3 className="eyebrow mb-5">Follow</h3>
+          <ul className="space-y-3">
+            {Object.entries(siteConfig.social).map(([name, href]) => (
+              <li key={name}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-line text-sm text-paper-dim capitalize hover:text-paper"
+                >
+                  {name === 'twitter' ? 'X (Twitter)' : name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Giant wordmark */}
+      <div className="container-x" aria-hidden="true">
+        {/* Decorative: drawn as SVG so it scales exactly to the container width */}
+        <svg viewBox="0 0 1000 150" className="block w-full translate-y-[14%] select-none" role="presentation">
+          <text
+            x="500"
+            y="140"
+            textAnchor="middle"
+            textLength="990"
+            lengthAdjust="spacingAndGlyphs"
+            className="font-display fill-ink-3 font-bold"
+            style={{ fontSize: 190, letterSpacing: '-0.05em' }}
+          >
+            BITROPIX
+          </text>
+        </svg>
+      </div>
+
+      <div className="relative border-t border-line bg-ink">
+        <div className="container-x flex flex-col gap-3 py-6 text-xs text-mute sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} Bitropix. All rights reserved.</p>
+          <p className="font-mono tracking-[0.1em] uppercase">Designed and engineered in-house</p>
         </div>
       </div>
     </footer>

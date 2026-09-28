@@ -1,47 +1,56 @@
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
-import { BreadcrumbNav } from '@/components/breadcrumb-nav';
-import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animate';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, Users, Award, Headphones, IndianRupee, ChevronDown } from 'lucide-react';
-import Image from 'next/image';
+import { PageHero } from '@/components/site/page-hero';
+import { ButtonLink, Eyebrow } from '@/components/site/ui';
+import { Reveal, RevealGroup, RevealItem, SplitText } from '@/components/site/reveal';
+import { Accordion } from '@/components/site/accordion';
+import { ServiceIndex } from '@/components/services/service-index';
+import { ServiceBlock } from '@/components/services/service-block';
 import { services } from '@/lib/services-data';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'IT Services & Digital Marketing Solutions',
   description:
     'Bitropix offers expert website development, app development, SEO services, cloud solutions, and digital marketing services in India. Get a free consultation today.',
   keywords:
-    'website development, app development, SEO services, digital marketing agency India, cloud migration, UI UX design, IoT solutions, IT company Noida',
+    'website development, app development, SEO services, digital marketing agency India, cloud migration, UI UX design, IoT solutions, IT company Delhi',
   alternates: {
     canonical: 'https://www.bitropix.com/services',
   },
 };
 
+/** Short names for the sticky index, figure captions and related-service tags. */
+const shortLabels: Record<string, string> = {
+  web: 'Web',
+  mobile: 'Mobile',
+  design: 'UI/UX',
+  cloud: 'Cloud',
+  marketing: 'SEO & Marketing',
+  'digital-transformation': 'Transformation',
+  embedded: 'Embedded',
+  iot: 'IoT',
+};
+
 const whyChooseUs = [
   {
-    icon: Users,
-    title: 'Expert Team',
+    title: 'Expert team',
     description:
-      'Our team of 25+ skilled developers, designers, and strategists brings deep expertise across every technology stack.',
+      '25+ developers, designers and strategists with deep expertise across every layer of the stack. You work with the people who build.',
   },
   {
-    icon: Award,
-    title: 'Proven Results',
+    title: 'Proven results',
     description:
-      '50+ successful projects delivered with a 98% client satisfaction rate. We let our results speak for themselves.',
+      '50+ projects delivered with a 98% client satisfaction rate. We would rather show the dashboard than make promises.',
   },
   {
-    icon: Headphones,
-    title: '24/7 Support',
+    title: '24/7 support',
     description:
-      'Round-the-clock technical support and dedicated project managers ensure your project never misses a beat.',
+      'Round-the-clock technical support and a dedicated project manager, so your product never misses a beat.',
   },
   {
-    icon: IndianRupee,
-    title: 'Affordable Pricing',
+    title: 'Honest pricing',
     description:
-      'Get world-class IT solutions at competitive prices. Transparent pricing with no hidden costs or surprises.',
+      'World-class engineering at competitive prices. Transparent quotes with no hidden costs or surprises.',
   },
 ];
 
@@ -49,7 +58,7 @@ const faqs = [
   {
     question: 'What IT services does Bitropix offer?',
     answer:
-      'Bitropix offers a comprehensive range of IT services including website development, mobile app development, UI/UX design, cloud migration, digital marketing & SEO, digital transformation consulting, embedded systems development, and IoT solutions.',
+      'Bitropix offers a comprehensive range of IT services including website development, mobile app development, UI/UX design, cloud migration, digital marketing and SEO, digital transformation consulting, embedded systems development, and IoT solutions.',
   },
   {
     question: 'How much does website development cost in India?',
@@ -59,7 +68,7 @@ const faqs = [
   {
     question: 'How long does it take to build a mobile app?',
     answer:
-      'A simple mobile app typically takes 8-12 weeks, while feature-rich applications may take 4-6 months. The timeline depends on app complexity, platform (iOS, Android, or both), and specific feature requirements. We provide a detailed timeline during our free consultation.',
+      'A simple mobile app typically takes 8 to 12 weeks, while feature-rich applications may take 4 to 6 months. The timeline depends on app complexity, platform (iOS, Android, or both), and specific feature requirements. We provide a detailed timeline during our free consultation.',
   },
   {
     question: 'Do you offer ongoing maintenance and support?',
@@ -89,7 +98,7 @@ export default function ServicesPage() {
     ],
   };
 
-  // FAQPage JSON-LD intentionally removed here - canonical source is /faq.
+  // FAQPage JSON-LD intentionally omitted here: the canonical source is /faq.
 
   const itemListSchema = {
     '@context': 'https://schema.org',
@@ -108,229 +117,173 @@ export default function ServicesPage() {
     })),
   };
 
+  const label = (id: string) => shortLabels[id] ?? services.find((s) => s.id === id)?.title ?? id;
+  const indexItems = services.map((s) => ({ id: s.id, label: label(s.id) }));
+  const total = services.length;
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
-      <Navbar />
-      <main className="pt-16">
-        <BreadcrumbNav items={[{ label: 'Services' }]} />
-        {/* Hero Section */}
-        <section className="relative overflow-hidden py-16 sm:py-24">
-          <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
-          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
-          <FadeIn>
-            <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-              <span className="mb-6 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-4 py-1.5 text-sm font-medium text-[#E03B37]">
-                Our Services
-              </span>
-              <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-                IT Services & Digital Solutions{' '}
-                <span className="bg-linear-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">
-                  That Deliver Results
-                </span>
-              </h1>
-              <p className="mx-auto max-w-2xl text-lg text-gray-400">
-                From website development and mobile apps to SEO, cloud migration, and IoT -- we provide end-to-end
-                technology solutions that drive growth, efficiency, and competitive advantage for businesses across
-                India and beyond.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
-                >
-                  Get a Free Consultation <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="#web"
-                  className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
-                >
-                  Explore Services
-                </Link>
+      <main>
+        <PageHero
+          title="Design, engineering and growth under one roof."
+          crumbs={[{ label: 'Services' }]}
+          description={
+            <p>
+              From website development and mobile apps to SEO, cloud migration and IoT, we deliver end-to-end technology
+              that drives growth, efficiency and a real competitive edge for businesses across India and beyond.
+            </p>
+          }
+          aside={
+            <dl className="grid grid-cols-3 border-t border-l border-line">
+              {[
+                { k: String(total).padStart(2, '0'), v: 'Disciplines' },
+                { k: '50+', v: 'Projects delivered' },
+                { k: '98%', v: 'Client satisfaction' },
+              ].map((s) => (
+                <div key={s.v} className="flex flex-col-reverse border-r border-b border-line p-4 sm:p-6">
+                  <dt className="eyebrow mt-3">{s.v}</dt>
+                  <dd className="font-display text-3xl font-semibold text-paper sm:text-4xl">{s.k}</dd>
+                </div>
+              ))}
+            </dl>
+          }
+        >
+          <ButtonLink href="/contact">Get a free consultation</ButtonLink>
+          <ButtonLink href="#web" variant="ghost">
+            Explore services
+          </ButtonLink>
+        </PageHero>
+
+        {/* Sticky index + editorial service blocks */}
+        <div className="relative">
+          <ServiceIndex items={indexItems} />
+          {services.map((service, i) => (
+            <ServiceBlock
+              key={service.id}
+              index={i}
+              total={total}
+              service={{
+                id: service.id,
+                title: service.title,
+                description: service.description,
+                features: service.features,
+                technologies: service.technologies,
+                image: service.image,
+                shortLabel: label(service.id),
+                related: service.relatedServices
+                  .filter((rid) => services.some((s) => s.id === rid))
+                  .map((rid) => ({ id: rid, label: label(rid) })),
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Why us */}
+        <section className="relative bg-ink-2 py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule index="02" className="mb-12">
+              Why Bitropix
+            </Eyebrow>
+            <div className="mb-16 grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-8">
+                <SplitText
+                  as="h2"
+                  text="Craft you can see. Results you can measure."
+                  className="font-display block text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] font-semibold text-paper"
+                />
               </div>
-            </div>
-          </FadeIn>
-        </section>
-
-        {/* Why Choose Us */}
-        <section className="bg-[#0a0a12] py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-16 text-center">
-              <p className="mb-2 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">Why Bitropix</p>
-              <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Why Choose Our Services</h2>
-              <p className="mx-auto max-w-2xl text-gray-400">
-                We combine technical excellence with a client-first approach to deliver IT solutions that truly make a
-                difference.
-              </p>
-            </div>
-            <StaggerContainer className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {whyChooseUs.map((item) => (
-                <StaggerItem key={item.title}>
-                  <div className="group rounded border border-white/10 bg-[#111119] p-6 text-center transition-all duration-300 hover:border-[#E03B37]/30">
-                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5 transition-all group-hover:from-[#E03B37]/30 group-hover:to-[#E03B37]/10">
-                      <item.icon className="h-8 w-8 text-[#E03B37]" />
-                    </div>
-                    <h3 className="mb-2 text-lg font-semibold text-white">{item.title}</h3>
-                    <p className="text-sm leading-relaxed text-gray-400">{item.description}</p>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
-        {/* Services Detail */}
-        <section className="relative py-20">
-          <div className="absolute inset-0 bg-[#0a0a12]" />
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="space-y-24">
-              {services.map((service, index) => (
-                <FadeIn key={service.id}>
-                  <div
-                    id={service.id}
-                    className={`grid items-center gap-12 lg:grid-cols-2 ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}
-                  >
-                    <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded bg-linear-to-br from-[#E03B37]/20 to-[#E03B37]/5">
-                        <service.icon className="h-8 w-8 text-[#E03B37]" />
-                      </div>
-                      <h2 className="mb-4 text-3xl font-bold text-white">{service.title}</h2>
-                      <p className="mb-6 leading-relaxed text-gray-400">{service.description}</p>
-
-                      <div className="mb-6">
-                        <h3 className="mb-3 font-semibold text-white">What We Offer:</h3>
-                        <ul className="grid gap-2 sm:grid-cols-2">
-                          {service.features.map((feature) => (
-                            <li key={feature} className="flex items-center gap-2 text-gray-400">
-                              <CheckCircle2 className="h-4 w-4 shrink-0 text-[#E03B37]" />
-                              <span className="text-sm">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="mb-6">
-                        <h3 className="mb-3 font-semibold text-white">Technologies:</h3>
-                        <div className="flex flex-wrap gap-2">
-                          {service.technologies.map((tech) => (
-                            <span
-                              key={tech}
-                              className="rounded-full border border-white/10 bg-[#111119] px-3 py-1 text-sm text-white"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Related Services Links */}
-                      <div className="mb-8">
-                        <h3 className="mb-3 text-sm font-semibold text-white">Related Services:</h3>
-                        <div className="flex flex-wrap gap-2">
-                          {service.relatedServices.map((relatedId) => {
-                            const related = services.find((s) => s.id === relatedId);
-                            if (!related) return null;
-                            return (
-                              <Link
-                                key={relatedId}
-                                href={`#${relatedId}`}
-                                className="rounded-full border border-[#E03B37]/20 px-3 py-1 text-xs text-[#E03B37] transition-colors hover:border-[#E03B37]/40 hover:text-[#E03B37]/80"
-                              >
-                                {related.title}
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      </div>
-
-                      <Link
-                        href="/contact"
-                        className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/25"
-                      >
-                        Get a Quote <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-
-                    <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                      <div className="group relative aspect-4/3 overflow-hidden rounded bg-[#111119]">
-                        <div className="absolute inset-0 bg-linear-to-br from-[#E03B37]/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                        <Image
-                          src={service.image}
-                          width={800}
-                          height={600}
-                          alt={`${service.title} - Bitropix IT Services`}
-                          className="h-full w-full object-cover opacity-100"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="relative overflow-hidden bg-[#0e0e18] py-20">
-          <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-            <FadeIn>
-              <div className="mb-16 text-center">
-                <p className="mb-2 text-sm font-semibold tracking-wider text-[#E03B37] uppercase">FAQ</p>
-                <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Frequently Asked Questions</h2>
-                <p className="mx-auto max-w-2xl text-gray-400">
-                  Got questions about our IT services? Find answers to the most commonly asked questions below.
+              <Reveal className="lg:col-span-4">
+                <p className="text-paper-dim">
+                  Technical excellence with a client-first approach. The same senior team takes you from the first call
+                  to launch and beyond.
                 </p>
-              </div>
-              <div className="space-y-4">
-                {faqs.map((faq, index) => (
-                  <details key={index} className="group rounded border border-white/10 bg-[#111119]">
-                    <summary className="flex cursor-pointer items-center justify-between p-6 font-semibold text-white">
-                      <span>{faq.question}</span>
-                      <ChevronDown className="h-5 w-5 shrink-0 text-gray-400 transition-transform group-open:rotate-180" />
-                    </summary>
-                    <div className="border-t border-white/10 px-6 pt-4 pb-6 leading-relaxed text-gray-400">
-                      {faq.answer}
-                    </div>
-                  </details>
-                ))}
-              </div>
-            </FadeIn>
+              </Reveal>
+            </div>
+
+            <RevealGroup className="grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-4">
+              {whyChooseUs.map((item, i) => (
+                <RevealItem key={item.title} className="group relative border-r border-b border-line">
+                  <span
+                    className="absolute inset-0 origin-bottom scale-y-0 bg-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100"
+                    aria-hidden="true"
+                  />
+                  <i
+                    className="bg-brand-gradient absolute inset-x-0 top-0 h-px origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+                    aria-hidden="true"
+                  />
+                  <div className="relative flex h-full flex-col p-8 sm:p-10">
+                    <span className="eyebrow">{String(i + 1).padStart(2, '0')}</span>
+                    <h3 className="font-display mt-16 text-3xl font-semibold text-paper transition-colors duration-300 group-hover:text-brand">
+                      {item.title}
+                    </h3>
+                    <p className="mt-4 leading-relaxed text-paper-dim">{item.description}</p>
+                  </div>
+                </RevealItem>
+              ))}
+            </RevealGroup>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="relative overflow-hidden py-20">
-          <div className="absolute inset-0 bg-linear-to-r from-[#E03B37] via-[#E03B37]/90 to-[#c62828]" />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.1)_1px,transparent_1px)] bg-size-[30px_30px]" />
-          <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Ready to Transform Your Business?</h2>
-            <p className="mx-auto mb-4 max-w-2xl text-lg text-white/80">
-              Let&apos;s discuss how our IT services can help you achieve your business goals. Get a free consultation
-              and project estimate today.
-            </p>
-            <p className="mx-auto mb-8 max-w-xl text-sm text-white/60">
-              No commitment required. We will analyze your requirements and provide a tailored solution roadmap.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded border border-white bg-white px-6 py-3 text-sm font-semibold text-[#0a0a12] transition-all duration-300 hover:bg-white/90"
-              >
-                Start Your Project <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 rounded border border-white/30 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white/10"
-              >
-                Learn About Us
-              </Link>
+        {/* FAQ */}
+        <section className="relative py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule index="03" className="mb-12">
+              FAQ
+            </Eyebrow>
+          </div>
+          <div className="container-x grid gap-14 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <div className="lg:sticky lg:top-[calc(var(--nav-h)+3rem)]">
+                <SplitText
+                  as="h2"
+                  text="Questions, answered."
+                  className="font-display block text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.95] font-semibold text-paper"
+                />
+                <Reveal>
+                  <p className="mt-8 max-w-sm text-paper-dim">
+                    The things clients ask most before we start. More in the{' '}
+                    <Link href="/faq" className="link-line text-paper">
+                      full FAQ
+                    </Link>
+                    .
+                  </p>
+                </Reveal>
+              </div>
             </div>
+            <Reveal className="lg:col-span-8">
+              <Accordion items={faqs} />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Closing statement */}
+        <section className="relative py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule index="04" className="mb-12">
+              Next step
+            </Eyebrow>
+          </div>
+          <div className="container-x grid gap-12 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-8">
+              <SplitText
+                as="h2"
+                text="Not sure where to start? Start with a conversation."
+                className="font-display block text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.95] font-semibold text-paper"
+              />
+            </div>
+            <Reveal className="lg:col-span-4">
+              <p className="text-paper-dim">
+                No commitment required. We will analyse your requirements and send back a tailored solution roadmap.
+              </p>
+              <div className="mt-8">
+                <ButtonLink href="/contact">Book a free consultation</ButtonLink>
+              </div>
+            </Reveal>
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

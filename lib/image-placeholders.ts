@@ -1,0 +1,69 @@
+/**
+ * Tiny (~16px) WebP previews used as the first, instantly-visible stage of the blur-up
+ * loader in components/site/smart-image.tsx. Generated from the source images; regenerate
+ * when an image changes.
+ */
+export const imagePlaceholders: Record<string, string> = {
+  '/images/services/web.webp':
+    'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoQAAwAA4BaJagCsAEVzzoHuAD++RQ2TmzlVryCsv9Opl1YYNuBbyQEJfBT5dt6PxYUOgAA',
+  '/images/services/mobile.webp':
+    'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACQAQCdASoQAAwAA4BaJY1nyRgAiwAA/vO1RH8Pb1Ki/fP1D6fLP+Wc0zvIfkfIDVumeQhOqGVoEcYA',
+  '/images/services/design.webp':
+    'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAACwAQCdASoQAAwAA4BaJQAAXQa6XsLAAP75Ft0calODDwH7SiXIgdd6bu34ubfDLQgdkbinhXLAAA==',
+  '/images/services/cloud.webp':
+    'data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoQAAwAA4BaJZAC7AD0fvlp4AAA/vkYdiGZDi3CAP8c1OmAWFRa7ahy45ZLQpj+YtmHS+asI0V8TkCJgAA=',
+  '/images/services/growth.webp':
+    'data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQAgCdASoQAAwAA4BaJbACdAEPhv28O0I4AP75xExWdyqCwMb0BaWTu4IToAwI1b4U3tCbrk0VzVgBXJ0RsVBgXsTA0Gzmy8hPRrkSluEz5WBA1oYgoTNrIyZfUAAA',
+  '/images/services/transformation.webp':
+    'data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAwAA4BaJaAC7AEO+F4eoAD++RP0c5y51BWAWy9vV881NFC1wNPLSl2WRExJk6Yc2RGdXK6oAA==',
+  '/images/services/embedded.webp':
+    'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAAAQAgCdASoQAAwAA4BaJYwC7AEO+XfZF+UAAP75J6SgQYOzt+GKT26cUlHxfB59Fg7wajZhEG0AAA==',
+  '/images/services/iot.webp':
+    'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAABwAQCdASoQAAwAA4BaJZQCw7FAAAD+8/Hr+a9fMlBxCE8CU2E1Hy1aAAA=',
+  '/images/blog/digital-transformation-2024-guide.webp':
+    'data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQAAkAA4BaJZQCw7EO+nIqAAD++E6tBIj2f4EZMtxyAxUDMaHc3DTAAAA=',
+  '/images/blog/react-19-features.webp':
+    'data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADwAQCdASoQAAkAA4BaJQBdgCG8sCEN4IAA/vkXFypgfeRxWviZnIG5L6j8mDrZlCG5dcgA',
+  '/images/blog/cloud-cost-optimization.webp':
+    'data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAAAQAgCdASoQAAkAA4BaJYwCdH8AGEvnc/8AAP75F/UI0TNtlibmJGuhuUhONeTH8OTTQAAA',
+  '/images/blog/ai-in-enterprise.webp':
+    'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAkAA4BaJZgCdADHnZioAAD+9sXnYalUdelvpeKqLlaJ9GNJDf8rCFnX99vauwI70Lwd3eOCY+eoAkAAAA==',
+  '/images/blog/microservices-best-practices.webp':
+    'data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAABQAQCdASoQAAkAA4BaJZwABAAAAP70z31TTh1gAAA=',
+  '/images/blog/ux-design-trends-2025.webp':
+    'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACwAQCdASoQAAkAA4BaJZQAAxec8l+AAP74ZvcxPkMzmy5hSQC4DeFkWa0UqQAA',
+  '/images/blog/devops-automation.webp':
+    'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoQAAkAA4BaJQBdgCHhp62evAAA/vkT45wd2xke5z0y8JpJCuhdy5S/h0MnijNCKIAAAA==',
+  '/images/blog/seo-strategies-for-business-growth.webp':
+    'data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoQAAkAA4BaJZQAAuQm3S1YAAD++RDzMqB5HsoKPXM36ODMYGhnlChtAAA=',
+  '/images/blog/nextjs-app-router-guide.webp':
+    'data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADwAQCdASoQAAkAA4BaJZwCw7ED+/SasQAA/vkYcob1SvUpLQFBNSrThQbX3+salFcAAA==',
+  '/images/blog/mobile-app-development-react-native-vs-flutter.webp':
+    'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAADQAQCdASoQAAkAA4BaJZQAAudkwoBbAAD++RbHWCe0mGjQhdpd96NRu+70lAAA',
+  '/images/blog/ecommerce-conversion-optimization.webp':
+    'data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAAAwAQCdASoQAAkAA4BaJZwAA3AA/vTRp7C1jVXwkNRZHnGXn8198vtmgAA=',
+  '/images/blog/social-media-marketing-strategy.webp':
+    'data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAABwAQCdASoQAAkAA4BaJZw3A4AXQAD+9PzccYtO/tuppM8uubBFe/tJdtcux32HAAA=',
+  '/images/blog/ppc-google-ads-optimization.webp':
+    'data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACwAQCdASoQAAkAA4BaJZQAAudNyU1AAP75E0Gk2JKb+DKeSZgAAA==',
+  '/images/blog/kubernetes-production-best-practices.webp':
+    'data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAAAwAQCdASoQAAkAA4BaJZwAA3AA/vSVg6dNXwvuTtdcIUAA',
+  '/images/blog/ui-ux-design-process-for-startups.webp':
+    'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAACwAQCdASoQAAkAA4BaJZQAAu183jAAAP7247CrPQH3ZaSEbr7c9Cu/oLL8LljLpdDD8TycPnQchUlddF974AAA',
+  '/images/studio/about.webp':
+    'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoQAAcAA4BaJYwCdAEf/uBRrAD+9snT8hauwpQA5rz6WJMP8Fu/4nbIwuxW+ArOrCJgAA==',
+  '/images/studio/careers.webp':
+    'data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAwAA4BaJYwCdAEVV2yP9ay8AP70SMvR8XXaPmgCpiFsze3onHobuhglRy3XlXIuheNNWwa+PI+2EFky7TgAep9K65VUYAA=',
+  '/images/portfolio/bookurevents.webp':
+    'data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACwAQCdASoQAAkAA4BaJZwAAudmoRnAAP72mTYqOUySI1sL5wgAAA==',
+  '/images/portfolio/tourillo.webp':
+    'data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACwAQCdASoQAAkAA4BaJZQAAudVj0IAAP72paozCcxy9tdBHs7T5qFa5ajovcaLL0lAAA==',
+  '/images/portfolio/advanced-beauty.webp':
+    'data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACwAQCdASoQAAkAA4BaJQBOgB9FMaEAAMsrnkneAyeO/dgoHJ3Z2AAVS/PbHZryvSZK/r1ZH34u/iwG9njm48J0aWL/3YrUjioVAFLkrhaN7StzBxwCuLWZGeOAAA==',
+  '/images/portfolio/beverly-agrovet.webp':
+    'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoQAAkAA4BaJYwCdAEOurkAAP4nvR7sWtmllcE9BYG4if6eAJCu0/kK9tteFcn6igZCMlXsAAA=',
+  '/images/portfolio/dishaa-vertex.webp':
+    'data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAAAQAgCdASoQAAkAA4BaJZQCdAEQFTCai9JAAP7zw+vuPSjVBU77ifMfNxik2a7gEWQHS+uAAAA=',
+  '/images/portfolio/proteam.webp':
+    'data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoQAAkAA4BaJZwAGyAKKB5RgAD+lEzEsHshV1Hojedla3kfMfGrhWFmMdx7FI3EQB0rzVle0q7CHlgQ7V6LmazLIZIne+QcKAA=',
+};

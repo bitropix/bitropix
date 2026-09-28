@@ -1,27 +1,19 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { SmartImage } from '@/components/site/smart-image';
 import { notFound } from 'next/navigation';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
-import {
-  ExternalLink,
-  ArrowRight,
-  ArrowLeft,
-  Globe,
-  Layers,
-  Target,
-  Lightbulb,
-  CheckCircle2,
-  Code2,
-} from 'lucide-react';
-import { BreadcrumbNav } from '@/components/breadcrumb-nav';
-import { LivePreview } from '@/components/live-preview';
+import { ArrowUpRight } from 'lucide-react';
 import { portfolioProjects, getProjectBySlug } from '@/lib/portfolio-data';
-import { FadeIn, FadeInLeft, FadeInRight, StaggerContainer, StaggerItem } from '@/components/animate';
+import { PageHero } from '@/components/site/page-hero';
+import { ButtonLink, Eyebrow } from '@/components/site/ui';
+import { SplitText, Reveal, RevealGroup, RevealItem, ScrollText } from '@/components/site/reveal';
+import { ParallaxImage } from '@/components/portfolio/parallax-image';
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
 }
+
+const pad = (n: number) => String(n).padStart(2, '0');
 
 export async function generateStaticParams() {
   return portfolioProjects.map((project) => ({
@@ -35,7 +27,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   if (!project) {
     return {
-      title: 'Project Not Found | Bitropix Portfolio',
+      title: 'Project not found',
       description: 'The project you are looking for does not exist.',
     };
   }
@@ -78,10 +70,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
+  const total = portfolioProjects.length;
   const currentIndex = portfolioProjects.findIndex((p) => p.slug === project.slug);
-  const prevProject = currentIndex > 0 ? portfolioProjects[currentIndex - 1] : null;
-  const nextProject = currentIndex < portfolioProjects.length - 1 ? portfolioProjects[currentIndex + 1] : null;
-  const otherProjects = portfolioProjects.filter((p) => p.slug !== project.slug);
+  const nextIndex = (currentIndex + 1) % total;
+  const nextProject = portfolioProjects[nextIndex];
+  const domain = project.url
+    .replace(/^https?:\/\//, '')
+    .replace(/^www\./, '')
+    .replace(/\/$/, '');
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -98,306 +94,242 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     ],
   };
 
+  const meta = [
+    { label: 'Industry', value: [project.industry] },
+    { label: 'Category', value: [project.category] },
+    { label: 'Services', value: project.services },
+    { label: 'Stack', value: project.techStack },
+  ];
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      <Navbar />
-      <main className="pt-16">
-        <BreadcrumbNav items={[{ label: 'Portfolio', href: '/portfolio' }, { label: project.title }]} />
+      <main>
+        <PageHero
+          title={project.title}
+          crumbs={[{ label: 'Portfolio', href: '/portfolio' }, { label: project.title }]}
+          description={
+            <>
+              <p className="font-display text-paper text-2xl leading-tight font-medium sm:text-3xl">
+                &ldquo;{project.tagline}&rdquo;
+              </p>
+              <p className="mt-6">{project.description}</p>
+            </>
+          }
+        >
+          <ButtonLink href={project.url} aria-label={`Visit live site: ${project.title} (opens in a new tab)`}>
+            Visit live site
+          </ButtonLink>
+          <ButtonLink href="/contact" variant="ghost">
+            Start a similar project
+          </ButtonLink>
+        </PageHero>
 
-        {/* Hero Section */}
-        <section className="relative overflow-hidden py-16 sm:py-20">
-          <div className="absolute inset-0 bg-[#0e0e18]" />
-          <div className="animate-pulse-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-[#E03B37]/15 blur-[100px]" />
-          <div className="animate-pulse-glow absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#E03B37]/10 blur-[100px] delay-500" />
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <FadeInLeft>
-                <div>
-                  <div className="mb-4 flex flex-wrap gap-2">
-                    <span className="rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-3 py-1 text-xs font-medium text-[#E03B37]">
-                      {project.category}
-                    </span>
-                    <span className="rounded-full border border-white/10 px-3 py-1 text-xs font-medium text-gray-400">
-                      {project.industry}
-                    </span>
-                  </div>
-                  <h1 className="mb-3 text-4xl font-bold text-white sm:text-5xl">{project.title}</h1>
-                  <p className="mb-4 text-xl font-medium text-[#E03B37]">&ldquo;{project.tagline}&rdquo;</p>
-                  <p className="mb-8 text-lg leading-relaxed text-gray-400">{project.description}</p>
-                  <div className="flex flex-wrap gap-4">
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
-                    >
-                      Visit Live Website <ExternalLink className="h-4 w-4" />
-                    </a>
-                    <Link
-                      href="/contact"
-                      className="inline-flex items-center gap-2 rounded border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
-                    >
-                      Start Your Project
-                    </Link>
-                  </div>
-                </div>
-              </FadeInLeft>
-              <FadeInRight>
-                <div className="relative aspect-[16/10] overflow-hidden rounded border border-white/10 shadow-2xl shadow-[#E03B37]/5">
-                  <LivePreview
-                    image={project.image}
-                    title={project.title}
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                </div>
-              </FadeInRight>
-            </div>
-          </div>
-        </section>
-
-        {/* Services & Tech Stack */}
-        <section className="border-y border-white/10 bg-[#111119]">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid divide-y divide-white/10 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-              <FadeIn>
-                <div className="py-8 sm:pr-8">
-                  <div className="mb-4 flex items-center gap-2 text-sm font-semibold tracking-wide text-[#E03B37] uppercase">
-                    <Layers className="h-4 w-4" /> Services Provided
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {project.services.map((service) => (
-                      <span
-                        key={service}
-                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-gray-300"
-                      >
-                        {service}
-                      </span>
+        {/* Meta row + hero image */}
+        <section className="pt-16 pb-24 sm:pt-20 sm:pb-36">
+          <div className="container-x">
+            <RevealGroup as="div" className="border-line grid border-t border-l sm:grid-cols-2 lg:grid-cols-4">
+              {meta.map((m) => (
+                <RevealItem key={m.label} className="border-line border-r border-b p-6 sm:p-8">
+                  <dl>
+                    <dt className="eyebrow mb-4">{m.label}</dt>
+                    {m.value.map((v) => (
+                      <dd key={v} className="text-paper">
+                        {v}
+                      </dd>
                     ))}
-                  </div>
-                </div>
-              </FadeIn>
-              <FadeIn delay={0.1}>
-                <div className="py-8 sm:pl-8">
-                  <div className="mb-4 flex items-center gap-2 text-sm font-semibold tracking-wide text-[#E03B37] uppercase">
-                    <Code2 className="h-4 w-4" /> Tech Stack
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {project.techStack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-gray-300"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </FadeIn>
-            </div>
-          </div>
-        </section>
-
-        {/* Challenge & Solution */}
-        <section className="bg-[#0a0a12] py-16 sm:py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-8 lg:grid-cols-2">
-              <FadeInLeft>
-                <div className="h-full rounded border border-white/10 bg-[#111119] p-8">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded bg-[#E03B37]/10">
-                    <Target className="h-6 w-6 text-[#E03B37]" />
-                  </div>
-                  <h2 className="mb-4 text-2xl font-bold text-white">The Challenge</h2>
-                  <p className="leading-relaxed text-gray-400">{project.challenge}</p>
-                </div>
-              </FadeInLeft>
-              <FadeInRight>
-                <div className="h-full rounded border border-white/10 bg-[#111119] p-8">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded bg-[#E03B37]/10">
-                    <Lightbulb className="h-6 w-6 text-[#E03B37]" />
-                  </div>
-                  <h2 className="mb-4 text-2xl font-bold text-white">Our Solution</h2>
-                  <p className="leading-relaxed text-gray-400">{project.solution}</p>
-                </div>
-              </FadeInRight>
-            </div>
-          </div>
-        </section>
-
-        {/* Key Features */}
-        <section className="bg-[#0e0e18] py-16 sm:py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <FadeIn>
-              <div className="mb-12 text-center">
-                <p className="mb-2 font-semibold tracking-wide text-[#E03B37] uppercase">Features</p>
-                <h2 className="text-3xl font-bold text-white sm:text-4xl">Key Features We Built</h2>
-              </div>
-            </FadeIn>
-            <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {project.features.map((feature) => (
-                <StaggerItem key={feature}>
-                  <div className="flex h-full items-start gap-3 rounded border border-white/10 bg-[#111119] p-5 transition-all duration-300 hover:border-[#E03B37]/20">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#E03B37]" />
-                    <p className="text-sm leading-relaxed text-gray-300">{feature}</p>
-                  </div>
-                </StaggerItem>
+                  </dl>
+                </RevealItem>
               ))}
-            </StaggerContainer>
+            </RevealGroup>
+
+            <div className="mt-6">
+              <ParallaxImage src={project.image} alt={`${project.title} website homepage`} />
+            </div>
+            <p className="eyebrow mt-4 flex items-center justify-between gap-4">
+              <span>Live at {domain}</span>
+              <span>
+                {pad(currentIndex + 1)} / {pad(total)}
+              </span>
+            </p>
+          </div>
+        </section>
+
+        {/* Challenge / Solution */}
+        {[
+          { index: '01', eyebrow: 'Brief', label: 'The challenge', text: project.challenge },
+          { index: '02', eyebrow: 'Approach', label: 'Our solution', text: project.solution },
+        ].map((block) => (
+          <section key={block.index} className="border-line border-t py-24 sm:py-36">
+            <div className="container-x relative">
+              <Eyebrow rule index={block.index} className="mb-12">
+                {block.eyebrow}
+              </Eyebrow>
+            </div>
+            <div className="container-x grid gap-10 lg:grid-cols-12">
+              <div className="lg:col-span-4">
+                <SplitText
+                  as="h2"
+                  text={block.label}
+                  className="font-display text-paper block text-[clamp(2rem,4vw,3.5rem)] leading-[0.95] font-semibold"
+                />
+              </div>
+              <div className="lg:col-span-8">
+                <ScrollText
+                  text={block.text}
+                  className="font-display text-paper text-[clamp(1.5rem,3vw,2.625rem)] leading-[1.15] font-medium"
+                />
+              </div>
+            </div>
+          </section>
+        ))}
+
+        {/* Features */}
+        <section className="border-line bg-ink-2 border-t py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule index="03" className="mb-12">
+              Features
+            </Eyebrow>
+            <div className="mb-16 grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-8">
+                <SplitText
+                  as="h2"
+                  text="What we built."
+                  className="font-display text-paper block text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] font-semibold"
+                />
+              </div>
+              <Reveal className="lg:col-span-4">
+                <p className="text-paper-dim">
+                  {pad(project.features.length)} capabilities shipped for {project.title}, from first sketch to
+                  production.
+                </p>
+              </Reveal>
+            </div>
+
+            <RevealGroup as="ul" className="border-line grid border-t border-l sm:grid-cols-2 lg:grid-cols-4">
+              {project.features.map((feature, i) => (
+                <RevealItem
+                  as="li"
+                  key={feature}
+                  className="group border-line relative flex min-h-56 flex-col justify-between gap-10 border-r border-b p-6 sm:p-8"
+                >
+                  <i
+                    className="bg-brand-gradient absolute inset-x-0 top-0 h-px origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+                    aria-hidden="true"
+                  />
+                  <span className="eyebrow">{pad(i + 1)}</span>
+                  <p className="text-paper text-lg leading-snug">{feature}</p>
+                </RevealItem>
+              ))}
+            </RevealGroup>
           </div>
         </section>
 
         {/* Results */}
-        <section className="bg-[#0a0a12] py-16 sm:py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <FadeIn>
-              <div className="mb-12 text-center">
-                <p className="mb-2 font-semibold tracking-wide text-[#E03B37] uppercase">Impact</p>
-                <h2 className="text-3xl font-bold text-white sm:text-4xl">Results & Impact</h2>
-              </div>
-            </FadeIn>
-            <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {project.results.map((result, index) => (
-                <StaggerItem key={result}>
-                  <div className="h-full rounded border border-white/10 bg-[#111119] p-6 text-center transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
-                    <div className="mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#E03B37]/10 text-lg font-bold text-[#E03B37]">
-                      {index + 1}
-                    </div>
-                    <p className="text-sm leading-relaxed text-gray-300">{result}</p>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+        <section className="border-line border-t py-24 sm:py-36">
+          <div className="container-x relative">
+            <Eyebrow rule index="04" className="mb-12">
+              Results
+            </Eyebrow>
+          </div>
+          <div className="container-x grid gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <SplitText
+                as="h2"
+                text="The outcome."
+                className="font-display text-paper block text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] font-semibold"
+              />
+            </div>
+            <div className="lg:col-span-8">
+              <RevealGroup as="ul" className="border-line border-t">
+                {project.results.map((result) => (
+                  <RevealItem as="li" key={result} className="border-line flex gap-5 border-b py-8 sm:gap-8 sm:py-10">
+                    <i className="bg-brand mt-[0.45em] h-3 w-3 shrink-0 sm:h-4 sm:w-4" aria-hidden="true" />
+                    <p className="font-display text-paper text-[clamp(1.5rem,3.2vw,2.75rem)] leading-[1.08] font-medium">
+                      {result}
+                    </p>
+                  </RevealItem>
+                ))}
+              </RevealGroup>
+              <Reveal className="mt-12 flex flex-wrap gap-3">
+                <ButtonLink href={project.url} aria-label={`Visit ${domain} (opens in a new tab)`}>
+                  Visit {domain}
+                </ButtonLink>
+                <ButtonLink href="/portfolio" variant="ghost">
+                  All work
+                </ButtonLink>
+              </Reveal>
+            </div>
           </div>
         </section>
 
-        {/* Visit Website CTA */}
-        <section className="border-y border-white/10 bg-[#111119]">
-          <FadeIn>
-            <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-              <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded bg-[#E03B37]/10">
-                    <Globe className="h-7 w-7 text-[#E03B37]" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white">See {project.title} Live</h3>
-                    <p className="text-sm text-gray-400">Visit the website and experience it yourself</p>
-                  </div>
+        {/* Testimonial */}
+        {project.testimonial && (
+          <section className="border-line bg-ink-2 border-t py-24 sm:py-36">
+            <div className="container-x relative">
+              <Eyebrow rule className="mb-12" index="05">In their words</Eyebrow>
+            </div>
+            <div className="container-x grid gap-10 lg:grid-cols-12">
+              <div className="lg:col-span-3">
+              </div>
+              <Reveal className="lg:col-span-9">
+                <figure>
+                  <span className="font-display text-brand block text-[6rem] leading-[0.6]" aria-hidden="true">
+                    &ldquo;
+                  </span>
+                  <blockquote className="font-display text-paper mt-6 text-[clamp(1.875rem,4.4vw,4rem)] leading-[1.08] font-medium">
+                    {project.testimonial}
+                  </blockquote>
+                  <figcaption className="eyebrow mt-10">{project.title}</figcaption>
+                </figure>
+              </Reveal>
+            </div>
+          </section>
+        )}
+
+        {/* Next project */}
+        <section className="border-line border-t">
+          <Link
+            href={`/portfolio/${nextProject.slug}`}
+            className="group relative block overflow-hidden"
+            data-cursor="Next"
+          >
+            <span
+              className="bg-ink-2 absolute inset-0 origin-bottom scale-y-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100"
+              aria-hidden="true"
+            />
+            <div className="container-x relative grid gap-10 py-20 sm:py-28 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-7">
+                <h2 className="eyebrow mb-8 flex items-center gap-3">
+                  <span className="bg-brand inline-block h-2 w-2" aria-hidden="true" />
+                  <span>Next project</span>
+                  <span className="text-paper-dim">
+                    ({pad(nextIndex + 1)} / {pad(total)})
+                  </span>
+                </h2>
+                <p className="font-display text-paper group-hover:text-brand text-[clamp(3rem,10vw,9rem)] leading-[0.9] font-semibold transition-colors duration-500">
+                  {nextProject.title}
+                </p>
+                <div className="mt-8 flex items-center gap-5">
+                  <span className="border-line-strong text-paper group-hover:border-brand group-hover:bg-brand grid h-14 w-14 shrink-0 place-items-center border transition-all duration-500 group-hover:rotate-45 group-hover:text-ink">
+                    <ArrowUpRight className="h-6 w-6" aria-hidden="true" />
+                  </span>
+                  <p className="text-paper-dim max-w-md">{nextProject.tagline}</p>
                 </div>
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
-                >
-                  Visit {project.url.replace('https://', '').replace('www.', '').replace(/\/$/, '')}{' '}
-                  <ExternalLink className="h-4 w-4" />
-                </a>
+              </div>
+              <div className="border-line bg-ink-3 relative aspect-[16/10] overflow-hidden border transition-[clip-path] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] lg:col-span-5 lg:[clip-path:inset(100%_0_0_0)] lg:group-hover:[clip-path:inset(0_0_0_0)] lg:group-focus-visible:[clip-path:inset(0_0_0_0)]">
+                <SmartImage
+                  src={nextProject.image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="scale-110 object-cover object-top transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-100"
+                />
               </div>
             </div>
-          </FadeIn>
-        </section>
-
-        {/* Project Navigation */}
-        <section className="bg-[#0a0a12] py-12">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-4 sm:grid-cols-2">
-              {prevProject ? (
-                <Link
-                  href={`/portfolio/${prevProject.slug}`}
-                  className="group rounded border border-white/10 bg-[#111119] p-6 transition-all duration-300 hover:border-[#E03B37]/30"
-                >
-                  <span className="mb-2 flex items-center gap-1 text-xs text-gray-400">
-                    <ArrowLeft className="h-3 w-3" /> Previous Project
-                  </span>
-                  <p className="font-bold text-white transition-colors group-hover:text-[#E03B37]">
-                    {prevProject.title}
-                  </p>
-                  <p className="mt-1 text-sm text-gray-400">{prevProject.industry}</p>
-                </Link>
-              ) : (
-                <div />
-              )}
-              {nextProject && (
-                <Link
-                  href={`/portfolio/${nextProject.slug}`}
-                  className="group rounded border border-white/10 bg-[#111119] p-6 text-right transition-all duration-300 hover:border-[#E03B37]/30"
-                >
-                  <span className="mb-2 flex items-center justify-end gap-1 text-xs text-gray-400">
-                    Next Project <ArrowRight className="h-3 w-3" />
-                  </span>
-                  <p className="font-bold text-white transition-colors group-hover:text-[#E03B37]">
-                    {nextProject.title}
-                  </p>
-                  <p className="mt-1 text-sm text-gray-400">{nextProject.industry}</p>
-                </Link>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* Other Projects */}
-        <section className="border-t border-white/10 bg-[#0e0e18] py-16">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <FadeIn>
-              <h2 className="mb-8 text-2xl font-bold text-white">More Projects</h2>
-            </FadeIn>
-            <StaggerContainer className="grid gap-8 md:grid-cols-3">
-              {otherProjects.map((other) => (
-                <StaggerItem key={other.id}>
-                  <Link href={`/portfolio/${other.slug}`} className="group block">
-                    <div className="h-full overflow-hidden rounded border border-white/10 bg-[#111119] transition-all duration-300 hover:border-[#E03B37]/30 hover:shadow-lg hover:shadow-[#E03B37]/5">
-                      <div className="relative aspect-video overflow-hidden">
-                        <LivePreview
-                          image={other.image}
-                          title={other.title}
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          imageClassName="object-cover opacity-70 transition-opacity duration-500 group-hover:opacity-90"
-                        />
-                      </div>
-                      <div className="p-6">
-                        <span className="mb-3 inline-block rounded-full border border-[#E03B37]/20 bg-[#E03B37]/10 px-2.5 py-0.5 text-xs font-medium text-[#E03B37]">
-                          {other.industry}
-                        </span>
-                        <h3 className="mb-1 font-bold text-white transition-colors group-hover:text-[#E03B37]">
-                          {other.title}
-                        </h3>
-                        <p className="line-clamp-2 text-sm text-gray-400">{other.tagline}</p>
-                      </div>
-                    </div>
-                  </Link>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
-
-        {/* Final CTA */}
-        <section className="border-t border-white/10 bg-[#0a0a12] py-16 sm:py-20">
-          <FadeIn>
-            <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-              <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">
-                Want a Website Like{' '}
-                <span className="bg-gradient-to-r from-[#E03B37] to-[#ff6b6b] bg-clip-text text-transparent">
-                  {project.title}
-                </span>
-                ?
-              </h2>
-              <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-400">
-                Let&apos;s build something amazing together. Tell us about your project and we&apos;ll make it happen.
-              </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded bg-[#E03B37] px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-[#E03B37]/90 hover:shadow-lg hover:shadow-[#E03B37]/20"
-              >
-                Get in Touch <ArrowRight className="h-5 w-5" />
-              </Link>
-            </div>
-          </FadeIn>
+          </Link>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 
 interface BreadcrumbItem {
   label: string;
@@ -10,30 +9,31 @@ interface BreadcrumbNavProps {
   items: BreadcrumbItem[];
 }
 
+/** Standalone breadcrumb row for pages that don't use <PageHero>. */
 export function BreadcrumbNav({ items }: BreadcrumbNavProps) {
   return (
-    <nav className="border-b border-white/10 bg-[#0a0a12]" aria-label="Breadcrumb">
-      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <ol className="flex items-center gap-2 text-sm text-gray-400">
-          <li>
-            <Link href="/" className="transition-colors hover:text-[#E03B37]">
-              Home
-            </Link>
+    <nav aria-label="Breadcrumb" className="container-x pt-[calc(var(--nav-h)+2rem)]">
+      <ol className="eyebrow flex flex-wrap items-center gap-2">
+        <li>
+          <Link href="/" className="link-line hover:text-paper">
+            Home
+          </Link>
+        </li>
+        {items.map((item, index) => (
+          <li key={item.label} className="flex items-center gap-2">
+            <span aria-hidden="true">/</span>
+            {item.href && index < items.length - 1 ? (
+              <Link href={item.href} className="link-line hover:text-paper">
+                {item.label}
+              </Link>
+            ) : (
+              <span className="text-paper" aria-current="page">
+                {item.label}
+              </span>
+            )}
           </li>
-          {items.map((item, index) => (
-            <li key={item.label} className="flex items-center gap-2">
-              <ChevronRight className="h-4 w-4" />
-              {item.href && index < items.length - 1 ? (
-                <Link href={item.href} className="transition-colors hover:text-[#E03B37]">
-                  {item.label}
-                </Link>
-              ) : (
-                <span className="font-medium text-white">{item.label}</span>
-              )}
-            </li>
-          ))}
-        </ol>
-      </div>
+        ))}
+      </ol>
     </nav>
   );
 }

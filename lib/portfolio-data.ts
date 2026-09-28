@@ -28,7 +28,7 @@ export const portfolioProjects: PortfolioProject[] = [
     description:
       'A premium portfolio and booking website for BookUrEvents, a luxury event planning and management company operating across India. The platform showcases their work across corporate events, luxury weddings, and private celebrations, and lets prospective clients explore services and request a consultation.',
     url: 'https://bookurevents.in/',
-    image: '/images/portfolio/bookurevents.jpg',
+    image: '/images/portfolio/bookurevents.webp',
     category: 'Events & Booking Platform',
     industry: 'Events & Entertainment',
     services: ['Web Development', 'UI/UX Design', 'SEO', 'Digital Marketing'],
@@ -53,7 +53,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Curated portfolio that builds trust with high-value clients',
       'Streamlined consultation booking to capture qualified leads',
     ],
-    metaTitle: 'BookUrEvents - Luxury Events Platform Case Study',
+    metaTitle: 'BookUrEvents | Luxury Events Platform Case Study',
     metaDescription:
       'How Bitropix built BookUrEvents, a premium portfolio and booking platform for a luxury event planning company spanning corporate events, weddings, and celebrations.',
   },
@@ -63,15 +63,15 @@ export const portfolioProjects: PortfolioProject[] = [
     title: 'Tourillo',
     tagline: 'Explore the World with Us',
     description:
-      "A comprehensive travel platform offering curated tour packages across India - from the Himalayas to Kerala's backwaters. Tourillo connects travelers with unforgettable experiences through all-inclusive packages featuring hotels, transport, meals, and 24/7 expert consultation.",
+      "A comprehensive travel platform offering curated tour packages across India, from the Himalayas to Kerala's backwaters. Tourillo connects travelers with unforgettable experiences through all-inclusive packages featuring hotels, transport, meals, and 24/7 expert consultation.",
     url: 'https://tourillo.com/',
-    image: '/images/portfolio/tourillo.jpg',
+    image: '/images/portfolio/tourillo.webp',
     category: 'Web Application',
     industry: 'Travel & Tourism',
     services: ['Web Development', 'UI/UX Design', 'SEO', 'Digital Marketing'],
     features: [
-      'Curated tour packages with flexible durations (2-12 days)',
-      'Category-based browsing - Romantic, Religious, Adventure, Family, Nature, Hill Station',
+      'Curated tour packages with flexible durations (2 to 12 days)',
+      'Category-based browsing: Romantic, Religious, Adventure, Family, Nature, Hill Station',
       'All-inclusive packages with hotel, transport & meals',
       '24/7 destination expert consultation',
       'Verified traveler reviews with 5-star rating system',
@@ -81,7 +81,7 @@ export const portfolioProjects: PortfolioProject[] = [
     ],
     techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Node.js'],
     challenge:
-      'The client needed a modern, high-performance travel platform that could handle hundreds of tour packages with dynamic pricing, seasonal promotions, and an intuitive booking flow - all while maintaining lightning-fast page loads and top-tier SEO to compete in the crowded Indian travel market.',
+      'The client needed a modern, high-performance travel platform that could handle hundreds of tour packages with dynamic pricing, seasonal promotions, and an intuitive booking flow, all while maintaining lightning-fast page loads and top-tier SEO to compete in the crowded Indian travel market.',
     solution:
       'We built a server-rendered Next.js application with optimized image loading, structured data for rich search results, and a component-based architecture that makes adding new packages effortless. The platform features category-based filtering, verified reviews, and a streamlined consultation booking system that converts browsers into travelers.',
     results: [
@@ -90,7 +90,7 @@ export const portfolioProjects: PortfolioProject[] = [
       '3x improvement in page load speed',
       'Seamless mobile experience driving 60% of total bookings',
     ],
-    metaTitle: 'Tourillo - Travel Platform Case Study',
+    metaTitle: 'Tourillo | Travel Platform Case Study',
     metaDescription:
       'How Bitropix built Tourillo, a high-performance travel platform with curated tour packages across India. Next.js, React, and modern web technologies.',
   },
@@ -100,9 +100,9 @@ export const portfolioProjects: PortfolioProject[] = [
     title: 'Advanced Beauty',
     tagline: 'We are the Solution to All Your Beauty Problems!',
     description:
-      'A premium at-home salon service platform serving Noida, Greater Noida, and Delhi NCR. Advanced Beauty connects clients with 18+ professional beauty masters for bridal makeup, nail extensions, hair extensions, eyelash extensions, facials, and spa treatments - all delivered to your doorstep.',
+      'A premium at-home salon service platform serving Noida, Greater Noida, and Delhi NCR. Advanced Beauty connects clients with 18+ professional beauty masters for bridal makeup, nail extensions, hair extensions, eyelash extensions, facials, and spa treatments, all delivered to your doorstep.',
     url: 'https://www.advancedbeauty.in/',
-    image: '/images/portfolio/advanced-beauty.jpg',
+    image: '/images/portfolio/advanced-beauty.webp',
     category: 'E-Commerce Platform',
     industry: 'Beauty & Wellness',
     services: ['Web Development', 'E-Commerce', 'UI/UX Design', 'Digital Marketing'],
@@ -127,7 +127,7 @@ export const portfolioProjects: PortfolioProject[] = [
       '10+ years of founder expertise showcased effectively',
       '50% increase in online bookings after launch',
     ],
-    metaTitle: 'Advanced Beauty - E-Commerce Platform Case Study',
+    metaTitle: 'Advanced Beauty | E-Commerce Platform Case Study',
     metaDescription:
       'How Bitropix built Advanced Beauty, a premium at-home salon booking platform for Delhi NCR with e-commerce, service catalog, and booking system.',
   },
@@ -139,7 +139,7 @@ export const portfolioProjects: PortfolioProject[] = [
     description:
       'A professional corporate website for Beverly Agrovet, an agrochemical company with 25+ years of experience providing scientifically formulated crop protection solutions. The platform showcases their herbicides, fungicides, fertilizers, insecticides, bio-stimulants, and growth regulators to farmers worldwide.',
     url: 'https://www.beverlyagrovet.in/',
-    image: '/images/portfolio/beverly-agrovet.jpg',
+    image: '/images/portfolio/beverly-agrovet.webp',
     category: 'Corporate Website',
     industry: 'Agriculture & Agrochemicals',
     services: ['Web Development', 'UI/UX Design', 'SEO', 'Brand Identity'],
@@ -157,14 +157,14 @@ export const portfolioProjects: PortfolioProject[] = [
     challenge:
       'Beverly Agrovet required a modern digital presence that could effectively communicate their 25+ years of agrochemical expertise to farmers and agricultural professionals. The website needed to present complex product information in an accessible way while building trust and credibility in a traditionally offline industry.',
     solution:
-      'We created a clean, professional corporate website with an organized product catalog featuring detailed information about each formulation. The site emphasizes trust signals - years of experience, quality assurance processes, and eco-friendly commitments - while providing easy navigation for farmers to find the right products for their crops.',
+      'We created a clean, professional corporate website with an organized product catalog featuring detailed information about each formulation. The site emphasizes trust signals (years of experience, quality assurance processes, and eco-friendly commitments) while providing easy navigation for farmers to find the right products for their crops.',
     results: [
       'Established strong digital presence in the agricultural sector',
       'Organized 25+ products across 6 categories with detailed info',
       'Improved brand credibility with professional online showcase',
       'Increased dealer and farmer inquiries through contact system',
     ],
-    metaTitle: 'Beverly Agrovet - Corporate Website Case Study',
+    metaTitle: 'Beverly Agrovet | Corporate Website Case Study',
     metaDescription:
       "How Bitropix built Beverly Agrovet's corporate website showcasing 25+ years of agrochemical expertise with product catalogs and farmer-focused design.",
   },
@@ -176,7 +176,7 @@ export const portfolioProjects: PortfolioProject[] = [
     description:
       'A premium corporate website for Dishaa Vertex Infra Pvt Ltd, a leading infrastructure development company with 15+ years of excellence. The platform showcases their construction, engineering, industrial projects, project management, and manpower supply services with a portfolio of 120+ completed projects.',
     url: 'https://www.dishaavertex.com/',
-    image: '/images/portfolio/dishaa-vertex.jpg',
+    image: '/images/portfolio/dishaa-vertex.webp',
     category: 'Corporate Website',
     industry: 'Infrastructure & Construction',
     services: ['Web Development', 'UI/UX Design', 'SEO', 'Brand Identity'],
@@ -185,7 +185,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Service pages for 5 core business verticals',
       'Team showcase with 150+ expert profiles',
       'Company milestones and achievement timeline',
-      'Four pillars branding - Innovation, Reliability, Quality, Excellence',
+      'Four pillars branding: Innovation, Reliability, Quality, Excellence',
       'Project gallery with high-quality imagery',
       'SEO-optimized for infrastructure and construction searches',
       'Lead generation forms for project inquiries',
@@ -194,14 +194,14 @@ export const portfolioProjects: PortfolioProject[] = [
     challenge:
       'Dishaa Vertex Infra needed a website that matched the scale and professionalism of their infrastructure projects. The platform had to showcase 120+ completed projects, communicate their expertise across multiple service verticals, and generate qualified leads from potential clients seeking large-scale construction and engineering services.',
     solution:
-      'We developed a visually impactful corporate website with a project showcase that highlights their most impressive builds - from metropolitan bridges to smart city developments. The site features a structured service presentation, team credentials, and strategic CTAs that convert visitors into qualified project inquiries.',
+      'We developed a visually impactful corporate website with a project showcase that highlights their most impressive builds, from metropolitan bridges to smart city developments. The site features a structured service presentation, team credentials, and strategic CTAs that convert visitors into qualified project inquiries.',
     results: [
       '120+ completed projects showcased effectively',
       '15+ years of excellence communicated through brand storytelling',
       '150+ team member profiles building client confidence',
       'Increased qualified project inquiries from digital channels',
     ],
-    metaTitle: 'Dishaa Vertex Infra - Corporate Website Case Study',
+    metaTitle: 'Dishaa Vertex Infra | Corporate Website Case Study',
     metaDescription:
       "How Bitropix built Dishaa Vertex Infra's premium corporate website showcasing 120+ infrastructure projects with modern design and SEO optimization.",
   },
@@ -213,7 +213,7 @@ export const portfolioProjects: PortfolioProject[] = [
     description:
       'A professional corporate website for PROTEAM Management Services Pvt. Ltd., a workforce solutions and facility management company serving corporate and industrial clients across India. The platform presents their manpower outsourcing, staffing, security, payroll, housekeeping, and skill development offerings to enterprise decision-makers.',
     url: 'https://www.proteamorg.com/',
-    image: '/images/portfolio/proteam.jpg',
+    image: '/images/portfolio/proteam.webp',
     category: 'Corporate Website',
     industry: 'Staffing & Facility Management',
     services: ['Web Development', 'UI/UX Design', 'SEO'],
@@ -238,7 +238,7 @@ export const portfolioProjects: PortfolioProject[] = [
       'Improved discoverability for staffing and facility management searches',
       'Streamlined enterprise inquiries through a clear contact flow',
     ],
-    metaTitle: 'PROTEAM Management Services - Corporate Website Case Study',
+    metaTitle: 'PROTEAM Management Services | Corporate Website Case Study',
     metaDescription:
       'How Bitropix built the corporate website for PROTEAM Management Services, presenting manpower, staffing, security, payroll, and skill development services to enterprise clients.',
   },
