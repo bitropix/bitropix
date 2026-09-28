@@ -2,10 +2,22 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-function supportsWebGL() {
+/**
+ * WebGL backed by a real GPU. Software rasterisers (SwiftShader, llvmpipe) show up in headless
+ * Chrome (PageSpeed / Lighthouse), VMs and GPU-blocklisted machines; there the render loop pins the
+ * CPU every frame, so those keep the static logo. failIfMajorPerformanceCaveat alone does not catch
+ * SwiftShader in current Chrome, hence the renderer string check.
+ */
+function hasHardwareWebGL() {
   try {
     const c = document.createElement('canvas');
-    return !!(c.getContext('webgl2') || c.getContext('webgl'));
+    const opts = { failIfMajorPerformanceCaveat: true };
+    const gl = (c.getContext('webgl2', opts) || c.getContext('webgl', opts)) as WebGLRenderingContext | null;
+    if (!gl) return false;
+    const info = gl.getExtension('WEBGL_debug_renderer_info');
+    const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
+    gl.getExtension('WEBGL_lose_context')?.loseContext(); // free the probe context right away
+    return !/swiftshader|llvmpipe|softpipe|software|basic render/i.test(renderer);
   } catch {
     return false;
   }
@@ -14,7 +26,7 @@ function supportsWebGL() {
 /**
  * Hero 3D logo. A static CSS checkerboard renders immediately (zero JS cost);
  * the Three.js scene is fetched as a separate chunk only once the browser is
- * idle, then cross-fades in. Reduced-motion / no-WebGL keep the static mark.
+ * idle, then cross-fades in. Reduced-motion / software-only WebGL keep the static mark.
  */
 /** `className` must include a position utility (e.g. `absolute ...`); none is hardcoded to avoid conflicts. */
 export function HeroVisual({ className = 'relative' }: { className?: string }) {
@@ -24,7 +36,7 @@ export function HeroVisual({ className = 'relative' }: { className?: string }) {
   useEffect(() => {
     const el = mount.current;
     if (!el) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !supportsWebGL()) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !hasHardwareWebGL()) return;
 
     let dispose: (() => void) | undefined;
     let cancelled = false;
